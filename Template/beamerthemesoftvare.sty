@@ -4,6 +4,7 @@
 % import packages
 % ---------------------------------------------
 \usepackage{color}
+\usepackage{fitbox} % used to auto-scale long frame titles
 % ---------------------------------------------
 
 
@@ -21,14 +22,29 @@
 \definecolor{blue}{HTML}{26547C}
 
 % beamer colors:
+\setbeamercolor{frametitle}{fg=black}
 \setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
 \setbeamercolor{mypagenumber}{fg=white,bg=red}
 % ---------------------------------------------
 
 
 % ---------------------------------------------
+% fonts
+% ---------------------------------------------
+\setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+% ---------------------------------------------
+
+
+% ---------------------------------------------
 % frame layout
 % ---------------------------------------------
+\setbeamertemplate{frametitle}{
+    \vspace{20pt}
+    \fitbox[maxheight=12pt,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{
+        \insertframetitle{}
+    }
+}
+
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
