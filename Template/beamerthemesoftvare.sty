@@ -70,3 +70,45 @@
     }%
 }
 % ---------------------------------------------
+
+
+% ---------------------------------------------
+% content layout
+% ---------------------------------------------
+\newcommand{\onlyleft}[1]{
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+}
+
+\newcommand{\onlyright}[1]{
+    \hfill
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+}
+
+\newcommand{\leftandright}[2]{
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.45\textwidth}
+        #2
+    \end{minipage}
+}
+
+\newcommand{\leftmiddleandright}[3]{
+	\begin{minipage}[t]{0.3\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.3\textwidth}
+        #2
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.3\textwidth}
+        #3
+    \end{minipage}
+}
+% ---------------------------------------------
