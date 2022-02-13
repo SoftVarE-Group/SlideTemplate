@@ -26,6 +26,9 @@
 \setbeamercolor{frametitle}{fg=black}
 \setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
 \setbeamercolor{mypagenumber}{fg=white,bg=red}
+\setbeamercolor{titlebox}{fg=white,bg=red}
+\setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
+\setbeamercolor{logobox}{bg=white}
 % ---------------------------------------------
 
 
@@ -49,6 +52,36 @@
 % ---------------------------------------------
 % frame layout
 % ---------------------------------------------
+\setbeamertemplate{title page}{
+    \vspace{0.6\paperheight}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
+        \LARGE\textbf{\inserttitle}\hspace*{20pt}
+    \end{beamercolorbox}%
+    \nointerlineskip%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
+        \small \inserttitle\ $\vert$ \insertauthor\ $\vert$ \insertdate \hspace*{20pt}
+    \end{beamercolorbox}%
+}
+
+\newcommand{\uulmtitlepage}[1]{
+    {
+    \setbeamertemplate{footline}{
+        \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
+            \centering
+            \vspace{-1ex}
+            \hspace{10pt}
+            \includegraphics[height=4.5ex]{logo_path}
+            \hfill
+            \includegraphics[height=4.5ex]{logo_uulm}
+            \hspace{10pt}
+        \end{beamercolorbox}%
+    }
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{#1}}
+    \maketitle
+    }
+    \addtocounter{framenumber}{-1}
+}
+
 \setbeamertemplate{frametitle}{
     \vspace{20pt}
     \fitbox[maxheight=12pt,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{
