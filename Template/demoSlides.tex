@@ -11,15 +11,11 @@
     
     \maketitle[IMG_0930][250]
 
-    \begin{frame}{Content}
-        \tableofcontents
-    \end{frame}
-    
-    \section[First Section]{The first Section}
+    \section{Lists}
 
-    \subsection[First Subsection]{The first Subsection of the First Section}
+    \subsection{Itemizations}
 
-    \begin{frame}{Itemize}
+    \begin{frame}{\insertsubsection}
         These are the three levels of \texttt{itemize}:
         \begin{itemize}
             \item Item 1
@@ -32,7 +28,9 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Enumerate}
+    \subsection{Enumerations}
+
+    \begin{frame}{\insertsubsection}
         These are the three levels of \texttt{enumerate}:
         \begin{enumerate}
             \item Item 1
@@ -50,25 +48,27 @@
         \end{enumerate}
     \end{frame}
 
-    \section[Second Section]{The second Section}
+    \section{Content Layouts}
 
-    \begin{frame}{Frame 3 has a very very very very very very very very very very very very long Frame Title}
-        Very long frame titles are scaled down automatically.
-    \end{frame}
+    \subsection{Only Left}
 
-    \begin{frame}{Only Left}
+    \begin{frame}{\insertsubsection}
         \onlyleft{
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }
     \end{frame}
 
-    \begin{frame}{Only Right}
+    \subsection{Only Right}
+
+    \begin{frame}{\insertsubsection}
         \onlyright{
             This is an example text that is displayed on the \textbf{right side} of the frame. 
         }
     \end{frame}
 
-    \begin{frame}{Left and Right}
+    \subsection{Left and Right}
+
+    \begin{frame}{\insertsubsection}
         \leftandright{
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }{
@@ -76,7 +76,9 @@
         }
     \end{frame}
 
-    \begin{frame}{Left, Middle and Right}
+    \subsection{Left, Middle and Right}
+
+    \begin{frame}{\insertsubsection}
         \leftmiddleandright{
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }{
@@ -86,7 +88,9 @@
         }
     \end{frame}
 
-    \begin{frame}{Color Boxes}
+    \section{Color Boxes}
+
+    \begin{frame}{\insertsubsection}
         \mydefinition{This is the Title of the Definition}{
             This is a definition.
         }
@@ -99,6 +103,14 @@
             This is a note.
         }
 
+    \end{frame}
+
+    \section{Other}
+
+    \subsection{Frametitle Auto-Scale}
+
+    \begin{frame}{This frame has a very very very very very very very very very very very very long Frame Title}
+        Very long frame titles are scaled down automatically.
     \end{frame}
 
 \end{document}
