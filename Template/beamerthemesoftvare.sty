@@ -31,6 +31,8 @@
 \setbeamercolor{titlebox}{fg=white,bg=red}
 \setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
 \setbeamercolor{logobox}{bg=white}
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
 % ---------------------------------------------
 
 
@@ -38,6 +40,7 @@
 % fonts
 % ---------------------------------------------
 \setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section in toc}{size=\large, series=\bfseries}
 % ---------------------------------------------
 
 
@@ -108,9 +111,12 @@
 % ---------------------------------------------
 % table of contents
 % ---------------------------------------------
-\setbeamerfont{section in toc}{size=\large, series=\bfseries}
-\setbeamercolor{section in toc}{fg=black}
-\setbeamercolor{subsection in toc}{fg=black}
+\AtBeginSection{
+    \begin{frame}[plain]
+        \vfill
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+}
 % ---------------------------------------------
 
 
