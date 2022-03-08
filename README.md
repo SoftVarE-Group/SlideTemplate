@@ -9,7 +9,7 @@ TODO
 First, you need to create a new beamer presentation. For that, add ``\documentclass[aspectratio=169]{beamer}`` to your ``.tex``-file (and change the aspectratio)
 
 ### Including the Theme
-The beamer theme can be used for a beamer presentation by the command ``\usetheme{softvare}``.
+The beamer theme can be used for a beamer presentation by the command ``\usetheme{uulm}``.
 
 ## Functionality of the Theme
 ### Title Page
