@@ -4,6 +4,7 @@
 
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
+\newif\ifrecording
 
 % ---------------------------------------------
 % import packages
@@ -128,19 +129,6 @@
 % ---------------------------------------------
 % content layout
 % ---------------------------------------------
-\newcommand{\onlyleft}[1]{
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
-}
-
-\newcommand{\onlyright}[1]{
-    \hfill
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
-}
-
 \newcommand{\leftandright}[2]{
     \begin{minipage}[t]{0.45\textwidth}
         #1
@@ -160,6 +148,78 @@
         #2
     \end{minipage}
     \hfill
+    \begin{minipage}[t]{0.3\textwidth}
+        #3
+    \end{minipage}
+}
+
+\newcommand{\leftthenright}[2]{
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2->
+    \fi
+    \begin{minipage}[t]{0.45\textwidth}
+        #2
+    \end{minipage}
+}
+
+\newcommand{\leftmiddlethenright}[3]{
+	\begin{minipage}[t]{0.3\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2->
+    \fi
+    \begin{minipage}[t]{0.3\textwidth}
+        #2
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<3->
+    \fi
+    \begin{minipage}[t]{0.3\textwidth}
+        #3
+    \end{minipage}
+}
+
+\newcommand{\leftorright}[2]{
+    \ifrecording
+    \onslide<1>
+    \fi
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2>
+    \fi
+    \begin{minipage}[t]{0.45\textwidth}
+        #2
+    \end{minipage}
+}
+
+\newcommand{\leftmiddleorright}[3]{
+    \ifrecording
+    \onslide<1>
+    \fi
+	\begin{minipage}[t]{0.3\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2>
+    \fi
+    \begin{minipage}[t]{0.3\textwidth}
+        #2
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<3>
+    \fi
     \begin{minipage}[t]{0.3\textwidth}
         #3
     \end{minipage}

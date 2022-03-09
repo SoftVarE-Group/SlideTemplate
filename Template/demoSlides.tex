@@ -2,6 +2,8 @@
 \usepackage[ngerman]{babel} % SPECIFY LANGUAGE HERE
 \usetheme{uulm}
 
+\recordingtrue
+
 \title[Short Title]{This is the Long Title}
 \subtitle[1.1 Short Subtitle]{1.1 This is the Long Subtitle}
 \author[Short Author]{Long Author}
@@ -50,21 +52,21 @@
 
     \section{Content Layouts}
 
-    \subsection{Only Left}
+    %\subsection{Only Left}
 
-    \begin{frame}{\insertsubsection}
-        \onlyleft{
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }
-    \end{frame}
+   % \begin{frame}{\insertsubsection}
+    %    \onlyleft{
+     %       This is an example text that is displayed on the \textbf{left side} of the frame. 
+      %  }
+    %\end{frame}
 
-    \subsection{Only Right}
+    %\subsection{Only Right}
 
-    \begin{frame}{\insertsubsection}
-        \onlyright{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
+    %\begin{frame}{\insertsubsection}
+    %    \onlyright{
+    %        This is an example text that is displayed on the \textbf{right side} of the frame. 
+    %    }
+    %\end{frame}
 
     \subsection{Left and Right}
 
@@ -80,6 +82,50 @@
 
     \begin{frame}{\insertsubsection}
         \leftmiddleandright{
+            This is an example text that is displayed on the \textbf{left side} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{middle} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{right side} of the frame. 
+        }
+    \end{frame}
+
+    \subsection{Left then Right}
+
+    \begin{frame}{\insertsubsection}
+        \leftthenright{
+            This is an example text that is displayed on the \textbf{left side} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{right side} of the frame. 
+        }
+    \end{frame}
+
+    \subsection{Left, Middle then Right}
+
+    \begin{frame}{\insertsubsection}
+        \leftmiddlethenright{
+            This is an example text that is displayed on the \textbf{left side} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{middle} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{right side} of the frame. 
+        }
+    \end{frame}
+
+    \subsection{Left or Right}
+
+    \begin{frame}{\insertsubsection}
+        \leftorright{
+            This is an example text that is displayed on the \textbf{left side} of the frame. 
+        }{
+            This is an example text that is displayed on the \textbf{right side} of the frame. 
+        }
+    \end{frame}
+
+    \subsection{Left, Middle or Right}
+
+    \begin{frame}{\insertsubsection}
+        \leftmiddleorright{
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }{
             This is an example text that is displayed on the \textbf{middle} of the frame. 
