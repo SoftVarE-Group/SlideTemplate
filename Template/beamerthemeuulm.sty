@@ -4,7 +4,7 @@
 
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
-\newif\ifrecording
+\newif\ifrecording % for enebling or disabling recording mode
 
 % ---------------------------------------------
 % import packages
@@ -158,9 +158,7 @@
         #1
     \end{minipage}
     \hfill
-    \ifrecording
     \onslide<2->
-    \fi
     \begin{minipage}[t]{0.45\textwidth}
         #2
     \end{minipage}
@@ -171,7 +169,52 @@
         #1
     \end{minipage}
     \hfill
+    \onslide<2->
+    \begin{minipage}[t]{0.3\textwidth}
+        #2
+    \end{minipage}
+    \hfill
+    \onslide<3->
+    \begin{minipage}[t]{0.3\textwidth}
+        #3
+    \end{minipage}
+}
+
+\newcommand{\leftorright}[2]{ % only works in recording mode
     \ifrecording
+    \onslide<1>
+    \else
+    \onslide<1->
+    \fi
+    \begin{minipage}[t]{0.45\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2>{}
+    \onslide<3>
+    \else
+    \onslide<2->
+    \fi
+    \begin{minipage}[t]{0.45\textwidth}
+        #2
+    \end{minipage}
+}
+
+\newcommand{\leftmiddleorright}[3]{ % only works in recording mode
+    \ifrecording
+    \onslide<1>
+    \else
+    \onslide<1->
+    \fi
+	\begin{minipage}[t]{0.3\textwidth}
+        #1
+    \end{minipage}
+    \hfill
+    \ifrecording
+    \onslide<2>{}
+    \onslide<3>
+    \else
     \onslide<2->
     \fi
     \begin{minipage}[t]{0.3\textwidth}
@@ -179,46 +222,10 @@
     \end{minipage}
     \hfill
     \ifrecording
+    \onslide<3>{}
+    \onslide<5>
+    \else
     \onslide<3->
-    \fi
-    \begin{minipage}[t]{0.3\textwidth}
-        #3
-    \end{minipage}
-}
-
-\newcommand{\leftorright}[2]{
-    \ifrecording
-    \onslide<1>
-    \fi
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<2>
-    \fi
-    \begin{minipage}[t]{0.45\textwidth}
-        #2
-    \end{minipage}
-}
-
-\newcommand{\leftmiddleorright}[3]{
-    \ifrecording
-    \onslide<1>
-    \fi
-	\begin{minipage}[t]{0.3\textwidth}
-        #1
-    \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<2>
-    \fi
-    \begin{minipage}[t]{0.3\textwidth}
-        #2
-    \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<3>
     \fi
     \begin{minipage}[t]{0.3\textwidth}
         #3

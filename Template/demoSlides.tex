@@ -2,7 +2,7 @@
 \usepackage[ngerman]{babel} % SPECIFY LANGUAGE HERE
 \usetheme{uulm}
 
-\recordingtrue
+\recordingtrue % ENABLES RECORDING MODE, COMMENT OUT IF NOT NEEDED
 
 \title[Short Title]{This is the Long Title}
 \subtitle[1.1 Short Subtitle]{1.1 This is the Long Subtitle}
@@ -52,22 +52,6 @@
 
     \section{Content Layouts}
 
-    %\subsection{Only Left}
-
-   % \begin{frame}{\insertsubsection}
-    %    \onlyleft{
-     %       This is an example text that is displayed on the \textbf{left side} of the frame. 
-      %  }
-    %\end{frame}
-
-    %\subsection{Only Right}
-
-    %\begin{frame}{\insertsubsection}
-    %    \onlyright{
-    %        This is an example text that is displayed on the \textbf{right side} of the frame. 
-    %    }
-    %\end{frame}
-
     \subsection{Left and Right}
 
     \begin{frame}{\insertsubsection}
@@ -115,7 +99,7 @@
     \subsection{Left or Right}
 
     \begin{frame}{\insertsubsection}
-        \leftorright{
+        \leftorright{ % only works in recording mode
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }{
             This is an example text that is displayed on the \textbf{right side} of the frame. 
@@ -125,7 +109,7 @@
     \subsection{Left, Middle or Right}
 
     \begin{frame}{\insertsubsection}
-        \leftmiddleorright{
+        \leftmiddleorright{ % only works in recording mode
             This is an example text that is displayed on the \textbf{left side} of the frame. 
         }{
             This is an example text that is displayed on the \textbf{middle} of the frame. 
