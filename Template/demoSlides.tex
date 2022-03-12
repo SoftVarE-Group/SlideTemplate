@@ -1,146 +1,180 @@
-\documentclass[aspectratio=169]{beamer} % SPECIFY ASPECT-RATIO HERE
-\usepackage[ngerman]{babel} % SPECIFY LANGUAGE HERE
-\usetheme{uulm}
+\documentclass[
+	aspectratio=169, % default is 43
+	8pt, % font size, default is 11pt
+	handout, % handout mode without animations, comment out to add animations
+]{beamer}
+\usetheme{uulm} % use the innofficial uulm beamer theme
+%\usepackage[ngerman]{babel} % use this line for slides in German
+%\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
-\recordingtrue % ENABLES RECORDING MODE, COMMENT OUT IF NOT NEEDED
-
-\title[Short Title]{This is the Long Title}
-\subtitle[1.1 Short Subtitle]{1.1 This is the Long Subtitle}
-\author[Short Author]{Long Author}
-\date{\today}
+\title[Short Title]{This is the Long Title} % short title is used for the slide footer but optional
+\subtitle[1.1 Short Subtitle]{1.1 This is the Long Subtitle} % subtitles are optional at all
+\author[Short Author]{Long Author} % short author title is used for the slide footer but optional
+\date{\today} % use a particular date here if needed
 
 \begin{document}
     
-    \maketitle[titleimage][250]
+\maketitle[titleimage][300] % optional parameters to change title picture and offset to move it upwards
 
-    \section{Lists}
+\section{Lists and Boxes}
 
-    \subsection{Itemizations}
+\subsection{Lists and Numbered Lists}
+\begin{frame}{\insertsubsection}
+	\leftandright{
+	    Lists can be nested to a depth of three:
+	    \begin{itemize}
+	        \item Item on the first level
+	    	\item Another item on the first level
+	        \begin{itemize}
+	            \item Item on the second level
+	        	\item Another item on the second level
+	            \begin{itemize}
+	                \item Item on the third level
+	                \item Another item on the third level
+	            \end{itemize}
+	        \end{itemize}
+	    \end{itemize}
+    }{
+		Lists can be nested to a depth of three:
+		\begin{enumerate}
+			\item Item on the first level
+			\item Another item on the first level
+			\begin{enumerate}
+				\item Item on the second level
+				\item Another item on the second level
+				\begin{enumerate}
+					\item Item on the third level
+					\item Another item on the third level
+				\end{enumerate}
+			\end{enumerate}
+		\end{enumerate}
+	}
+\end{frame}
 
-    \begin{frame}{\insertsubsection}
-        These are the three levels of \texttt{itemize}:
-        \begin{itemize}
-            \item Item 1
-            \begin{itemize}
-                \item Item 1.1
-                \begin{itemize}
-                    \item Item 1.1.1
-                \end{itemize}
-            \end{itemize}
-        \end{itemize}
-    \end{frame}
+\subsection{Colored Boxes}
+\begin{frame}{\insertsubsection}
+	\leftmiddleandright{
+		\mydefinition{A Definition}{This is a definition.}
+	}{
+		\myexample{An Example}{This is an example.}
+	}{
+		\mynote{A Note}{This is a note.}
+	}
+\end{frame}
 
-    \subsection{Enumerations}
+\section{Slide Layouts}
 
-    \begin{frame}{\insertsubsection}
-        These are the three levels of \texttt{enumerate}:
-        \begin{enumerate}
-            \item Item 1
-            \item Item 2
-            \begin{enumerate}
-                \item Item 1.1
-                \item Item 1.2
-                \begin{enumerate}
-                    \item Item 1.1.1
-                    \item Item 1.1.2
-                \end{enumerate}
-                \item Item 1.3
-            \end{enumerate}
-            \item Item 3
-        \end{enumerate}
-    \end{frame}
+\subsection{Left and Right}
+\begin{frame}{\insertsubsection}
+    \leftandright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+\end{frame}
 
-    \section{Content Layouts}
+\subsection{Left, Middle and Right}
+\begin{frame}{\insertsubsection}
+    \leftmiddleandright{
+        This is an example text that is shown in the \textbf{left column}. 
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+\end{frame}
 
-    \subsection{Left and Right}
+\subsection{Left then Right}
+\begin{frame}{\insertsubsection}
+    \leftthenright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	In \textbf{handout} mode, both columns are visible.
 
-    \begin{frame}{\insertsubsection}
-        \leftandright{
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
+	In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+\end{frame}
 
-    \subsection{Left, Middle and Right}
+\subsection{Left, Middle then Right}
+\begin{frame}{\insertsubsection}
+    \leftmiddlethenright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	In \textbf{handout} mode, all columns are visible.
 
-    \begin{frame}{\insertsubsection}
-        \leftmiddleandright{
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{middle} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
+	In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+\end{frame}
 
-    \subsection{Left then Right}
+\subsection{Left or Right}
+\begin{frame}{\insertsubsection}
+    \leftorright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	In \textbf{handout mode}, both columns are visible.
+	
+	In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
+	
+	In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
+\end{frame}
 
-    \begin{frame}{\insertsubsection}
-        \leftthenright{
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
+\subsection{Left, Middle or Right}
+\begin{frame}{\insertsubsection}
+    \leftmiddleorright{ % only works in recording mode
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	In \textbf{handout mode}, all columns are visible.
+	
+	In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle then Right}).
+	
+	In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
+\end{frame}
 
-    \subsection{Left, Middle then Right}
+\section{Other Features}
 
-    \begin{frame}{\insertsubsection}
-        \leftmiddlethenright{
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{middle} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
+\subsection{Auto-Scaling for Long Titles}
+\begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
+	\leftmiddleandright{
+		Very long frame titles are scaled down automatically.
+	}{
+		Can avoid annoying linebreaks for a single character or word.
+	}{
+		Use with care.
+	}
+\end{frame}
 
-    \subsection{Left or Right}
+\subsection{Easy Navigation in Slides}
+\begin{frame}{\insertsubsection}
+	\vfill
+	Click on the title (here \textbf{\insertshorttitle}) or subtitle (here \textbf{\insertshortsubtitle}) in the slide footer to jump to the title slide.
+	\vfill
+	Click on the section title (here \textbf{\insertsection}) in the slide footer to jump to the section overview.
+	\vfill
+	In the section overview, click on sections or subsections to jump to another part.
+	\vfill
+\end{frame}
 
-    \begin{frame}{\insertsubsection}
-        \leftorright{ % only works in recording mode
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
-
-    \subsection{Left, Middle or Right}
-
-    \begin{frame}{\insertsubsection}
-        \leftmiddleorright{ % only works in recording mode
-            This is an example text that is displayed on the \textbf{left side} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{middle} of the frame. 
-        }{
-            This is an example text that is displayed on the \textbf{right side} of the frame. 
-        }
-    \end{frame}
-
-    \section{Color Boxes}
-
-    \begin{frame}{\insertsubsection}
-        \mydefinition{This is the Title of the Definition}{
-            This is a definition.
-        }
-
-        \myexample{This is the Title of the Example}{
-            This is an example.
-        }
-
-        \mynote{This is the Title of the Note}{
-            This is a note.
-        }
-
-    \end{frame}
-
-    \section{Other}
-
-    \subsection{Frametitle Auto-Scale}
-
-    \begin{frame}{This frame has a very very very very very very very very very very very very long Frame Title}
-        Very long frame titles are scaled down automatically.
-    \end{frame}
+\begin{frame}{\inserttitle}
+	\vfill
+	\tableofcontents
+\end{frame}
 
 \end{document}

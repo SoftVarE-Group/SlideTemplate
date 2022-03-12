@@ -91,20 +91,20 @@
 }
 
 \setbeamertemplate{frametitle}{
-    \vspace{20pt}
-    \fitbox[maxheight=12pt,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{
-        \insertframetitle{}\phantom{/}
-    }
+    \vspace{20pt}%
+    \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
+        \insertframetitle{}\phantom{/}%
+    }%
 }
 
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
-            \hspace{20pt}
+            \hspace{0.03\textwidth}
             \insertshortauthor
             \hfill
             \insertshorttitle\ -- \insertshortsubtitle\ \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
-            \hspace{20pt} 
+            \hspace{0.03\textwidth} 
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
             \insertframenumber
@@ -118,7 +118,7 @@
 % table of contents
 % ---------------------------------------------
 \AtBeginSection{
-    \begin{frame}
+    \begin{frame}{\insertsection}
         \vfill
         \tableofcontents[currentsection,hideothersubsections]
     \end{frame}
@@ -158,10 +158,11 @@
         #1
     \end{minipage}
     \hfill
-    \onslide<2->
+    \onslide<2->{
     \begin{minipage}[t]{0.45\textwidth}
         #2
     \end{minipage}
+	}
 }
 
 \newcommand{\leftmiddlethenright}[3]{
@@ -169,67 +170,59 @@
         #1
     \end{minipage}
     \hfill
-    \onslide<2->
+    \onslide<2->{
     \begin{minipage}[t]{0.3\textwidth}
         #2
     \end{minipage}
+	}
     \hfill
-    \onslide<3->
+    \onslide<3->{
     \begin{minipage}[t]{0.3\textwidth}
         #3
     \end{minipage}
+	}
 }
 
 \newcommand{\leftorright}[2]{ % only works in recording mode
     \ifrecording
-    \onslide<1>
-    \else
-    \onslide<1->
-    \fi
+    \onslide<1>{
     \begin{minipage}[t]{0.45\textwidth}
         #1
     \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<2>{}
-    \onslide<3>
-    \else
-    \onslide<2->
-    \fi
+	}
+    \onslide<2>{\hfill}
+    \onslide<3>{
     \begin{minipage}[t]{0.45\textwidth}
         #2
     \end{minipage}
+	}
+    \else
+	\leftthenright{#1}{#2}
+	\fi
 }
 
 \newcommand{\leftmiddleorright}[3]{ % only works in recording mode
     \ifrecording
-    \onslide<1>
-    \else
-    \onslide<1->
-    \fi
+    \onslide<1>{
 	\begin{minipage}[t]{0.3\textwidth}
         #1
     \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<2>{}
-    \onslide<3>
-    \else
-    \onslide<2->
-    \fi
+	}
+    \onslide<2>{\hfill}
+    \onslide<3>{
     \begin{minipage}[t]{0.3\textwidth}
         #2
     \end{minipage}
-    \hfill
-    \ifrecording
-    \onslide<3>{}
-    \onslide<5>
-    \else
-    \onslide<3->
-    \fi
+	}
+    \onslide<4>{\hfill}
+    \onslide<5>{
     \begin{minipage}[t]{0.3\textwidth}
         #3
     \end{minipage}
+	}
+    \else
+	\leftmiddlethenright{#1}{#2}{#3}
+	\fi
 }
 % ---------------------------------------------
 
