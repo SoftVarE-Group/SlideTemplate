@@ -3,7 +3,7 @@
 	8pt, % font size, default is 11pt
 	handout, % handout mode without animations, comment out to add animations
 ]{beamer}
-\usetheme{uulm} % use the innofficial uulm beamer theme
+\usetheme{uulm} % use the inofficial uulm beamer theme
 %\usepackage[ngerman]{babel} % use this line for slides in German
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
@@ -35,7 +35,7 @@
 	        \end{itemize}
 	    \end{itemize}
     }{
-		Lists can be nested to a depth of three:
+		Numbered lists can be nested to a depth of three:
 		\begin{enumerate}
 			\item Item on the first level
 			\item Another item on the first level
@@ -72,7 +72,9 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	\mynote{Explanation}{
+		Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	}
 \end{frame}
 
 \subsection{Left, Middle and Right}
@@ -85,7 +87,9 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	\mynote{Explanation}{
+		All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	}
 \end{frame}
 
 \subsection{Left then Right}
@@ -96,9 +100,11 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	In \textbf{handout} mode, both columns are visible.
+	\mynote{Explanation}{
+		In \textbf{handout} mode, both columns are visible.
 
-	In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+	}
 \end{frame}
 
 \subsection{Left, Middle then Right}
@@ -111,9 +117,12 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	In \textbf{handout} mode, all columns are visible.
+	\mynote{Explanation}{
+		In \textbf{handout} mode, all columns are visible.
 
-	In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+	}
+	
 \end{frame}
 
 \subsection{Left or Right}
@@ -124,16 +133,19 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	In \textbf{handout mode}, both columns are visible.
+	\mynote{Explanation}{
+		In \textbf{handout mode}, both columns are visible.
 	
-	In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
+		In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
+		
+		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
+	}
 	
-	In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
 \end{frame}
 
 \subsection{Left, Middle or Right}
 \begin{frame}{\insertsubsection}
-    \leftmiddleorright{ % only works in recording mode
+    \leftmiddleorright{
         This is an example text that is shown in the \textbf{left column}.
     }{
         This is an example text that is shown in the \textbf{middle column}.
@@ -141,22 +153,24 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	In \textbf{handout mode}, all columns are visible.
+	\mynote{Explanation}{
+		In \textbf{handout mode}, all columns are visible.
 	
-	In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle then Right}).
-	
-	In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
+		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle then Right}).
+		
+		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
+	}
 \end{frame}
 
 \section{Other Features}
 
 \subsection{Auto-Scaling for Long Titles}
 \begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
-	\leftmiddleandright{
+	\mynote{Explanation}{
 		Very long frame titles are scaled down automatically.
-	}{
-		Can avoid annoying linebreaks for a single character or word.
-	}{
+		
+		This can avoid annoying linebreaks for a single character or word.
+		
 		Use with care.
 	}
 \end{frame}
