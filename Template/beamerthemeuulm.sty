@@ -74,7 +74,11 @@
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
-            \small \insertsubtitle\ $\vert$ \insertauthor\ $\vert$ \insertdate \hspace*{20pt}
+            \small 
+            \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
+            \insertauthor\ $\vert$
+            \insertdate
+            \hspace*{20pt}
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
@@ -103,7 +107,9 @@
             \hspace{0.03\textwidth}
             \insertshortauthor
             \hfill
-            \insertshorttitle\ -- \insertshortsubtitle\ \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
+            \insertshorttitle\
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi 
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
             \hspace{0.03\textwidth} 
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
