@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{fitbox} % used to auto-scale long frame titles
 \usepackage{tcolorbox} % used for color boxes (definition, example, note)
+\usepackage{ifthen}
 % ---------------------------------------------
 
 
@@ -47,6 +48,16 @@
 \setbeamercolor{logobox}{bg=white}
 \setbeamercolor{section in toc}{fg=black}
 \setbeamercolor{subsection in toc}{fg=black}
+
+\newcommand{\setfaculty}[1]{
+    \ifthenelse{\equal{#1}{med}}{\setbeamercolor{mypagenumber}{fg=white,bg=blue}\setbeamercolor{titlebox}{fg=white,bg=blue}}{
+        \ifthenelse{\equal{#1}{infIngPsy}}{\setbeamercolor{mypagenumber}{fg=white,bg=red}\setbeamercolor{titlebox}{fg=white,bg=red}}{
+            \ifthenelse{\equal{#1}{math}}{\setbeamercolor{mypagenumber}{fg=white,bg=green}\setbeamercolor{titlebox}{fg=white,bg=green}}{
+                \ifthenelse{\equal{#1}{nat}}{\setbeamercolor{mypagenumber}{fg=white,bg=orange}\setbeamercolor{titlebox}{fg=white,bg=orange}}{}
+            }
+        }
+    }
+}
 % ---------------------------------------------
 
 
