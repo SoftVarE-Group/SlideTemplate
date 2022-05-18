@@ -2,10 +2,6 @@
 % MAIN uulm-THEME
 % =============================================
 
-\beamertemplatenavigationsymbolsempty % remove the default navigation symbols
-
-\newif\ifrecording % for enebling or disabling recording mode
-
 % ---------------------------------------------
 % import packages
 % ---------------------------------------------
@@ -14,6 +10,19 @@
 \usepackage{color}
 \usepackage{fitbox} % used to auto-scale long frame titles
 \usepackage{tcolorbox} % used for color boxes (definition, example, note)
+\usepackage{ifthen}
+% ---------------------------------------------
+
+
+% ---------------------------------------------
+% general settings
+% ---------------------------------------------
+\beamertemplatenavigationsymbolsempty % remove the default navigation symbols
+
+\newif\ifrecording % for enabling or disabling recording mode
+
+\setlength{\parskip}{1.5ex} % set the parskip
+\newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
 % ---------------------------------------------
 
 
@@ -39,6 +48,16 @@
 \setbeamercolor{logobox}{bg=white}
 \setbeamercolor{section in toc}{fg=black}
 \setbeamercolor{subsection in toc}{fg=black}
+
+\newcommand{\setfaculty}[1]{
+    \ifthenelse{\equal{#1}{med}}{\setbeamercolor{mypagenumber}{fg=white,bg=blue}\setbeamercolor{titlebox}{fg=white,bg=blue}}{
+        \ifthenelse{\equal{#1}{infIngPsy}}{\setbeamercolor{mypagenumber}{fg=white,bg=red}\setbeamercolor{titlebox}{fg=white,bg=red}}{
+            \ifthenelse{\equal{#1}{math}}{\setbeamercolor{mypagenumber}{fg=white,bg=green}\setbeamercolor{titlebox}{fg=white,bg=green}}{
+                \ifthenelse{\equal{#1}{nat}}{\setbeamercolor{mypagenumber}{fg=white,bg=orange}\setbeamercolor{titlebox}{fg=white,bg=orange}}{}
+            }
+        }
+    }
+}
 % ---------------------------------------------
 
 
@@ -74,7 +93,11 @@
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
-            \small \insertsubtitle\ $\vert$ \insertauthor\ $\vert$ \insertdate \hspace*{20pt}
+            \small 
+            \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
+            \insertauthor\ $\vert$
+            \insertdate
+            \hspace*{20pt}
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
@@ -93,7 +116,7 @@
 \setbeamertemplate{frametitle}{
     \vspace{20pt}%
     \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
-        \insertframetitle{}\phantom{/}%
+        \vphantom{/}\insertframetitle{}%
     }%
 }
 
@@ -103,7 +126,9 @@
             \hspace{0.03\textwidth}
             \insertshortauthor
             \hfill
-            \insertshorttitle\ -- \insertshortsubtitle\ \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
+            \insertshorttitle\
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi 
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
             \hspace{0.03\textwidth} 
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
@@ -119,8 +144,16 @@
 % ---------------------------------------------
 \AtBeginSection{
     \begin{frame}{Part~\thesection:~\insertsection}
+        \setlength{\parskip}{0ex}
         \vfill
         \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+}
+
+\newcommand{\lectureoverview}{
+    \begin{frame}{\inserttitle}
+        \setlength{\parskip}{0ex}
+        \tableofcontents
     \end{frame}
 }
 % ---------------------------------------------
@@ -231,19 +264,19 @@
 % color boxes
 % ---------------------------------------------
 \newcommand{\mydefinition}[2]{
-	\begin{tcolorbox}[title={#1},colback=orange!10,colframe=orange!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
+	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=orange!10,colframe=orange!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
 		#2
 	\end{tcolorbox}
 }
 
 \newcommand{\myexample}[2]{
-	\begin{tcolorbox}[title={#1},colback=blue!10,colframe=blue!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
+	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=blue!10,colframe=blue!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
 		#2
 	\end{tcolorbox}
 }
 
 \newcommand{\mynote}[2]{
-	\begin{tcolorbox}[title={#1},colback=red!10,colframe=red!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
+	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=red!10,colframe=red!10,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
 		#2
 	\end{tcolorbox}
 }
