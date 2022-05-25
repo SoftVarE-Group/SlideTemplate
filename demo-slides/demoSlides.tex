@@ -57,12 +57,24 @@
 
 \subsection{Colored Boxes}
 \begin{frame}{\insertsubsection}
+	Normal versions:
+
 	\leftmiddleandright{
 		\mydefinition{A Definition}{This is a definition.}
 	}{
 		\myexample{An Example}{This is an example.}
 	}{
 		\mynote{A Note}{This is a note.}
+	}
+
+	Tight versions:
+
+	\leftmiddleandright{
+		\mydefinitiontight{A Definition}{This is a definition.}
+	}{
+		\myexampletight{An Example}{This is an example.}
+	}{
+		\mynotetight{A Note}{This is a note.}
 	}
 \end{frame}
 
@@ -107,7 +119,22 @@
 	\mynote{Explanation}{
 		In \textbf{handout} mode, both columns are visible.
 
-		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then both columns.
+	}
+\end{frame}
+
+\subsection{Right then Left}
+\begin{frame}{\insertsubsection}
+    \rightthenleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, both columns are visible.
+
+		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then both columns.
 	}
 \end{frame}
 
@@ -126,7 +153,23 @@
 
 		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
 	}
-	
+\end{frame}
+
+\subsection{Right, Middle, then Left}
+\begin{frame}{\insertsubsection}
+    \rightmiddlethenleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, all columns are visible.
+
+		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then additionally the middle column, and finally all columns.
+	}
 \end{frame}
 
 \subsection{Left or Right}
@@ -144,7 +187,23 @@
 		
 		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
 	}
+\end{frame}
+
+\subsection{Right or Left}
+\begin{frame}{\insertsubsection}
+    \rightorleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, both columns are visible.
 	
+		In \textbf{slide mode}, only the right column is shown at the beginning and then both columns (cf. \textbf{Right then Left}).
+		
+		In \textbf{recording mode}, only the right column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the left column.
+	}
 \end{frame}
 
 \subsection{Left, Middle, or Right}
@@ -160,9 +219,28 @@
 	\mynote{Explanation}{
 		In \textbf{handout mode}, all columns are visible.
 	
-		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle then Right}).
+		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle, then Right}).
 		
 		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
+	}
+\end{frame}
+
+\subsection{Right, Middle, or Left}
+\begin{frame}{\insertsubsection}
+    \rightmiddleorleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, all columns are visible.
+	
+		In \textbf{slide mode}, only the right column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Right, Middle, then Left}).
+		
+		In \textbf{recording mode}, only the right column is shown at the beginning, then only the middle column, and finally only the left column (again interleaved with empty slides).
 	}
 \end{frame}
 
