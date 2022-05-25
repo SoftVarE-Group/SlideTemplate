@@ -164,99 +164,103 @@
 % ---------------------------------------------
 % content layout
 % ---------------------------------------------
+\newcommand{\halfpage}[1]{\partofpage{48}{#1}}
+
+\newcommand{\thirdpage}[1]{\partofpage{31}{#1}}
+
+\usepackage{adjustbox}
+\newcommand{\partofpage}[2]{
+	\begin{minipage}{0.#1\textwidth}
+			\begin{flushleft}
+				#2
+			\end{flushleft}
+	\end{minipage}
+}
+
+
 \newcommand{\leftandright}[2]{
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
+    \halfpage{#1}
     \hfill
-    \begin{minipage}[t]{0.45\textwidth}
-        #2
-    \end{minipage}
+    \halfpage{#2}
 }
 
 \newcommand{\leftmiddleandright}[3]{
-	\begin{minipage}[t]{0.3\textwidth}
-        #1
-    \end{minipage}
+	\thirdpage{#1}
     \hfill
-    \begin{minipage}[t]{0.3\textwidth}
-        #2
-    \end{minipage}
+    \thirdpage{#2}
     \hfill
-    \begin{minipage}[t]{0.3\textwidth}
-        #3
-    \end{minipage}
+    \thirdpage{#3}
 }
 
 \newcommand{\leftthenright}[2]{
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
+    \halfpage{#1}
     \hfill
-    \onslide<2->{
-    \begin{minipage}[t]{0.45\textwidth}
-        #2
-    \end{minipage}
-	}
+    \onslide<2->{\halfpage{#2}}
+}
+
+\newcommand{\rightthenleft}[2]{
+    \onslide<2->{\halfpage{#1}}
+    \hfill
+    \halfpage{#2}
 }
 
 \newcommand{\leftmiddlethenright}[3]{
-	\begin{minipage}[t]{0.3\textwidth}
-        #1
-    \end{minipage}
+	\thirdpage{#1}
     \hfill
-    \onslide<2->{
-    \begin{minipage}[t]{0.3\textwidth}
-        #2
-    \end{minipage}
-	}
+    \onslide<2->{\thirdpage{#2}}
     \hfill
-    \onslide<3->{
-    \begin{minipage}[t]{0.3\textwidth}
-        #3
-    \end{minipage}
-	}
+    \onslide<3->{\thirdpage{#3}}
+}
+
+\newcommand{\rightmiddlethenleft}[3]{
+	\onslide<3->{\thirdpage{#1}}
+    \hfill
+    \onslide<2->{\thirdpage{#2}}
+    \hfill
+    \thirdpage{#3}
 }
 
 \newcommand{\leftorright}[2]{ % only works in recording mode
     \ifrecording
-    \onslide<1>{
-    \begin{minipage}[t]{0.45\textwidth}
-        #1
-    \end{minipage}
-	}
+    \onslide<1>{\halfpage{#1}}
     \onslide<2>{\hfill}
-    \onslide<3>{
-    \begin{minipage}[t]{0.45\textwidth}
-        #2
-    \end{minipage}
-	}
+    \onslide<3>{\halfpage{#2}}
     \else
 	\leftthenright{#1}{#2}
 	\fi
 }
 
+\newcommand{\rightorleft}[2]{ % only works in recording mode
+    \ifrecording
+    \onslide<3>{\halfpage{#1}}
+    \onslide<2>{\hfill}
+    \onslide<1>{\halfpage{#2}}
+    \else
+	\rightthenleft{#1}{#2}
+	\fi
+}
+
 \newcommand{\leftmiddleorright}[3]{ % only works in recording mode
     \ifrecording
-    \onslide<1>{
-	\begin{minipage}[t]{0.3\textwidth}
-        #1
-    \end{minipage}
-	}
+    \onslide<1>{\thirdpage{#1}}
     \onslide<2>{\hfill}
-    \onslide<3>{
-    \begin{minipage}[t]{0.3\textwidth}
-        #2
-    \end{minipage}
-	}
+    \onslide<3>{\thirdpage{#2}}
     \onslide<4>{\hfill}
-    \onslide<5>{
-    \begin{minipage}[t]{0.3\textwidth}
-        #3
-    \end{minipage}
-	}
+    \onslide<5>{\thirdpage{#3}}
     \else
 	\leftmiddlethenright{#1}{#2}{#3}
+	\fi
+}
+
+\newcommand{\rightmiddleorleft}[3]{ % only works in recording mode
+    \ifrecording
+    \onslide<5>{\thirdpage{#1}}
+    \onslide<4>{\hfill}
+    \onslide<3>{\thirdpage{#2}}
+    \onslide<2>{\hfill}
+    \onslide<1>{\thirdpage{#3}}
+    \else
+	\rightmiddlethenleft{#1}{#2}{#3}
 	\fi
 }
 % ---------------------------------------------
