@@ -100,8 +100,8 @@
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
             \small 
             \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
-            \insertauthor\ $\vert$
-            \insertdate
+            \insertauthor\
+            \ifx \insertdate \empty \else $\vert$ \insertdate \fi
             \hspace*{20pt}
         \end{beamercolorbox}%
         \nointerlineskip%
