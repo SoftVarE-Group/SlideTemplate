@@ -5,20 +5,29 @@
 ]{beamer}
 
 \usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
+\setfaculty{infIngPsy} % set the color scheme for your faculty here [med/infIngPsy/math/nat]
 
 %\usepackage[ngerman]{babel} % use this line for slides in German
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
 \title[Short Title]{This is the Long Title} % short title is used for the slide footer but optional
-\subtitle[1.1 Short Subtitle]{1.1 This is the Long Subtitle} % subtitles are optional at all
+\subtitle[Short Subtitle]{This is the Long Subtitle} % subtitles are optional at all
 \author[Short Author]{Long Author} % short author title is used for the slide footer but optional
 \date{\today} % use a particular date here if needed
 
 \begin{document}
 
-\setfaculty{infIngPsy} % set the color scheme for your faculty here [med/infIngPsy/math/nat]
-    
-\maketitle[titleimage][300] % optional parameters to change title picture and offset to move it upwards
+\maketitle % title page with default picture
+% examples for alternative title pictures
+\maketitle[mar22-bee1][0] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-north1][50] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-o25b][100] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-west1][150] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-south][175] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-q47][200] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-o27c][250] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-ulm][300] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-q37][350] % optional parameters to change title picture and offset to move it upwards
 
 \section{Lists and Boxes}
 
@@ -67,7 +76,9 @@
 		\mynote{A Note}{This is a note.}
 	}
 
-	Tight versions:
+	\vfill
+
+	Tight versions (e.g., for use with pictures):
 
 	\leftmiddleandright{
 		\mydefinitiontight{A Definition}{This is a definition.}
@@ -108,6 +119,17 @@
 	}
 \end{frame}
 
+\subsection{Columns with Customized Width}
+\begin{frame}{\insertsubsection}
+	\partofpage{10}{This is an example text that is shown in a column with \textbf{10 percent of the width}.}
+	\hfill % two and three column layouts use about 4% of the width as space in between
+	\partofpage{30}{This is an example text that is shown in a column with \textbf{30 percent of the width}.}
+	\hfill
+	\partofpage{50}{This is an example text that is shown in a column with \textbf{50 percent of the width}.}
+\end{frame}
+
+\section{Animated Slide Layouts}
+
 \subsection{Left then Right}
 \begin{frame}{\insertsubsection}
     \leftthenright{
@@ -123,8 +145,7 @@
 	}
 \end{frame}
 
-\subsection{Right then Left}
-\begin{frame}{\insertsubsection}
+\begin{frame}{Right then Left}
     \rightthenleft{
         This is an example text that is shown in the \textbf{left column}.
     }{
@@ -155,8 +176,7 @@
 	}
 \end{frame}
 
-\subsection{Right, Middle, then Left}
-\begin{frame}{\insertsubsection}
+\begin{frame}{Right, Middle, then Left}
     \rightmiddlethenleft{
         This is an example text that is shown in the \textbf{left column}.
     }{
@@ -189,8 +209,7 @@
 	}
 \end{frame}
 
-\subsection{Right or Left}
-\begin{frame}{\insertsubsection}
+\begin{frame}{Right or Left}
     \rightorleft{
         This is an example text that is shown in the \textbf{left column}.
     }{
@@ -225,8 +244,7 @@
 	}
 \end{frame}
 
-\subsection{Right, Middle, or Left}
-\begin{frame}{\insertsubsection}
+\begin{frame}{Right, Middle, or Left}
     \rightmiddleorleft{
         This is an example text that is shown in the \textbf{left column}.
     }{

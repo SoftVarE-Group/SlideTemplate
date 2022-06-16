@@ -19,7 +19,7 @@
 % ---------------------------------------------
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
-\graphicspath{{../pics/}}
+\graphicspath{{../pics/logos}{../pics/uulm}{../pics/nature}}
 
 \newif\ifrecording % for enabling or disabling recording mode
 
@@ -82,13 +82,14 @@
 \setbeamertemplate{enumerate item}{\arabic{enumi}.}
 \setbeamertemplate{enumerate subitem}{\arabic{enumii}.}
 \setbeamertemplate{enumerate subsubitem}{\arabic{enumiii}.}
+\setbeamertemplate{section in toc}[sections numbered]
 % ---------------------------------------------
 
 
 % ---------------------------------------------
 % frame layout
 % ---------------------------------------------
-\renewcommandx{\maketitle}[2][1=titleimage,2=0]{
+\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     {
     \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}
     \begin{frame}[plain]
@@ -109,9 +110,9 @@
             \centering
             \vspace{-1ex}
             \hspace{10pt}
-            \includegraphics[height=4.5ex]{logo_institute} % SPECIFY INSTITUTE LOGO HERE
+            \includegraphics[height=4.5ex]{sp} % SPECIFY INSTITUTE LOGO HERE
             \hfill
-            \includegraphics[height=4.5ex]{logo_uulm}
+            \includegraphics[height=4.5ex]{uulm}
             \hspace{10pt}
         \end{beamercolorbox}%
     \end{frame}
@@ -148,7 +149,7 @@
 % table of contents
 % ---------------------------------------------
 \AtBeginSection{
-    \begin{frame}{\thesection~\insertsection}
+    \begin{frame}{\thesection.~\insertsection}
         \setlength{\parskip}{0ex}
         \vfill
         \tableofcontents[currentsection,hideothersubsections]
