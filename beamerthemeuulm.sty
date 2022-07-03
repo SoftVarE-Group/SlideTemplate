@@ -136,7 +136,7 @@
   \beamer@ypos@offset=0\relax%
   \ifnum#5=\c@part%
   \beamer@section@set@min@width%
-  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
+  \box\beamer@sectionbox\hskip2.5ex plus .2\linewidth% i do not want full fill
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
@@ -149,7 +149,7 @@
         \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}%
       \fi}%
   }%
-  \ht\beamer@sectionbox=1.875ex%
+  \ht\beamer@sectionbox=2.5ex%
   \dp\beamer@sectionbox=0.75ex%
   \fi\ignorespaces
 }
@@ -160,34 +160,19 @@
 \beamer@currentsubsection0\relax
 \let\sectionentry\uulm@sectionentry
 \let\slideentry\@gobble@six
-% \def\sectionentry##1##2##3##4##5{}%
-%     \def\slideentry##1##2##3##4##5##6{%
-%         \ifnum##6=\c@part\ifnum##1=\c@section
-%             WW\ifnum##2>\beamer@currentsubsection
-%                 \beamer@currentsubsection=##2%
-%                     \box\beamer@sectionbox\hskip1.875ex%
-%                         \setbox\beamer@sectionbox=%
-%                             \hbox{\ifnum\c@subsection=##2\beamer@link(##4){XX}\else\beamer@link(##4){YY}\fi}%
-%                         \ht\beamer@sectionbox=1.875ex%
-%                         \dp\beamer@sectionbox=.75ex%
-%             \else KK%
-%             \fi
-%         \fi\fi\ignorespaces}%
-\hskip.15cm\setbox\beamer@sectionbox=\null
-% \hskip-1.875ex
-\dohead
-\box\beamer@sectionbox\hfil\hskip.15cm}}
+\setbox0=\hbox{\uulm@pre@footer}\relax
+\insertnavigation{\dimexpr.9\linewidth-\wd0}}}
 
+\def\uulm@pre@footer{\insertshortauthor}
+\def\uulm@footer{\uulm@pre@footer\hfill\uulm@sections@low} % allows context redefinition
+% maybe right align this as well by using fixed widths?
+\def\uulm@section@footer{\uulm@pre@footer\hfill\insertshorttitle\ \ifx\insertsubtitle\@empty\else{--- \insertshortsubtitle\ }\fi\ifx\insertsectionhead\@empty\else{--- \thesection.~\insertsectionhead}\fi}
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\paperwidth,ht=3mm,dp=1.5mm,left]{myfooter}
             \hskip.03\paperwidth
-            \insertshortauthor
-            \hfill
-            \uulm@sections@low
-            % \insertshorttitle\
-            % \ifx \insertsubtitle \empty \else {--- \insertshortsubtitle\ }\fi
-            % \ifx \insertsectionhead \empty \else {--- \thesection.~\insertsectionhead}\fi
+            \uulm@footer
+            %
             \hskip.03\paperwidth
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\paperwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
@@ -201,19 +186,24 @@
 % ---------------------------------------------
 % table of contents
 % ---------------------------------------------
-\AtBeginSection{
+\AtBeginSection{\begingroup
+    \let\uulm@footer\uulm@section@footer
     \begin{frame}{\thesection.~\insertsection}
         \setlength{\parskip}{0ex}
         \vfill
         \tableofcontents[currentsection,hideothersubsections]
     \end{frame}
+    \endgroup
 }
 
-\newcommand{\lectureoverview}{
+% clone clone :D
+\newcommand{\lectureoverview}{\begingroup
+    \let\uulm@footer\uulm@section@footer
     \begin{frame}{\inserttitle}
         \setlength{\parskip}{0ex}
         \tableofcontents
     \end{frame}
+    \endgroup
 }
 % ---------------------------------------------
 
