@@ -52,6 +52,8 @@
 \setbeamercolor{section in toc}{fg=black}
 \setbeamercolor{subsection in toc}{fg=black}
 
+\setbeamercolor{section in head/foot}{parent=myfooter}
+
 \newcommand{\setfaculty}[1]{
     \ifthenelse{\equal{#1}{med}}{\setbeamercolor{mypagenumber}{fg=white,bg=blue}\setbeamercolor{titlebox}{fg=white,bg=blue}}{
         \ifthenelse{\equal{#1}{infIngPsy}}{\setbeamercolor{mypagenumber}{fg=white,bg=red}\setbeamercolor{titlebox}{fg=white,bg=red}}{
@@ -127,15 +129,65 @@
     }%
 }
 
+% TODO: switch that on short toc slides so that it shows the old footer
+\def\uulm@sectionentry#1#2#3#4#5{% section number, section title, page
+  \beamer@xpos=0\relax%
+  \beamer@ypos=1\relax%
+  \beamer@ypos@offset=0\relax%
+  \ifnum#5=\c@part%
+  \beamer@section@set@min@width%
+  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
+  \setbox\beamer@sectionbox=
+  \hbox{\def\insertsectionhead{#2}%
+    \def\insertsectionheadnumber{#1}%
+    \def\insertpartheadnumber{#5}%
+    {%
+      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+      \ifnum\c@section=#1%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot}}}%
+      \else%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}%
+      \fi}%
+  }%
+  \ht\beamer@sectionbox=1.875ex%
+  \dp\beamer@sectionbox=0.75ex%
+  \fi\ignorespaces
+}
+\def\@gobble@six#1#2#3#4#5#6{}
+% TODO: maybe progress-bar below each section? may be something for the future
+
+\def\uulm@sections@low{{%
+\beamer@currentsubsection0\relax
+\let\sectionentry\uulm@sectionentry
+\let\slideentry\@gobble@six
+% \def\sectionentry##1##2##3##4##5{}%
+%     \def\slideentry##1##2##3##4##5##6{%
+%         \ifnum##6=\c@part\ifnum##1=\c@section
+%             WW\ifnum##2>\beamer@currentsubsection
+%                 \beamer@currentsubsection=##2%
+%                     \box\beamer@sectionbox\hskip1.875ex%
+%                         \setbox\beamer@sectionbox=%
+%                             \hbox{\ifnum\c@subsection=##2\beamer@link(##4){XX}\else\beamer@link(##4){YY}\fi}%
+%                         \ht\beamer@sectionbox=1.875ex%
+%                         \dp\beamer@sectionbox=.75ex%
+%             \else KK%
+%             \fi
+%         \fi\fi\ignorespaces}%
+\hskip.15cm\setbox\beamer@sectionbox=\null
+% \hskip-1.875ex
+\dohead
+\box\beamer@sectionbox\hfil\hskip.15cm}}
+
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\paperwidth,ht=3mm,dp=1.5mm,left]{myfooter}
             \hskip.03\paperwidth
             \insertshortauthor
             \hfill
-            \insertshorttitle\
-            \ifx \insertsubtitle \empty \else {--- \insertshortsubtitle\ }\fi
-            \ifx \insertsectionhead \empty \else {--- \thesection.~\insertsectionhead}\fi
+            \uulm@sections@low
+            % \insertshorttitle\
+            % \ifx \insertsubtitle \empty \else {--- \insertshortsubtitle\ }\fi
+            % \ifx \insertsectionhead \empty \else {--- \thesection.~\insertsectionhead}\fi
             \hskip.03\paperwidth
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\paperwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
