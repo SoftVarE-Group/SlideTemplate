@@ -129,7 +129,7 @@
     }%
 }
 
-% TODO: switch that on short toc slides so that it shows the old footer
+% TODO: maybe jumpers for first and last slide?
 \def\uulm@sectionentry#1#2#3#4#5{% section number, section title, page
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
@@ -165,7 +165,7 @@
 
 \def\uulm@pre@footer{\insertshortauthor}
 \def\uulm@footer{\uulm@pre@footer\hfill\uulm@sections@low} % allows context redefinition
-% maybe right align this as well by using fixed widths?
+% TODO: maybe right align this as well by using fixed widths?
 \def\uulm@section@footer{\uulm@pre@footer\hfill\insertshorttitle\ \ifx\insertsubtitle\@empty\else{--- \insertshortsubtitle\ }\fi\ifx\insertsectionhead\@empty\else{--- \thesection.~\insertsectionhead}\fi}
 \setbeamertemplate{footline}{
     \hbox{%
