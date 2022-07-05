@@ -129,7 +129,7 @@
         \def\@tmp##1{\parbox\textwidth{##1}}%
     \else\let\@tmp\@empty\let\hfill\space\fi
     \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
-        \vphantom{/}\@tmp{\insertframetitle}%
+        \strut\@tmp{\insertframetitle}%
     }%
 }
 
