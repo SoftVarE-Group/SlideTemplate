@@ -126,11 +126,8 @@
     \vspace{20pt}%
     \setbox0=\hbox{\insertframetitle}%
     \ifdim\wd0<\textwidth % <- in this case we want to allow hfill etc. to work normally
-        \def\@tmp##1{\parbox\textwidth{##1}}%
-    \else\let\@tmp\@empty\let\hfill\space\fi
-    \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
-        \strut\@tmp{\insertframetitle}%
-    }%
+    \insertframetitle
+    \else\let\hfill\space\resizebox\linewidth!{\insertframetitle}\fi
 }
 
 % TODO: maybe jumpers for first and last slide?
