@@ -19,6 +19,8 @@
 % general settings
 % ---------------------------------------------
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
+\def\ThemeLetter#1{\def\@tmp{#1}\ifx\@tmp\@empty\let\@theme@letter@title\@empty \let\@theme@letter@page\@empty\else\def\@theme@letter@title{#1.\space}\def\@theme@letter@page{#1-}\fi}
+\ThemeLetter{}
 
 \appto\Ginput@path{{../pics/logos}{../pics/uulm}{../pics/nature}}
 
@@ -98,17 +100,17 @@
     \begin{frame}[plain]
         \vskip0pt plus 1filll
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
-            \LARGE\textbf{\inserttitle}\hspace*{20pt}
+            \LARGE\textbf{\@theme@letter@title\inserttitle}\hspace*{20pt}
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
             \small
-            \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
+            \ifx\insertsubtitle\empty\else\insertsubtitle\ $\vert$ \fi
             \insertauthor\
-            \ifx \insertdate \empty \else $\vert$ \insertdate \fi
+            \ifx\insertdate\empty\else $\vert$ \insertdate \fi
             \hspace*{20pt}
         \end{beamercolorbox}%
-        \nointerlineskip%
+        \nointerlineskip
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
             \centering
             \vspace{-1ex}
@@ -183,7 +185,7 @@
             \hskip.03\paperwidth
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\paperwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
-            \insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi
+            \@theme@letter@page\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi
         \end{beamercolorbox}%
     }%
 }
