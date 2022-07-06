@@ -175,7 +175,7 @@
 \def\uulm@pre@footer{\insertshortauthor}
 \def\uulm@footer{\uulm@pre@footer\hfill\uulm@sections@low} % allows context redefinition
 % TODO: maybe right align this as well by using fixed widths?
-\def\uulm@section@footer{\uulm@pre@footer\hfill\insertshorttitle\ \ifx\insertsubtitle\@empty\else{--- \insertshortsubtitle\ }\fi\ifx\insertsectionhead\@empty\else{--- \thesection.~\insertsectionhead}\fi}
+\def\uulm@section@footer{\uulm@pre@footer\hfill\insertshorttitle\ \ifx\insertshortsubtitle\@empty\else{--- \insertshortsubtitle\ }\fi\ifx\insertsectionhead\@empty\else{--- \thesection.~\insertsectionhead}\fi}
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\paperwidth,ht=3mm,dp=1.5mm,left]{myfooter}
