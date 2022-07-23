@@ -138,9 +138,10 @@
 % TODO: maybe jumpers for first and last slide?
 \def\uulm@guard@@ssect#1{\expandafter\gdef\csname uulm@guard@sect@#1\endcsname{X}}
 \def\uulm@guard@ssect#1{\uulm@guard@@ssect{#1}\immediate\write\@auxout{\string\uulm@guard@@ssect{#1}}}
-\long\def\beamer@@ssection*#1{\uulm@guard@ssect{\the\numexpr\c@section+1}\beamer@section[{#1}]{}}
+\long\def\beamer@@ssection*#1{\global\advance\uulm@unstarred@sec@counter\m@ne\uulm@guard@ssect{\the\numexpr\c@section+1}\beamer@section[{#1}]{}}
 \newcount\uulm@unstarred@sec@counter
-\long\def\beamer@@@section#1{\global\advance\uulm@unstarred@sec@counter\@ne\beamer@section[{#1}]{#1}}
+\let\uulm@base@sect\beamer@section
+\long\def\beamer@section[#1]#2{\global\advance\uulm@unstarred@sec@counter\@ne\uulm@base@sect[#1]{#2}}
 % \show\section
 % TODO: hook to real
 \def\uulm@sectionentry#1#2#3#4#5{% section number, section title, page
