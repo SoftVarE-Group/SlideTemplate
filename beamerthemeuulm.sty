@@ -138,9 +138,10 @@
 % TODO: maybe jumpers for first and last slide?
 \def\uulm@guard@@ssect#1{\expandafter\gdef\csname uulm@guard@sect@#1\endcsname{X}}
 \def\uulm@guard@ssect#1{\uulm@guard@@ssect{#1}\immediate\write\@auxout{\string\uulm@guard@@ssect{#1}}}
-\long\def\beamer@@ssection*#1{\uulm@guard@ssect{\the\numexpr\c@section+1}\beamer@section[{#1}]{}}
+\long\def\beamer@@ssection*#1{\global\advance\uulm@unstarred@sec@counter\m@ne\uulm@guard@ssect{\the\numexpr\c@section+1}\beamer@section[{#1}]{}}
 \newcount\uulm@unstarred@sec@counter
-\long\def\beamer@@@section#1{\global\advance\uulm@unstarred@sec@counter\@ne\beamer@section[{#1}]{#1}}
+\let\uulm@base@sect\beamer@section
+\long\def\beamer@section[#1]#2{\global\advance\uulm@unstarred@sec@counter\@ne\uulm@base@sect[#1]{#2}}
 % \show\section
 % TODO: hook to real
 \def\uulm@sectionentry#1#2#3#4#5{% section number, section title, page
@@ -204,9 +205,13 @@
 \def\uulm@totalsections{\the\uulm@unstarred@sec@counter}
 \def\uulmdefaulttocsplit{5}
 % other options | split at X
-\newcommand\uulmtoc[2][\uulmdefaulttocsplit]{\vfill%
-\hb@xt@\linewidth{\hb@xt@.5\linewidth{\vbox to.8\textheight{\tableofcontents[sections={1-#1},#2]}}%
-\hb@xt@.5\linewidth{\vbox to.8\textheight{\edef\@start{\the\numexpr#1+1}\tableofcontents[sections={\@start-\uulm@totalsections},#2]}}}%
+\def\vfilll{\vspace*{\z@\@plus1filll}}
+\def\uulmtoccolwrap#1{\vfilll#1\vfilll}
+% \def\uulmtoccolwrap#1{#1} => top
+% \def\uulmtoccolwrap#1{#1} => bot
+\newcommand\uulmtoc[2][\uulmdefaulttocsplit]{%
+\hb@xt@\linewidth{\hb@xt@.5\linewidth{\vbox to.8\textheight{\uulmtoccolwrap{\tableofcontents[sections={1-#1},#2]}}}%
+\hb@xt@.5\linewidth{\vbox to.8\textheight{\edef\@start{\the\numexpr#1+1}\uulmtoccolwrap{\tableofcontents[sections={\@start-\uulm@totalsections},#2]}}}}%
 }
 \AtBeginSection[]{\begingroup
     \let\uulm@footer\uulm@section@footer
