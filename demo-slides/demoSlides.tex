@@ -7,9 +7,10 @@
 
 \usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
 \setfaculty{infIngPsy} % set the color scheme for your faculty here [med/infIngPsy/math/nat]
+\usepackage{minted}
 
 \usepackage{babel}
-%\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
+% \recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
 \title[Short Title]{This is the Long Title} % short title is used for the slide footer but optional
 \ThemeLetter{A}
@@ -67,28 +68,40 @@
 \end{frame}
 
 \subsection{Colored Boxes}
-\begin{frame}{\insertsubsection\ with a really really really really really really really really really really really long title\hfill With Fill!}
+\begin{frame}[fragile]{\insertsubsection\ with a really really really really really really really really really really really long title\hfill With Fill!}
 	Normal versions:
 
-	\leftmiddleandright{
-		\mydefinition{A Definition}{This is a definition.}
-	}{
+\begin{leftmiddleandright}
+		\begin{definition}{A Definition}
+			This is a definition.
+\begin{minted}{java}
+System.out.println("foo");
+\end{minted}
+		\end{definition}
+\second
 		\myexample{An Example}{This is an example.}
-	}{
-		\mynote{A Note}{This is a note.}
-	}
-
+\third
+		\begin{note}{A Note}
+			This is a note.
+		\end{note}
+\end{leftmiddleandright}
 	\vfill
 
 	Tight versions (e.g., for use with pictures):
 
-	\leftmiddleandright{
-		\mydefinitiontight{A Definition}{This is a definition.}
-	}{
-		\myexampletight{An Example}{This is an example.}
-	}{
-		\mynotetight{A Note}{This is a note.}
-	}
+\leftmiddleandright{%
+		\begin{definitiontight}{A Definition}
+			This is a definition.
+		\end{definitiontight}
+}{%
+		\begin{exampletight}{An Example}
+			This is an example.
+		\end{exampletight}
+}{%
+		\begin{notetight}{A Note}
+			This is a note.
+		\end{notetight}
+}
 \end{frame}
 
 \section{Slide Layouts}
@@ -101,20 +114,20 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	\mynote{Explanation}{
+	\begin{note}{Explanation}
 		Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
-	}
+	\end{note}
 \end{frame}
 
 \subsection{Left, Middle, and Right}
 \begin{frame}{\insertsubsection}
-    \leftmiddleandright{
+\begin{leftmiddleandright}
         This is an example text that is shown in the \textbf{left column}.
-    }{
+\second
         This is an example text that is shown in the \textbf{middle column}.
-    }{
+\third
         This is an example text that is shown in the \textbf{right column}.
-    }
+\end{leftmiddleandright}
 	\vfill
 	\mynote{Explanation}{
 		All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
@@ -133,12 +146,24 @@
 \section{Animated Slide Layouts}
 
 \subsection{Left then Right}
-\begin{frame}{\insertsubsection}
+\begin{frame}[fragile]{\insertsubsection}
     \leftthenright{
         This is an example text that is shown in the \textbf{left column}.
     }{
         This is an example text that is shown in the \textbf{right column}.
     }
+	 \vfill
+	 \begin{leftthenright}
+		This is an example text that is shown in the \textbf{left column}.
+	\begin{minted}{java}
+class Example {}
+	\end{minted}
+	\second
+		This is an example text that is shown in the \textbf{right column}.
+	\begin{minted}{java}
+class ExampleB extends Example {}
+	\end{minted}
+	 \end{leftthenright}
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout} mode, both columns are visible.

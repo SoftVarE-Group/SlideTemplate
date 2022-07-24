@@ -248,131 +248,174 @@
 	\end{minipage}
 }
 
+% the old version allowed to pass on three macros, we want to support this non-verbatim-safe
+% variant for legacy reasons. With '\@ifnextchar\bgroup' we could check if this macro
+% is followed by an open brace. This is fragile, because we do no longer separate between
+% protective groups and the plain definition. Assuming, that no non-export user will
+% use plain macro definitions, we will use currenvir guards.
 
-\newcommand{\leftandright}[2]{
-    \halfpage{#1}
-    \hfill
-    \halfpage{#2}
+\newcount\uulm@splitter@nextcount
+
+% macro name [and text] | number of old args | old definition
+% | new definition (next-target only,no args => first[|second|third|... optional if not needed])
+\def\uulm@CreateSplitterBox#1#2#3#4{%
+% with this we define a new macro which maps to the text-name of the environment
+% therefore, '\uulm@CreateSplitterBox{abcd}...' would produce:
+% \def\uulm@txt@abcd{abcd}
+\@namedef{uulm@txt@#1}{#1}
+% why the edef hell? well it 1) ensures that the expansions are correct and
+% 2) makes the resulting macro faster :D
+% let's reconsider '\uulm@CreateSplitterBox{abcd}...', the execution of '\@tmp'
+% will execute:
+% \def\abcd{\ifx\uulm@txt@abcd\@currenvir\expandafter\uulm@abcd\else\expandafter\uulm@old@abcd\fi}
+% because this is far more readable, i will explain the contents with this sample definition:
+% '\ifx\uulm@txt@abcd\@currenvir' will check, if the textual representation of the environment
+% '\uulm@txt@abcd => abcd' expands similar to '\@currenvir' which is the macro handled by LaTeX
+% when using '\begin{abcd}'. Therefore we detect (based on our assumption) if we have been called
+% as '\begin{abcd}...\next...\end{abcd}' (true) or as '\abcd{...}{...}...' (false)
+% depending on that, we will use either '\uulm@abcd' or '\uulm@old@abcd'
+% the '\expandafter' before them, defers their expansion after the '\ifx' is completed.
+\edef\@tmp{\noexpand\@namedef{#1}{%
+\noexpand\ifx\expandonce{\csname uulm@txt@#1\endcsname}\noexpand\@currenvir\noexpand\expandafter\expandonce{\csname uulm@#1\endcsname}\noexpand\else\noexpand\expandafter\expandonce{\csname uulm@old@#1\endcsname}\noexpand\fi}}
+% this will execute the edef-ed '\@tmp' (*e*def because it will fully expand its definition)
+% the '\noexpand' and '\expandonce' (etoolbox) in the definition will stop the expansion.
+\@tmp
+% now, '\abcd' is defined
+% with this we define the old macro definition, see the creation of 'leftandright'
+% below for a clearer explanation
+\expandafter\newcommand\csname uulm@old@#1\endcsname[#2]{#3}
+% TODO: to be honest, it would be better to patch the old variants so they work similar to
+% 'onlytextwidth', but the old version of `leftmiddleright` did not implement this behavior,
+% and therefore, fails with the internal padding of minipages and spacing problems:
+%    \partofpage{<X>
+% \begin{minipage}{0.#1\textwidth}
+%     \begin{flushleft}
+%         #2
+%     \end{flushleft}
+% \end{minipage}<X>
+% latex will insert spaces at each newline (e.g. <X>, same for the passed #2)
+% and we do not want them!!
+% in short, the following to lines define the macros used when in environment-mode
+% with \uulm@splitter@nextcount we count the number of times, next has been called
+\@namedef{uulm@#1}{\begingroup\let\all\@uulm@set@all#4\columns[c,onlytextwidth]\first}
+\@namedef{end#1}{\endcolumns\endgroup}
 }
 
-\newcommand{\leftmiddleandright}[3]{
-	\thirdpage{#1}
-    \hfill
-    \thirdpage{#2}
-    \hfill
-    \thirdpage{#3}
-}
+% just a shortcut to set all columns the same way, useful, whenever there are no animations
+% will be accessible as '\all' whenever useful
+\def\@uulm@set@all#1{\def\first{\column#1}\def\second{\column#1}\def\third{\column#1}}
 
-\newcommand{\leftthenright}[2]{
-    \halfpage{#1}
-    \hfill
-    \onslide<2->{\halfpage{#2}}
-}
+% corresponds to '\halfpage', however, with the new columns we could use larger values
+% (same for thirdnext)
+\def\halfnext{{.489\textwidth}}
+% corresponds to '\thirdpage'
+\def\thirdnext{{.31\textwidth}}
 
-\newcommand{\rightthenleft}[2]{
-    \onslide<2->{\halfpage{#1}}
-    \hfill
-    \halfpage{#2}
-}
+% now we want to create a splitter-box
+% the first argument is the name and corresponds directly to the environment/available macro
+% in this case: 'leftandright'
+% with 2 we express, that the old '\leftandright' definition required 2 arguments,
+% this enables us to refer to them with '#1' and '#2 in the next argument which basically
+% just holds the definition of the original '\leftandright'-macro
+% i removed some newlines to make it more compact (but they do not matter)
+% the last macro defines the new definition of the column splitters first|second...
+\uulm@CreateSplitterBox{leftandright}{2}{\halfpage{#1}\hfill\halfpage{#2}}{\all\halfnext}
 
-\newcommand{\leftmiddlethenright}[3]{
-	\thirdpage{#1}
-    \hfill
-    \onslide<2->{\thirdpage{#2}}
-    \hfill
-    \onslide<3->{\thirdpage{#3}}
-}
+\uulm@CreateSplitterBox{leftmiddleandright}{3}{\thirdpage{#1}\hfill\thirdpage{#2}\hfill\thirdpage{#3}}{\all\thirdnext}
 
-\newcommand{\rightmiddlethenleft}[3]{
-	\onslide<3->{\thirdpage{#1}}
-    \hfill
-    \onslide<2->{\thirdpage{#2}}
-    \hfill
-    \thirdpage{#3}
-}
+\uulm@CreateSplitterBox{leftthenright}{2}{\halfpage{#1}\hfill\onslide<2->{\halfpage{#2}}}{\def\first{\column\halfnext}\def\second{\column<2->\halfnext}}
 
-\newcommand{\leftorright}[2]{ % only works in recording mode
-    \ifrecording
-    \onslide<1>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\halfpage{#2}}
-    \else
-	\leftthenright{#1}{#2}
-	\fi
-}
+\uulm@CreateSplitterBox{rightthenleft}{2}{\onslide<2->{\halfpage{#1}}\hfill\halfpage{#2}}{\def\first{\column<2->\halfnext}\def\second{\column\halfnext}}
 
-\newcommand{\rightorleft}[2]{ % only works in recording mode
-    \ifrecording
-    \onslide<3>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\halfpage{#2}}
-    \else
-	\rightthenleft{#1}{#2}
-	\fi
-}
+\uulm@CreateSplitterBox{leftmiddlethenright}{3}{\thirdpage{#1}\hfill\onslide<2->{\thirdpage{#2}}\hfill\onslide<3->{\thirdpage{#2}}}{\def\first{\column\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column<3->\thirdnext}}
 
-\newcommand{\leftmiddleorright}[3]{ % only works in recording mode
-    \ifrecording
-    \onslide<1>{\thirdpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<4>{\hfill}
-    \onslide<5>{\thirdpage{#3}}
-    \else
-	\leftmiddlethenright{#1}{#2}{#3}
-	\fi
-}
+\uulm@CreateSplitterBox{rightmiddlethenleft}{3}{\onslide<3->{\thirdpage{#1}}\hfill\onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}}{\def\first{\column<3->\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column\thirdnext}}
 
-\newcommand{\rightmiddleorleft}[3]{ % only works in recording mode
-    \ifrecording
-    \onslide<5>{\thirdpage{#1}}
-    \onslide<4>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\thirdpage{#3}}
-    \else
-	\rightmiddlethenleft{#1}{#2}{#3}
-	\fi
-}
+% for the or environments we simply change the first-second-third definitions
+\uulm@CreateSplitterBox{leftorright}{2}{\ifrecording
+\onslide<1>{\halfpage{#1}}
+\onslide<2>{\hfill}
+\onslide<3>{\halfpage{#2}}
+\else
+\leftthenright{#1}{#2}
+\fi}{\ifrecording
+\def\first{\column<1>\halfnext}\def\second{\column<3>\halfnext}%
+\else
+\def\first{\column\halfnext}\def\second{\column<2->\halfnext}%
+\fi}
+
+\uulm@CreateSplitterBox{rightorleft}{2}{\ifrecording
+\onslide<3>{\halfpage{#1}}
+\onslide<2>{\hfill}
+\onslide<1>{\halfpage{#2}}
+\else
+\leftthenright{#1}{#2}
+\fi}{\ifrecording
+\def\first{\column<3>\halfnext}\def\second{\column<1>\halfnext}%
+\else
+\def\first{\column<2->\halfnext}\def\second{\column\halfnext}%
+\fi}
+
+\uulm@CreateSplitterBox{leftmiddleorright}{3}{\ifrecording
+\onslide<1>{\thirdpage{#1}}
+\onslide<2>{\hfill}
+\onslide<3>{\thirdpage{#2}}
+\onslide<4>{\hfill}
+\onslide<5>{\thirdpage{#3}}
+\else
+\leftmiddlethenright{#1}{#2}
+\fi}{\ifrecording
+\def\first{\column\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column<5>\thirdnext}%
+\else
+\def\first{\column\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column<3->\thirdnext}%
+\fi}
+
+\uulm@CreateSplitterBox{rightmiddleorleft}{3}{\ifrecording
+\onslide<5>{\thirdpage{#1}}
+\onslide<4>{\hfill}
+\onslide<3>{\thirdpage{#2}}
+\onslide<2>{\hfill}
+\onslide<1>{\thirdpage{#3}}
+\else
+\rightmiddlethenleft{#1}{#2}
+\fi}{\ifrecording
+\def\first{\column<4->\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column\thirdnext}%
+\else
+\def\first{\column<3->\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column\thirdnext}%
+\fi}
+
 % ---------------------------------------------
 
 
 % ---------------------------------------------
 % color boxes
 % ---------------------------------------------
-\newcommand{\mydefinition}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=orange!10,colframe=orange!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
+\tcbset{%
+    uulm@basic-boxstyle/.style n args=4{title={\setlength{\parskip}{0ex}\vphantom{/}#2},colframe=#3!30,coltitle=black,fonttitle=\bfseries,left=#4,right=#4,top=#4,bottom=#4,#1},
+    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm},colback=#3!10},
+    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm},colback=white}
 }
 
-\newcommand{\mydefinitiontight}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=white,colframe=orange!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
+% name | color
+\def\uulm@MakeNewBox#1#2{
+% renew will not work if we define a box that does not already exist in beamer
+% we could check this by \ifcsname #1\endcsname...\else...\fi
+% however, for the moment this is not necessary
+% in the definition #1 and #2 refer to the arguments of \uulm@MakeNewBox
+% while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
+% therefore, with '\uulm@MakeNewBox{definition}{orange}', we create a new tcolorbox
+% named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
+% will result in the option list 'uulm@boxstyle={top=10mm}{My title}{orange}'
+\renewtcolorbox{#1}[2][]{uulm@boxstyle={##1}{##2}{#2}}
+% here, we re-create the old macros (e.g. '\mydefinition')
+% 'capture=minipage' ensures their behavior is similar to the previous one (the default for
+% tcbox would be hbox and no longer fill the width)
+\expandafter\newtcbox\csname my#1\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{#2}}
+% now, we do the same for the tight-version of the boxes
+\newtcolorbox{#1tight}[2][]{uulm@tightboxstyle={##1}{##2}{#2}}
+\expandafter\newtcbox\csname my#1tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{#2}}
 }
-
-\newcommand{\myexample}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=blue!10,colframe=blue!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\myexampletight}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=white,colframe=blue!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\mynote}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=red!10,colframe=red!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\mynotetight}[2]{
-	\begin{tcolorbox}[title={\setlength{\parskip}{0ex}\vphantom{/}#1},colback=white,colframe=red!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
-}
+\uulm@MakeNewBox{definition}{orange}
+\uulm@MakeNewBox{example}{blue}
+\uulm@MakeNewBox{note}{red}
 % ---------------------------------------------
