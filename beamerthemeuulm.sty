@@ -363,7 +363,7 @@
 \onslide<4>{\hfill}
 \onslide<5>{\thirdpage{#3}}
 \else
-\leftmiddlethenright{#1}{#2}
+\leftmiddlethenright{#1}{#2}{#3}
 \fi}{\ifrecording
 \def\first{\column\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column<5>\thirdnext}%
 \else
@@ -377,7 +377,7 @@
 \onslide<2>{\hfill}
 \onslide<1>{\thirdpage{#3}}
 \else
-\rightmiddlethenleft{#1}{#2}
+\rightmiddlethenleft{#1}{#2}{#3}
 \fi}{\ifrecording
 \def\first{\column<4->\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column\thirdnext}%
 \else
