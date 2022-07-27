@@ -1,3 +1,4 @@
+\errorcontextlines9999
 \documentclass[
 	aspectratio=169, % default is 43
 	8pt, % font size, default is 11pt
@@ -9,6 +10,8 @@
 
 %\usepackage[ngerman]{babel} % use this line for slides in German
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
+
+\usepackage{minted} % exemplify verbatim-safe-boxes
 
 \title[Short Title]{This is the Long Title} % short title is used for the slide footer but optional
 \subtitle[Short Subtitle]{This is the Long Subtitle} % subtitles are optional at all
@@ -65,27 +68,39 @@
 \end{frame}
 
 \subsection{Colored Boxes}
-\begin{frame}{\insertsubsection}
+\begin{frame}[fragile]{\insertsubsection\ with a really really really really really really really really really really really long title\hfill With Fill!}
 	Normal versions:
 
-	\leftmiddleandright{
-		\mydefinition{A Definition}{This is a definition.}
-	}{
+\begin{leftmiddleandright}
+		\begin{definition}{A Definition}
+			This is a definition.
+\begin{minted}{java}
+System.out.println("foo");
+\end{minted}
+		\end{definition}
+\second
 		\myexample{An Example}{This is an example.}
-	}{
-		\mynote{A Note}{This is a note.}
-	}
-
+\third
+		\begin{note}{A Note}
+			This is a note.
+		\end{note}
+\end{leftmiddleandright}
 	\vfill
 
 	Tight versions (e.g., for use with pictures):
 
-	\leftmiddleandright{
-		\mydefinitiontight{A Definition}{This is a definition.}
-	}{
-		\myexampletight{An Example}{This is an example.}
-	}{
-		\mynotetight{A Note}{This is a note.}
+	\leftmiddleandright{%
+		\begin{definitiontight}{A Definition}
+			This is a definition.
+		\end{definitiontight}
+	}{%
+		\begin{exampletight}{An Example}
+			This is an example.
+		\end{exampletight}
+	}{%
+		\begin{notetight}{A Note}
+			This is a note.
+		\end{notetight}
 	}
 \end{frame}
 
@@ -99,20 +114,20 @@
         This is an example text that is shown in the \textbf{right column}.
     }
 	\vfill
-	\mynote{Explanation}{
+	\begin{note}{Explanation}
 		Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
-	}
+	\end{note}
 \end{frame}
 
 \subsection{Left, Middle, and Right}
 \begin{frame}{\insertsubsection}
-    \leftmiddleandright{
-        This is an example text that is shown in the \textbf{left column}. 
-    }{
-        This is an example text that is shown in the \textbf{middle column}.
-    }{
-        This is an example text that is shown in the \textbf{right column}.
-    }
+	\begin{leftmiddleandright}
+		This is an example text that is shown in the \textbf{left column}.
+	\second
+		This is an example text that is shown in the \textbf{middle column}.
+	\third
+		This is an example text that is shown in the \textbf{right column}.
+	\end{leftmiddleandright}
 	\vfill
 	\mynote{Explanation}{
 		All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
@@ -202,9 +217,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, both columns are visible.
-	
+
 		In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
-		
+
 		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
 	}
 \end{frame}
@@ -218,9 +233,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, both columns are visible.
-	
+
 		In \textbf{slide mode}, only the right column is shown at the beginning and then both columns (cf. \textbf{Right then Left}).
-		
+
 		In \textbf{recording mode}, only the right column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the left column.
 	}
 \end{frame}
@@ -237,9 +252,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, all columns are visible.
-	
+
 		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle, then Right}).
-		
+
 		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
 	}
 \end{frame}
@@ -255,9 +270,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, all columns are visible.
-	
+
 		In \textbf{slide mode}, only the right column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Right, Middle, then Left}).
-		
+
 		In \textbf{recording mode}, only the right column is shown at the beginning, then only the middle column, and finally only the left column (again interleaved with empty slides).
 	}
 \end{frame}
@@ -268,9 +283,9 @@
 \begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
 	\mynote{Explanation}{
 		Very long frame titles are scaled down automatically.
-		
+
 		This can avoid annoying linebreaks for a single character or word.
-		
+
 		Use with care.
 	}
 \end{frame}
