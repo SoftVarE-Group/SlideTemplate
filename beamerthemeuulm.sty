@@ -3,6 +3,17 @@
 % =============================================
 
 % ---------------------------------------------
+% package options
+% ---------------------------------------------
+
+% if passed as argument draft will apply as a global option and therefore affects
+% various other packages as well (e.g., automatically removing images etc. from loading)
+\newif\if@uulm@beamertheme@draftmode@
+\DeclareOption{draft}{\@uulm@beamertheme@draftmode@true}
+\DeclareOption{final}{\@uulm@beamertheme@draftmode@false}
+\ProcessOptions
+
+% ---------------------------------------------
 % import packages
 % ---------------------------------------------
 \usepackage[utf8]{inputenc}
@@ -89,6 +100,17 @@
 % ---------------------------------------------
 % frame layout
 % ---------------------------------------------
+
+\if@uulm@beamertheme@draftmode@
+\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
+\begin{frame}[plain]
+    Title: \textbf{\inserttitle}\par
+    Subtitle: \insertsubtitle\par
+    Author: \insertauthor\par
+    Date: \insertdate\par
+\end{frame}
+}
+\else
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     {
     \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}
@@ -99,7 +121,7 @@
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
-            \small 
+            \small
             \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
             \insertauthor\
             \ifx \insertdate \empty \else $\vert$ \insertdate \fi
@@ -116,8 +138,9 @@
             \hspace{10pt}
         \end{beamercolorbox}%
     \end{frame}
-    }  
+    }
 }
+\fi
 
 \setbeamertemplate{frametitle}{
     \vspace{20pt}%
@@ -126,6 +149,7 @@
     }%
 }
 
+% draft mode will already replace footline with rect
 \setbeamertemplate{footline}{
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
@@ -133,9 +157,9 @@
             \insertshortauthor
             \hfill
             \insertshorttitle\
-            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi 
-            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
-            \hspace{0.03\textwidth} 
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi
+            \hspace{0.03\textwidth}
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
             \insertframenumber
