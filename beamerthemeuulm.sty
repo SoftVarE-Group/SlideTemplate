@@ -23,6 +23,9 @@
 
 \newif\ifrecording % for enabling or disabling recording mode
 
+\newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
+\newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+
 \setlength{\parskip}{1.5ex} % set the parskip
 \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
 % ---------------------------------------------
@@ -149,11 +152,19 @@
 % table of contents
 % ---------------------------------------------
 \AtBeginSection{
-    \begin{frame}{\thesection.~\insertsection}
+    \ifsectiontitleslide
+        \ifsectionoverview
+        \begin{frame}{\thesection.~\insertsection}
         \setlength{\parskip}{0ex}
         \vfill
         \tableofcontents[currentsection,hideothersubsections]
-    \end{frame}
+        \end{frame}
+        \else
+        \begin{frame}
+            \Huge\textbf{\thesection.~\insertsection}
+        \end{frame}
+        \fi
+    \fi
 }
 
 \newcommand{\lectureoverview}{
