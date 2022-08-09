@@ -11,6 +11,7 @@
 \usepackage{fitbox} % used to auto-scale long frame titles
 \usepackage{tcolorbox} % used for color boxes (definition, example, note)
 \usepackage{ifthen}
+\usepackage{options}
 % ---------------------------------------------
 
 
@@ -25,6 +26,10 @@
 
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+
+\DeclareOption{sectiontitleslides}{\sectiontitleslidetrue}
+\DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\ProcessOptions
 
 \setlength{\parskip}{1.5ex} % set the parskip
 \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
