@@ -363,9 +363,10 @@
 \tcbset{%
     % by definig styles we avoid their replication
     uulm@basic-boxstyle/.style n args=4{
-        title={\setlength{\parskip}{0ex}\vphantom{/}#2},
+        title={#2},
         colframe=#3!30,
         coltitle=black,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}},
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4,
         #1
