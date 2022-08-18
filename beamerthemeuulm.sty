@@ -26,12 +26,12 @@
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
 
-\sectiontitleslidetrue % automatic section title slides are enabled per default
-\sectionoverviewtrue % automatic section overviews are enabled per default
-
 \DeclareOption{nosectiontitleslides}{\sectiontitleslidefalse}
 \DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
 \DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+
+\ExecuteOptions{sectionoverviews} % automatic section overviews are enabled per default
+
 \ProcessOptions
 
 \setlength{\parskip}{1.5ex} % set the parskip
