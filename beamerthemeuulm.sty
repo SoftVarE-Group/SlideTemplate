@@ -159,8 +159,8 @@
 % ---------------------------------------------
 % table of contents
 % ---------------------------------------------
+\ifsectiontitleslide
 \AtBeginSection{
-    \ifsectiontitleslide
         \ifsectionoverview
         \begin{frame}{\thesection.~\insertsection}
         \setlength{\parskip}{0ex}
@@ -172,8 +172,8 @@
             \Huge\textbf{\thesection.~\insertsection}
         \end{frame}
         \fi
-    \fi
 }
+\fi
 
 \newcommand{\lectureoverview}{
     \begin{frame}{\inserttitle}
