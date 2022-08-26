@@ -78,6 +78,7 @@
 % fonts
 % ---------------------------------------------
 \setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, series=\bfseries}
 \setbeamerfont{section in toc}{size=\large, series=\bfseries}
 
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
@@ -169,7 +170,7 @@
         \end{frame}
         \else
         \begin{frame}
-            \Huge\textbf{\thesection.~\insertsection}
+            \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
         \end{frame}
         \fi
 }
