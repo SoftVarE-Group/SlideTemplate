@@ -162,17 +162,17 @@
 % ---------------------------------------------
 \ifsectiontitleslide
 \AtBeginSection{
-        \ifsectionoverview
-        \begin{frame}{\thesection.~\insertsection}
-        \setlength{\parskip}{0ex}
-        \vfill
-        \tableofcontents[currentsection,hideothersubsections]
-        \end{frame}
-        \else
-        \begin{frame}
-            \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
-        \end{frame}
-        \fi
+    \ifsectionoverview
+    \begin{frame}{\thesection.~\insertsection}
+    \setlength{\parskip}{0ex}
+    \vfill
+    \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+    \else
+    \begin{frame}
+        \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
+    \end{frame}
+    \fi
 }
 \fi
 
