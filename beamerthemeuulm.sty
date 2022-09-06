@@ -181,178 +181,95 @@
 	\end{minipage}
 }
 
-% the old version allowed to pass on three macros, we want to support this non-verbatim-safe
-% variant for legacy reasons. With '\@ifnextchar\bgroup' we could check if this macro
-% is followed by an open brace. This is fragile, because we do no longer separate between
-% protective groups and the plain definition. Assuming, that no non-export user will
-% use plain macro definitions, we will use currenvir guards.
-
-% macro name [and env] | number of old args | old definition
-% | new definition (next-target only,no args => first[|second|third|... optional if not needed])
-\outer\def\uulm@CreateSplitterBox#1#2#3#4{%
-    % with this we define a new macro which maps to the text-name of the environment
-    % therefore, '\uulm@CreateSplitterBox{abcd}...' would produce:
-    % \def\uulm@txt@abcd{abcd}
-    \@namedef{uulm@txt@#1}{#1}%
-    % why the edef-noxpand hell in the following? well it
-    % 1) ensures that the expansions are correct and
-    % 2) makes the resulting macro faster :D
-    % let's reconsider '\uulm@CreateSplitterBox{abcd}...', the execution of '\@tmp' will execute:
-    % \def\abcd{\ifx\uulm@txt@abcd\@currenvir\expandafter\uulm@abcd\else\expandafter\uulm@old@abcd\fi}
-    % because this is far more readable, i will explain the contents with this sample definition:
-    % '\ifx\uulm@txt@abcd\@currenvir' will check, if the textual representation of the environment
-    % '\uulm@txt@abcd => abcd' expands similar to '\@currenvir' which is the macro handled by LaTeX
-    % when using '\begin{abcd}'. Therefore we detect (based on our assumption) if we have been called
-    % as '\begin{abcd}...\next...\end{abcd}' (true) or as '\abcd{...}{...}...' (false)
-    % depending on that, we will use either '\uulm@abcd' or '\uulm@old@abcd'
-    % the '\expandafter' before them, defers their expansion after the '\ifx' is completed.
-    \edef\@tmp{\noexpand\@namedef{#1}{%
-        \noexpand\ifx\expandonce{\csname uulm@txt@#1\endcsname}\noexpand\@currenvir%
-            \noexpand\expandafter\expandonce{\csname uulm@#1\endcsname}%
-        \noexpand\else
-        \noexpand\expandafter\expandonce{\csname uulm@old@#1\endcsname}%
-        \noexpand\fi}%
-    }%
-    % the following line will execute the edef-ed '\@tmp' (*e*def because it will fully expand its
-    % definition) the '\noexpand' and '\expandonce' (etoolbox) in the definition will stop the expansion.
-    \@tmp
-    % now, '\abcd' is defined
-    % with this we define the old macro definition, see the creation of 'leftandright'
-    % below for a clearer explanation
-    \expandafter\newcommand\csname uulm@old@#1\endcsname[#2]{#3}%
-    % TODO: to be honest, it would be better to patch the old variants so they work similar to
-    % 'onlytextwidth', but the old version of `leftmiddleright` did not implement this behavior,
-    % and therefore, fails with the internal padding of minipages and spacing problems:
-    %    \partofpage{<X>
-    % \begin{minipage}{0.#1\textwidth}
-    %     \begin{flushleft}
-    %         #2
-    %     \end{flushleft}
-    % \end{minipage}<X>
-    % latex will insert spaces at each newline (e.g. <X>, same for the passed #2)
-    % and we do not want them!!
-    % in short, the following two lines define the macros used when in environment-mode
-    \@namedef{uulm@#1}{\begingroup\let\all\@uulm@set@all#4\columns[c,onlytextwidth]\first}%
-    \@namedef{end#1}{\endcolumns\endgroup}%
-}
-
-% the following is just a shortcut to set all columns the same way, useful, whenever there are no
-% animations will be accessible as '\all' whenever useful
-\def\@uulm@set@all#1{\def\first{\column#1}\def\second{\column#1}\def\third{\column#1}}
-
 % corresponds to '\halfpage', however, with the new columns we could use larger values
 % (same for thirdnext)
 \def\halfnext{.489\textwidth}
 % corresponds to '\thirdpage'
 \def\thirdnext{.31\textwidth}
 
-% now we want to create a splitter-box
-% the first argument is the name and corresponds directly to the environment/available macro
-% in this case: 'leftandright'
-% with 2 we express, that the old '\leftandright' definition required 2 arguments,
-% this enables us to refer to them with '#1' and '#2 in the next argument which basically
-% just holds the definition of the original '\leftandright'-macro
-% the last macro defines the new definition of the column splitters first|second...
-\uulm@CreateSplitterBox{leftandright}{2}{
-    \halfpage{#1}
+\newcommand\leftandright[2]{%
+    \halfpage{#1}%
     \hfill
-    \halfpage{#2}
-}{\all\halfnext}
+    \halfpage{#2}%
+}
 
-\uulm@CreateSplitterBox{leftmiddleandright}{3}{
-    \thirdpage{#1}
+\newcommand\leftmiddleandright[3]{%
+    \thirdpage{#1}%
     \hfill
-    \thirdpage{#2}
+    \thirdpage{#2}%
     \hfill
-    \thirdpage{#3}
-}{\all\thirdnext}
+    \thirdpage{#3}%
+}
 
 % instead of onslide we use the column-overlay specification for first and second
-\uulm@CreateSplitterBox{leftthenright}{2}{
-    \halfpage{#1}
+\newcommand\leftthenright[2]{%
+    \halfpage{#1}%
     \hfill
-    \onslide<2->{\halfpage{#2}}
-}{\def\first{\column\halfnext}\def\second{\column<2->\halfnext}}
+    \onslide<2->{\halfpage{#2}}%
+}
 
-\uulm@CreateSplitterBox{rightthenleft}{2}{
+\newcommand\rightthenleft[2]{
     \onslide<2->{\halfpage{#1}}
     \hfill
     \halfpage{#2}
-}{\def\first{\column<2->\halfnext}\def\second{\column\halfnext}}
+}{
 
-\uulm@CreateSplitterBox{leftmiddlethenright}{3}{
-    \thirdpage{#1}
+\newcommand\leftmiddlethenright[3]{%
+    \thirdpage{#1}%
     \hfill
-    \onslide<2->{\thirdpage{#2}}
+    \onslide<2->{\thirdpage{#2}}%
     \hfill
-    \onslide<3->{\thirdpage{#2}}
-}{\def\first{\column\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column<3->\thirdnext}}
-
-\uulm@CreateSplitterBox{rightmiddlethenleft}{3}{
-    \onslide<3->{\thirdpage{#1}}
-    \hfill
-    \onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}
-}{\def\first{\column<3->\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column\thirdnext}}
-
-% for the or environments we simply change the first-second-third definitions
-\uulm@CreateSplitterBox{leftorright}{2}{\ifrecording
-    \onslide<1>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\halfpage{#2}}
-    \else
-    \leftthenright{#1}{#2}
-    \fi
-}{\ifrecording
-    \def\first{\column<1>\halfnext}\def\second{\column<3>\halfnext}%
-  \else
-    \def\first{\column\halfnext}\def\second{\column<2->\halfnext}%
-  \fi
+    \onslide<3->{\thirdpage{#2}}%
 }
 
-\uulm@CreateSplitterBox{rightorleft}{2}{\ifrecording
-    \onslide<3>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\halfpage{#2}}
-    \else
-    \leftthenright{#1}{#2}
-    \fi
-}{\ifrecording
-    \def\first{\column<3>\halfnext}\def\second{\column<1>\halfnext}%
-  \else
-    \def\first{\column<2->\halfnext}\def\second{\column\halfnext}%
-  \fi
+\newcommand\rightmiddlethenleft[3]{%
+    \onslide<3->{\thirdpage{#1}}%
+    \hfill
+    \onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}%
 }
 
-\uulm@CreateSplitterBox{leftmiddleorright}{3}{\ifrecording
-    \onslide<1>{\thirdpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<4>{\hfill}
-    \onslide<5>{\thirdpage{#3}}
-    \else
-    \leftmiddlethenright{#1}{#2}{#3}
-    \fi
-}{\ifrecording
-    \def\first{\column\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column<5>\thirdnext}%
-  \else
-    \def\first{\column\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column<3->\thirdnext}%
-  \fi
+\newcommand\leftorright[2]{%
+\ifrecording
+    \onslide<1>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\halfpage{#2}}%
+\else
+    \leftthenright{#1}{#2}%
+\fi
 }
 
-\uulm@CreateSplitterBox{rightmiddleorleft}{3}{\ifrecording
-    \onslide<5>{\thirdpage{#1}}
-    \onslide<4>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\thirdpage{#3}}
-    \else
-    \rightmiddlethenleft{#1}{#2}{#3}
-    \fi
-}{\ifrecording
-    \def\first{\column<4->\thirdnext}\def\second{\column<3>\thirdnext}\def\third{\column\thirdnext}%
-  \else
-    \def\first{\column<3->\thirdnext}\def\second{\column<2->\thirdnext}\def\third{\column\thirdnext}%
-  \fi
+\newcommand\rightorleft[2]{%
+\ifrecording
+    \onslide<3>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\halfpage{#2}}%
+\else
+    \leftthenright{#1}{#2}%
+\fi
+}
+
+\newcommand\leftmiddleorright[3]{%
+\ifrecording
+    \onslide<1>{\thirdpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<4>{\hfill}%
+    \onslide<5>{\thirdpage{#3}}%
+\else
+    \leftmiddlethenright{#1}{#2}{#3}%
+\fi
+}
+
+\newcommand\rightmiddleorleft[3]{%
+\ifrecording
+    \onslide<5>{\thirdpage{#1}}%
+    \onslide<4>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\thirdpage{#3}}%
+\else
+    \rightmiddlethenleft{#1}{#2}{#3}%
+\fi
 }
 % ---------------------------------------------
 
