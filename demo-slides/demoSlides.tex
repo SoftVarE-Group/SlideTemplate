@@ -7,6 +7,12 @@
 \usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
 \setfaculty{infIngPsy} % set the color scheme for your faculty here [med/infIngPsy/math/nat]
 
+%\intitutelogo{sp} % set the institute logo
+%\universitylogo{uulm} % set a new university logo
+% use these commands, to clear existing logos
+%\clearuniversitylogo
+%\clearintitutelogo
+
 %\usepackage[ngerman]{babel} % use this line for slides in German
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
@@ -107,7 +113,7 @@
 \subsection{Left, Middle, and Right}
 \begin{frame}{\insertsubsection}
     \leftmiddleandright{
-        This is an example text that is shown in the \textbf{left column}. 
+        This is an example text that is shown in the \textbf{left column}.
     }{
         This is an example text that is shown in the \textbf{middle column}.
     }{
@@ -202,9 +208,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, both columns are visible.
-	
+
 		In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
-		
+
 		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
 	}
 \end{frame}
@@ -218,9 +224,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, both columns are visible.
-	
+
 		In \textbf{slide mode}, only the right column is shown at the beginning and then both columns (cf. \textbf{Right then Left}).
-		
+
 		In \textbf{recording mode}, only the right column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the left column.
 	}
 \end{frame}
@@ -237,9 +243,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, all columns are visible.
-	
+
 		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle, then Right}).
-		
+
 		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
 	}
 \end{frame}
@@ -255,9 +261,9 @@
 	\vfill
 	\mynote{Explanation}{
 		In \textbf{handout mode}, all columns are visible.
-	
+
 		In \textbf{slide mode}, only the right column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Right, Middle, then Left}).
-		
+
 		In \textbf{recording mode}, only the right column is shown at the beginning, then only the middle column, and finally only the left column (again interleaved with empty slides).
 	}
 \end{frame}
@@ -268,9 +274,9 @@
 \begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
 	\mynote{Explanation}{
 		Very long frame titles are scaled down automatically.
-		
+
 		This can avoid annoying linebreaks for a single character or word.
-		
+
 		Use with care.
 	}
 \end{frame}
