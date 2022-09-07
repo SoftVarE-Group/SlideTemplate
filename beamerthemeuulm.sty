@@ -332,7 +332,26 @@
 
 \pgfqkeys{/uulm columns}{
   /uulm columns/.is choice,
-  leftthenright/.code = {\uulm@cols@leftthenright}
+  leftandright/.code                 = \uulm@cols@leftandright,
+  left and right/.forward to         = /uulm columns/leftandright,
+  leftmiddleandright/.code           = \uulm@cols@leftmiddleandright,
+  left middle and right/.forward to  = /uulm columns/leftmiddleandright,
+  leftthenright/.code                = \uulm@cols@leftthenright,
+  left then right/.forward to        = /uulm columns/leftthenright,
+  rightthenleft/.code                = \uulm@cols@rightthenleft,
+  right then left/.forward to        = /uulm columns/rightthenleft,
+  leftmiddleandright/.code           = \uulm@cols@leftmiddleandright,
+  left middle and right/.forward to  = /uulm columns/leftmiddleandright,
+  rightmiddlethenleft/.code          = \uulm@cols@leftmiddleandright,
+  right middle then left/.forward to = /uulm columns/rightmiddlethenleft,
+  leftorright/.code                  = \uulm@cols@leftorright,
+  left or right/.forward to          = /uulm columns/leftorright,
+  rightorleft/.code                  = \uulm@cols@rightorleft,
+  right or left/.forward to          = /uulm columns/rightorleft,
+  leftmiddleorright/.code            = \uulm@cols@leftmiddleorright,
+  left middle or right/.forward to   = /uulm columns/leftmiddleorright,
+  rightmiddleorleft/.code            = \uulm@cols@rightmiddleorleft,
+  right middle or left/.forward to   = /uulm columns/rightmiddleorleft
 }
 
 \newenvironment{mycolumns}[1][]{\begingroup
