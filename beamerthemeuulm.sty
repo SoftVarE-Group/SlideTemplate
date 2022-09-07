@@ -330,34 +330,31 @@
 \fi
 }
 
-\pgfqkeys{/uulm columns}{
-  /uulm columns/.is choice,
-  /uulm columns/.search also         = {/uulm columns/align},
-  align/c/.code                      = \typeout{I GOT A C},
-  leftandright/.code                 = \uulm@cols@leftandright,
-  left and right/.forward to         = /uulm columns/leftandright,
-  leftmiddleandright/.code           = \uulm@cols@leftmiddleandright,
-  left middle and right/.forward to  = /uulm columns/leftmiddleandright,
-  leftthenright/.code                = \uulm@cols@leftthenright,
-  left then right/.forward to        = /uulm columns/leftthenright,
-  rightthenleft/.code                = \uulm@cols@rightthenleft,
-  right then left/.forward to        = /uulm columns/rightthenleft,
-  leftmiddlethenright/.code           = \uulm@cols@leftmiddlethenright,
-  left middle then right/.forward to  = /uulm columns/leftmiddlethenright,
-  rightmiddlethenleft/.code          = \uulm@cols@rightmiddlethenleft,
-  right middle then left/.forward to = /uulm columns/rightmiddlethenleft,
-  leftorright/.code                  = \uulm@cols@leftorright,
-  left or right/.forward to          = /uulm columns/leftorright,
-  rightorleft/.code                  = \uulm@cols@rightorleft,
-  right or left/.forward to          = /uulm columns/rightorleft,
-  leftmiddleorright/.code            = \uulm@cols@leftmiddleorright,
-  left middle or right/.forward to   = /uulm columns/leftmiddleorright,
-  rightmiddleorleft/.code            = \uulm@cols@rightmiddleorleft,
-  right middle or left/.forward to   = /uulm columns/rightmiddleorleft
+\def\validalignments{}
+
+\foreach \shortkey/\longkey/\command in {
+    leftandright/left and right/\uulm@cols@leftandright,
+    leftmiddleandright/left middle and right/\uulm@cols@leftmiddleandright,
+    leftthenright/left then right/\uulm@cols@leftthenright,
+    rightthenleft/right then left/\uulm@cols@rightthenleft,
+    leftmiddlethenright/left middle then right/\uulm@cols@leftmiddlethenright,
+    rightmiddlethenleft/right middle then left/\uulm@cols@rightmiddlethenleft
+    leftorright/left or right/\uulm@cols@leftorright,
+    rightorleft/right or left/\uulm@cols@rightorleft,
+    leftmiddleorright/left middle or right/\uulm@cols@leftmiddleorright,
+    rightmiddleorleft/right middle or left/\uulm@cols@rightmiddleorleft
+}{
+    \pgfqkeys{/uulm columns}{
+        \shortkey/.code      = \command,
+        \longkey/.forward to = /uulm columns/\shortkey,
+    }
+    \gappto\validalignments{'\shortkey' or '\longkey', }%
 }
 
+\typeout{valid: \validalignments}
+
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{/uulm columns=leftthenright, /uulm columns=#1}%
+\pgfqkeys{/uulm columns}{leftthenright, #1}%
 \begin{columns}% TODO: other parameters like onlytextwith
     \@init
 }{\end{columns}\endgroup}
