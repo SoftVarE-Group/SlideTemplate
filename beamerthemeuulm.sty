@@ -374,7 +374,24 @@
   leftmiddleorright/.code            = \uulm@cols@leftmiddleorright,
   left middle or right/.forward to   = /uulm columns/leftmiddleorright,
   rightmiddleorleft/.code            = \uulm@cols@rightmiddleorleft,
-  right middle or left/.forward to   = /uulm columns/rightmiddleorleft
+  right middle or left/.forward to   = /uulm columns/rightmiddleorleft,
+  .unknown/.append code = {
+    \def\@option{#1}%
+    \ifx\@option\@empty\else
+    \PackageError{beamerthemeuulm}{The option '#1' is not a known option for the layout.}{There are the following layouts:
+        'leftandright', 'left and right',
+        'leftmiddleandright', 'left middle and right',
+        'leftthenright', 'left then right',
+        'rightthenleft', 'right then left',
+        'leftmiddlethenright', 'left middle then right',
+        'rightmiddlethenleft', 'right middle then left',
+        'leftorright', 'left or right',
+        'rightorleft', 'right or left',
+        'leftmiddleorright', 'left middle or right',
+        'rightmiddleorleft', and 'right middle or left'.
+        Furthermore, you can configure the vertical alignment with 'c', 'b', 't' and 'T'.
+    }\fi
+  }
 }
 
 \newenvironment{mycolumns}[1][]{\begingroup
