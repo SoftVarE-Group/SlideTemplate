@@ -90,9 +90,9 @@
 % frame layout
 % ---------------------------------------------
 % [options for includegraphics]{logoname}
-\newcommand*\intitutelogo[2][height=4.5ex]{\def\@institutelogo{\includegraphics[#1]{#2}}}
+\newcommand*\intitutelogo[2][]{\def\@institutelogo{\includegraphics[height=4.5ex,#1]{#2}}}
 \newcommand*\clearintitutelogo{\def\@institutelogo{}}
-\newcommand*\universitylogo[2][height=4.5ex]{\def\@universitylogo{\includegraphics[#1]{#2}}}
+\newcommand*\universitylogo[2][]{\def\@universitylogo{\includegraphics[height=4.5ex,#1]{#2}}}
 \newcommand*\clearuniversitylogo{\def\@universitylogo{}}
 % default for the university, after all, it is the layout of uulm
 \universitylogo{uulm}
