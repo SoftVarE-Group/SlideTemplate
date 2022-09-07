@@ -332,6 +332,8 @@
 
 \pgfqkeys{/uulm columns}{
   /uulm columns/.is choice,
+  /uulm columns/.search also         = {/uulm columns/align},
+  align/c/.code                      = \typeout{I GOT A C},
   leftandright/.code                 = \uulm@cols@leftandright,
   left and right/.forward to         = /uulm columns/leftandright,
   leftmiddleandright/.code           = \uulm@cols@leftmiddleandright,
@@ -355,7 +357,7 @@
 }
 
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{leftthenright, #1}%
+\pgfqkeys{/uulm columns}{/uulm columns=leftthenright, /uulm columns=#1}%
 \begin{columns}% TODO: other parameters like onlytextwith
     \@init
 }{\end{columns}\endgroup}
