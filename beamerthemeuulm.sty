@@ -181,10 +181,21 @@
 	\end{minipage}
 }
 
+% corresponds to '\halfpage', however, with the new columns we could use larger values
+% (same for thirdnext)
+\def\halfnext{.489\textwidth}
+% corresponds to '\thirdpage'
+\def\thirdnext{.31\textwidth}
+
 \newcommand\leftandright[2]{%
     \halfpage{#1}%
     \hfill
     \halfpage{#2}%
+}
+% these commands are for the new column mechanism
+\newcommand*\uulm@cols@leftandright{%
+    \def\mynextcolumn{\column<1->{\halfnext}}%
+    \def\@init{\mynextcolumn}% the "first" column
 }
 
 \newcommand\leftmiddleandright[3]{%
@@ -194,19 +205,31 @@
     \hfill
     \thirdpage{#3}%
 }
+\newcommand*\uulm@cols@leftmiddleandright{%
+    \def\mynextcolumn{\column<1->{\thirdnext}}%
+    \def\@init{\mynextcolumn}%
+}
 
-% instead of onslide we use the column-overlay specification for first and second
 \newcommand\leftthenright[2]{%
     \halfpage{#1}%
     \hfill
     \onslide<2->{\halfpage{#2}}%
+}
+% instead of onslide we use the column-overlay specification for first and second
+\newcommand*\uulm@cols@leftthenright{%
+    \def\@init{\column<1->{\halfnext}}%
+    \def\mynextcolumn{\column<2->{\halfnext}}%
 }
 
 \newcommand\rightthenleft[2]{
     \onslide<2->{\halfpage{#1}}
     \hfill
     \halfpage{#2}
-}{
+}
+\newcommand*\uulm@cols@rightthenleft{%
+    \def\@init{\column<2->{\halfnext}}%
+    \def\mynextcolumn{\column<1->{\halfnext}}%
+}
 
 \newcommand\leftmiddlethenright[3]{%
     \thirdpage{#1}%
@@ -215,11 +238,20 @@
     \hfill
     \onslide<3->{\thirdpage{#2}}%
 }
+\newcommand*\uulm@cols@leftmiddlethenright{%
+    \def\@init{\column<1->{\thirdnext}}%
+    % we redefine mynextcolumn within mynextcolumn so that it uses the overlay-specification <3->
+    \def\mynextcolumn{\column<2->{\thirdnext}\def\mynextcolumn{\column<3->{\thirdnext}}}%
+}
 
 \newcommand\rightmiddlethenleft[3]{%
     \onslide<3->{\thirdpage{#1}}%
     \hfill
     \onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}%
+}
+\newcommand*\uulm@cols@rightmiddlethenleft{%
+    \def\@init{\column<3->{\thirdnext}}%
+    \def\mynextcolumn{\column<2->{\thirdnext}\def\mynextcolumn{\column<1->{\thirdnext}}}%
 }
 
 \newcommand\leftorright[2]{%
@@ -231,6 +263,14 @@
     \leftthenright{#1}{#2}%
 \fi
 }
+\newcommand*\uulm@cols@leftorright{%
+\ifrecording
+    \def\@init{\column<1->{\halfnext}}%
+    \def\mynextcolumn{\column<3->{\halfnext}}%
+\else
+    \uulm@cols@leftthenright
+\fi
+}
 
 \newcommand\rightorleft[2]{%
 \ifrecording
@@ -238,7 +278,15 @@
     \onslide<2>{\hfill}%
     \onslide<1>{\halfpage{#2}}%
 \else
-    \leftthenright{#1}{#2}%
+    \rightthenleft{#1}{#2}%
+\fi
+}
+\newcommand*\uulm@cols@rightorleft{%
+\ifrecording
+    \def\@init{\column<3->{\halfnext}}%
+    \def\mynextcolumn{\column<1->{\halfnext}}%
+\else
+    \uulm@cols@leftthenright
 \fi
 }
 
@@ -253,6 +301,14 @@
     \leftmiddlethenright{#1}{#2}{#3}%
 \fi
 }
+\newcommand*\uulm@cols@leftmiddleorright{%
+\ifrecording
+    \def\@init{\column<1->{\thirdnext}}%
+    \def\mynextcolumn{\column<3->{\thirdnext}\def\mynextcolumn{\column<5->{\thirdnext}}}%
+\else
+    \uulm@cols@leftmiddlethenright
+\fi
+}
 
 \newcommand\rightmiddleorleft[3]{%
 \ifrecording
@@ -265,6 +321,27 @@
     \rightmiddlethenleft{#1}{#2}{#3}%
 \fi
 }
+\newcommand*\uulm@cols@rightmiddleorleft{%
+\ifrecording
+    \def\@init{\column<5->{\thirdnext}}%
+    \def\mynextcolumn{\column<3->{\thirdnext}\def\mynextcolumn{\column<1->{\thirdnext}}}%
+\else
+    \uulm@cols@rightmiddlethenleft
+\fi
+}
+
+\pgfqkeys{/uulm columns}{
+  /uulm columns/.is choice,
+  leftthenright/.code = {\uulm@cols@leftthenright}
+}
+
+\newenvironment{mycolumns}[1][]{\begingroup
+\pgfqkeys{/uulm columns}{leftthenright, #1}%
+\begin{columns}% TODO: other parameters like onlytextwith
+    \@init
+}{\end{columns}\endgroup}
+
+
 % ---------------------------------------------
 
 
