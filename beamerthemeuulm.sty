@@ -186,8 +186,7 @@
 \def\halfnext{.489\textwidth}
 % corresponds to '\thirdpage'
 \def\thirdnext{.31\textwidth}
-% mark the final column, additional columns issue an error
-\def\uulm@myfinalcolumn{\def\mynextcolumn{\PackageError{beamerthemeuulm}{The layout '\uulm@cols@layout' you selected does not allow another \string\mynextcolumn\space (page: \thepage, frame: \insertframenumber, \on@line)}{Either remove the command, or choose another Layout}}}
+\def\uulm@columnerror{\PackageError{beamerthemeuulm}{The layout <TODO> you selected does not allow another \string\mynextcolumn\space (page: \thepage, frame: \insertframenumber, \on@line)}{Either remove the command, or choose another Layout}}
 
 \newcommand\leftandright[2]{%
     \halfpage{#1}%
@@ -283,26 +282,41 @@
   align/T/.code                      = \def\uulm@cols@align{T},
   extra/columns/.code                = \def\uulm@cols@extra{#1}, % supply custom columns arguments with columns=...
   extra/custom/.code                 = #1, % just execute a custom configuration
-  columns/.code                      = \def\uulm@columncount{#1}
+  columns/.code                      = \def\uulm@columncount{#1},
+  animation/.is choice,
+  animation/all/.code                = \def\uulm@anim@init{1}\def\uulm@anim@step{0},
+  animation/left to right/.code      = \def\uulm@anim@init{1}\def\uulm@anim@step{1}
 }
 
-\newcounter{uulm@currentcolumn}
+\newcounter{uulm@cols@current}
+\newcounter{uulm@cols@currentanim}
 \newdimen\uulm@columnwidth
 
+
 \def\uulm@mynextcolumn{
-    % TODO: animation % TODO: error if used more
-    \column{\uulm@columnwidth}
+    % TODO: animation % TODO: error if used more % TODO: keep
+    % TODO: animations that hide again
+    \advance\c@uulm@cols@current1\relax
+    \typeout{In column \the\c@uulm@cols@current}
+    \ifnum\c@uulm@cols@current>\uulm@columncount\relax
+        \uulm@columnerror
+    \fi
+    % TODO: fix counter nesting?
+    % TODO: allow hooks for column 'X'
+    \column<\c@uulm@cols@currentanim->{\uulm@columnwidth}
+    \advance\c@uulm@cols@currentanim\uulm@anim@step\relax
 }
-\def\uulm@cols@init{% TODO: manipulate width
-    \uulm@columnwidth=\dimexpr\linewidth/\uulm@columncount\relax
+\def\uulm@cols@init{% TODO: manipulate width, padding etc (with onlytextwidth)
+    \uulm@columnwidth=\dimexpr.95\linewidth/\uulm@columncount\relax
+    \c@uulm@cols@currentanim\uulm@anim@init
     \let\mynextcolumn\uulm@mynextcolumn
     \mynextcolumn
 }
 
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{columns=2, c, #1}%
-\c@uulm@currentcolumn0% reset the counter locally to the group
-\begin{columns}[\uulm@cols@align, \uulm@cols@extra]% TODO: other parameters like onlytextwith
+\pgfqkeys{/uulm columns}{columns=2, animation=all, c, #1}%
+\c@uulm@cols@current0% reset the counter locally to the group
+\begin{columns}[onlytextwidth, \uulm@cols@align, \uulm@cols@extra]% TODO: other parameters like onlytextwith
     \uulm@cols@init
 }{\end{columns}\endgroup}
 
