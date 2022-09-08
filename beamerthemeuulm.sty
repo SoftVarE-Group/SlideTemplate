@@ -194,12 +194,6 @@
     \hfill
     \halfpage{#2}%
 }
-% these commands are for the new column mechanism
-\newcommand*\uulm@cols@leftandright{%
-    \def\uulm@cols@layout{leftandright}%
-    \def\mynextcolumn{\column<1->{\halfnext}\uulm@myfinalcolumn}%
-    \def\uulm@cols@init{\column<1->{\halfnext}}% the "first" column
-}
 
 \newcommand\leftmiddleandright[3]{%
     \thirdpage{#1}%
@@ -208,33 +202,17 @@
     \hfill
     \thirdpage{#3}%
 }
-\newcommand*\uulm@cols@leftmiddleandright{%
-    \def\uulm@cols@layout{leftmiddleandright}%
-    \def\mynextcolumn{\column<1->{\thirdnext}\def\mynextcolumn{\column<1->{\thirdnext}\uulm@myfinalcolumn}}%
-    \def\uulm@cols@init{\column<1->{\thirdnext}}%
-}
 
 \newcommand\leftthenright[2]{%
     \halfpage{#1}%
     \hfill
     \onslide<2->{\halfpage{#2}}%
 }
-% instead of onslide we use the column-overlay specification for first and second
-\newcommand*\uulm@cols@leftthenright{%
-    \def\uulm@cols@layout{leftthenright}%
-    \def\uulm@cols@init{\column<1->{\halfnext}}%
-    \def\mynextcolumn{\column<2->{\halfnext}\uulm@myfinalcolumn}%
-}
 
 \newcommand\rightthenleft[2]{
     \onslide<2->{\halfpage{#1}}
     \hfill
     \halfpage{#2}
-}
-\newcommand*\uulm@cols@rightthenleft{%
-    \def\uulm@cols@layout{rightthenleft}%
-    \def\uulm@cols@init{\column<2->{\halfnext}}%
-    \def\mynextcolumn{\column<1->{\halfnext}\uulm@myfinalcolumn}%
 }
 
 \newcommand\leftmiddlethenright[3]{%
@@ -244,22 +222,11 @@
     \hfill
     \onslide<3->{\thirdpage{#2}}%
 }
-\newcommand*\uulm@cols@leftmiddlethenright{%
-    \def\uulm@cols@layout{leftmiddlethenright}%
-    \def\uulm@cols@init{\column<1->{\thirdnext}}%
-    % we redefine mynextcolumn within mynextcolumn so that it uses the overlay-specification <3->
-    \def\mynextcolumn{\column<2->{\thirdnext}\def\mynextcolumn{\column<3->{\thirdnext}\uulm@myfinalcolumn}}%
-}
 
 \newcommand\rightmiddlethenleft[3]{%
     \onslide<3->{\thirdpage{#1}}%
     \hfill
     \onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}%
-}
-\newcommand*\uulm@cols@rightmiddlethenleft{%
-    \def\uulm@cols@layout{rightmiddlethenleft}%
-    \def\uulm@cols@init{\column<3->{\thirdnext}}%
-    \def\mynextcolumn{\column<2->{\thirdnext}\def\mynextcolumn{\column<1->{\thirdnext}\uulm@myfinalcolumn}}%
 }
 
 \newcommand\leftorright[2]{%
@@ -271,16 +238,6 @@
     \leftthenright{#1}{#2}%
 \fi
 }
-\newcommand*\uulm@cols@leftorright{%
-\ifrecording
-    \def\uulm@cols@layout{leftorright}%
-    \def\uulm@cols@init{\column<1->{\halfnext}}%
-    \def\mynextcolumn{\column<3->{\halfnext}\uulm@myfinalcolumn}%
-\else
-    \uulm@cols@leftthenright
-    \def\uulm@cols@layout{leftorright (no recording -> leftthenright)}%
-\fi
-}
 
 \newcommand\rightorleft[2]{%
 \ifrecording
@@ -289,16 +246,6 @@
     \onslide<1>{\halfpage{#2}}%
 \else
     \rightthenleft{#1}{#2}%
-\fi
-}
-\newcommand*\uulm@cols@rightorleft{%
-\ifrecording
-    \def\uulm@cols@layout{rightorleft}%
-    \def\uulm@cols@init{\column<3->{\halfnext}}%
-    \def\mynextcolumn{\column<1->{\halfnext}\uulm@myfinalcolumn}%
-\else
-    \uulm@cols@leftthenright
-    \def\uulm@cols@layout{rightorleft (no recording -> leftthenright)}%
 \fi
 }
 
@@ -313,16 +260,6 @@
     \leftmiddlethenright{#1}{#2}{#3}%
 \fi
 }
-\newcommand*\uulm@cols@leftmiddleorright{%
-\ifrecording
-    \def\uulm@cols@layout{leftmiddleorright}%
-    \def\uulm@cols@init{\column<1->{\thirdnext}}%
-    \def\mynextcolumn{\column<3->{\thirdnext}\def\mynextcolumn{\column<5->{\thirdnext}\uulm@myfinalcolumn}}%
-\else
-    \uulm@cols@leftmiddlethenright
-    \def\uulm@cols@layout{leftmiddleorright (no recording -> leftmiddlethenright)}%
-\fi
-}
 
 \newcommand\rightmiddleorleft[3]{%
 \ifrecording
@@ -335,16 +272,7 @@
     \rightmiddlethenleft{#1}{#2}{#3}%
 \fi
 }
-\newcommand*\uulm@cols@rightmiddleorleft{%
-\ifrecording
-    \def\uulm@cols@layout{rightmiddleorleft}%
-    \def\uulm@cols@init{\column<5->{\thirdnext}}%
-    \def\mynextcolumn{\column<3->{\thirdnext}\def\mynextcolumn{\column<1->{\thirdnext}\uulm@myfinalcolumn}}%
-\else
-    \uulm@cols@rightmiddlethenleft
-    \def\uulm@cols@layout{rightmiddleorleft (no recording -> rightmiddlethenleft)}%
-\fi
-}
+
 \def\uulm@cols@extra{}
 
 \pgfqkeys{/uulm columns}{
@@ -355,30 +283,25 @@
   align/T/.code                      = \def\uulm@cols@align{T},
   extra/columns/.code                = \def\uulm@cols@extra{#1}, % supply custom columns arguments with columns=...
   extra/custom/.code                 = #1, % just execute a custom configuration
-  leftandright/.code                 = \uulm@cols@leftandright,
-  left and right/.forward to         = /uulm columns/leftandright,
-  leftmiddleandright/.code           = \uulm@cols@leftmiddleandright,
-  left middle and right/.forward to  = /uulm columns/leftmiddleandright,
-  leftthenright/.code                = \uulm@cols@leftthenright,
-  left then right/.forward to        = /uulm columns/leftthenright,
-  rightthenleft/.code                = \uulm@cols@rightthenleft,
-  right then left/.forward to        = /uulm columns/rightthenleft,
-  leftmiddlethenright/.code          = \uulm@cols@leftmiddlethenright,
-  left middle then right/.forward to = /uulm columns/leftmiddlethenright,
-  rightmiddlethenleft/.code          = \uulm@cols@rightmiddlethenleft,
-  right middle then left/.forward to = /uulm columns/rightmiddlethenleft,
-  leftorright/.code                  = \uulm@cols@leftorright,
-  left or right/.forward to          = /uulm columns/leftorright,
-  rightorleft/.code                  = \uulm@cols@rightorleft,
-  right or left/.forward to          = /uulm columns/rightorleft,
-  leftmiddleorright/.code            = \uulm@cols@leftmiddleorright,
-  left middle or right/.forward to   = /uulm columns/leftmiddleorright,
-  rightmiddleorleft/.code            = \uulm@cols@rightmiddleorleft,
-  right middle or left/.forward to   = /uulm columns/rightmiddleorleft
+  columns/.code                      = \def\uulm@columncount{#1}
+}
+
+\newcounter{uulm@currentcolumn}
+\newdimen\uulm@columnwidth
+
+\def\uulm@mynextcolumn{
+    % TODO: animation % TODO: error if used more
+    \column{\uulm@columnwidth}
+}
+\def\uulm@cols@init{% TODO: manipulate width
+    \uulm@columnwidth=\dimexpr\linewidth/\uulm@columncount\relax
+    \let\mynextcolumn\uulm@mynextcolumn
+    \mynextcolumn
 }
 
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{leftthenright, c, #1}%
+\pgfqkeys{/uulm columns}{columns=2, c, #1}%
+\c@uulm@currentcolumn0% reset the counter locally to the group
 \begin{columns}[\uulm@cols@align, \uulm@cols@extra]% TODO: other parameters like onlytextwith
     \uulm@cols@init
 }{\end{columns}\endgroup}
