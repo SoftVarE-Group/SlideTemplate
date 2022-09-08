@@ -275,17 +275,17 @@
 \def\uulm@cols@extra{}
 
 \pgfqkeys{/uulm columns}{
-  /uulm columns/.search also         = {/uulm columns/align, /uulm columns/extras},
-  align/c/.code                      = \def\uulm@cols@align{c},
-  align/t/.code                      = \def\uulm@cols@align{t},
-  align/b/.code                      = \def\uulm@cols@align{b},
-  align/T/.code                      = \def\uulm@cols@align{T},
-  extra/columns/.code                = \def\uulm@cols@extra{#1}, % supply custom columns arguments with columns=...
-  extra/custom/.code                 = #1, % just execute a custom configuration
-  columns/.code                      = \def\uulm@columncount{#1},
+  /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
+  align/c/.code              = \def\uulm@cols@align{c},
+  align/t/.code              = \def\uulm@cols@align{t},
+  align/b/.code              = \def\uulm@cols@align{b},
+  align/T/.code              = \def\uulm@cols@align{T},
+  extra/columns/.code        = \def\uulm@cols@extra{#1}, % supply custom columns arguments with columns=...
+  extra/custom/.code         = #1, % just execute a custom configuration
+  columns/.code              = \def\uulm@columncount{#1},
   animation/.is choice,
-  animation/all/.code                = \def\uulm@anim@init{1}\def\uulm@anim@step{0},
-  animation/left to right/.code      = \def\uulm@anim@init{1}\def\uulm@anim@step{1}
+  animation/all/.code           = \def\uulm@anim@init{1}\def\uulm@anim@step{0},
+  animation/left to right/.code = \def\uulm@anim@init{1}\def\uulm@anim@step{1}
 }
 
 \newcounter{uulm@cols@current}
