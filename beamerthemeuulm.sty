@@ -296,15 +296,17 @@
 \def\uulm@mynextcolumn{
     % TODO: animation % TODO: error if used more % TODO: keep
     % TODO: animations that hide again
-    \advance\c@uulm@cols@current1\relax
+    \global\advance\c@uulm@cols@current1\relax
     \typeout{In column \the\c@uulm@cols@current}
-    \ifnum\c@uulm@cols@current>\uulm@columncount\relax
+    \ifnum\number\c@uulm@cols@current>\uulm@columncount\relax
         \uulm@columnerror
     \fi
     % TODO: fix counter nesting?
     % TODO: allow hooks for column 'X'
-    \column<\c@uulm@cols@currentanim->{\uulm@columnwidth}
-    \advance\c@uulm@cols@currentanim\uulm@anim@step\relax
+    \typeout{Currently animating for: \the\c@uulm@cols@currentanim}
+    \column<\number\c@uulm@cols@currentanim->{\uulm@columnwidth}
+    % TODO: global and nesting :c
+    \global\advance\c@uulm@cols@currentanim\uulm@anim@step\relax
 }
 \def\uulm@cols@init{% TODO: manipulate width, padding etc (with onlytextwidth)
     \uulm@columnwidth=\dimexpr.95\linewidth/\uulm@columncount\relax
