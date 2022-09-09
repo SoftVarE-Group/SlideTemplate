@@ -23,6 +23,14 @@
 
 \newif\ifrecording % for enabling or disabling recording mode
 
+\newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
+\newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+
+\DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
+\DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+
+\ProcessOptions
+
 \setlength{\parskip}{1.5ex} % set the parskip
 \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
 % ---------------------------------------------
@@ -67,6 +75,7 @@
 % fonts
 % ---------------------------------------------
 \setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, series=\bfseries}
 \setbeamerfont{section in toc}{size=\large, series=\bfseries}
 
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
@@ -148,13 +157,21 @@
 % ---------------------------------------------
 % table of contents
 % ---------------------------------------------
+\ifsectiontitleslide
 \AtBeginSection{
+    \ifsectionoverview
     \begin{frame}{\thesection.~\insertsection}
-        \setlength{\parskip}{0ex}
-        \vfill
-        \tableofcontents[currentsection,hideothersubsections]
+    \setlength{\parskip}{0ex}
+    \vfill
+    \tableofcontents[currentsection,hideothersubsections]
     \end{frame}
+    \else
+    \begin{frame}
+        \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
+    \end{frame}
+    \fi
 }
+\fi
 
 \newcommand{\lectureoverview}{
     \begin{frame}{\inserttitle}
