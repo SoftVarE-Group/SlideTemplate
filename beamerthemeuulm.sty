@@ -94,7 +94,7 @@
 \newcommand*\clearinstitutelogo{\def\@institutelogo{}}
 \newcommand*\universitylogo[2][]{\def\@universitylogo{\includegraphics[height=4.5ex,#1]{#2}}}
 \newcommand*\clearuniversitylogo{\def\@universitylogo{}}
-\def\@mainlogo{\@institutelogo\hfill\@universitylogo}
+\def\@mainlogo{\@institutelogo\hskip0pt plus 1filll\relax\@universitylogo}
 \newif\ifuulm@logos@first@
 \newcommand*\uulmlogos[2][]{\def\@mainlogo{%
     \uulm@logos@first@true
