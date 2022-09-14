@@ -100,7 +100,9 @@
 % ---------------------------------------------
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     {
-    \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}
+    \ifthenelse{\equal{#1}{none}}{}{
+        \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}
+    }
     \begin{frame}[plain]
         \vskip0pt plus 1filll
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
