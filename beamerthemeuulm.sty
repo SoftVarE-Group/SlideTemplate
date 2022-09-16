@@ -334,18 +334,30 @@
         \edef\uulm@cols@remaining@width{\the\numexpr\uulm@cols@remaining@width-\@width}%
         % step the counter
         \advance\@tempcnta1\relax
+        % too many?
+        \ifnum\number\@tempcnta>\uulm@columncount\relax
+            \PackageError{beamerthemeuulm}{You specified '\number\uulm@columncount' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber, \on@line)}{Reduce the amount of widths supplied or increase the number of columns}
+        \fi
     }%
+    \ifnum\uulm@cols@remaining@width<0
+        \PackageError{beamerthemeuulm}{Widths (\the\uulm@cols@remaining@width) sum up to more than the allowed max '\uulm@cols@widths@max' (page: \thepage, frame: \insertframenumber, \on@line)}{Please current the supplied widths}
+    \fi
     % for the remaining columns, distribute remaining width evenly
     \edef\@remainingcols{\the\numexpr\uulm@columncount-\@tempcnta}%
     \typeout{Using auto-width for \@remainingcols\space columns}%
-    \edef\@remainingcolwidth{\the\dimexpr
-    \uulm@cols@total@width*
-    \uulm@cols@remaining@width/\uulm@cols@widths@max/\@remainingcols}%
-    % TODO: errors if too many columns?
-    \@whilenum\@tempcnta<\uulm@columncount\do{%
-        \protected@csedef{uulm@cols@col@\number\@tempcnta}{\@remainingcolwidth}%
-        \advance\@tempcnta1\relax
-    }%
+    % NOTE: maybe a warning if? \ifnum\uulm@cols@remaining@width>0
+    % To tell the user about auto-filling besides typeout?
+    % TODO: warning in general if width is below max width?
+    \ifnum\@remainingcols>0
+        \edef\@remainingcolwidth{\the\dimexpr
+        \uulm@cols@total@width*
+        \uulm@cols@remaining@width/\uulm@cols@widths@max/\@remainingcols}%
+        % TODO: errors if too many columns?
+        \@whilenum\@tempcnta<\uulm@columncount\do{%
+            \protected@csedef{uulm@cols@col@\number\@tempcnta}{\@remainingcolwidth}%
+            \advance\@tempcnta1\relax
+        }%
+    \fi
     % issue the first column
     % NOTE: we don't guard if 'columns' is below 1
     \mynextcolumn

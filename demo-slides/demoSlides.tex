@@ -127,6 +127,31 @@ System.out.println("foo");
 	\end{mycolumns}
 \end{frame}
 
+\begin{frame}{No auto-width}
+	\begin{mycolumns}[columns=3,widths={10,10,80},animation=keep,reverse]
+		\mydefinition{X}{}
+	\mynextcolumn
+		\mydefinition{Y}{}
+	\mynextcolumn
+		\mydefinition{Z}{}
+	\end{mycolumns}
+	\begin{mycolumns}[columns=3,widths={10,10,80},animation=forget]
+		\mydefinition{X}{}
+	\mynextcolumn
+		\mydefinition{Y}{}
+	\mynextcolumn
+		\mydefinition{Z}{}
+	\end{mycolumns}
+	Non-Reverse, does only show on last, which is probably not desired but part of the current implementation:
+	\begin{mycolumns}[columns=3,widths={10,80,10},reverse]
+		\mydefinition{X}{}
+	\mynextcolumn
+		\mydefinition{Y}{}
+	\mynextcolumn
+		\mydefinition{Z}{}
+	\end{mycolumns}
+\end{frame}
+
 % \section{Slide Layouts}
 
 % \subsection{Left and Right}
