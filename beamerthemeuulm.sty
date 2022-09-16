@@ -186,7 +186,7 @@
 \def\halfnext{.489\textwidth}
 % corresponds to '\thirdpage'
 \def\thirdnext{.31\textwidth}
-\def\uulm@columnerror{\PackageError{beamerthemeuulm}{The layout <TODO> you selected does not allow another \string\mynextcolumn\space (page: \thepage, frame: \insertframenumber, \on@line)}{Either remove the command, or choose another Layout}}
+\def\uulm@cols@error{\PackageError{beamerthemeuulm}{The layout <TODO> you selected does not allow another \string\mynextcolumn\space (page: \thepage, frame: \insertframenumber, \on@line)}{Either remove the command, or choose another Layout}}
 
 \newcommand\leftandright[2]{%
     \halfpage{#1}%
@@ -272,53 +272,109 @@
 \fi
 }
 
-\def\uulm@cols@extra{}
-
+% here, we configure the defaults
+\def\uulm@cols@extra{} % no extra options for the columns environment
+% init | step
+\def\uulm@cols@animation#1#2{%
+    \def\uulm@cols@anim@step{#1}% defines the increment (+/-) each step
+    \def\uulm@cols@anim@suff{#2}% '-' for keep, '' for forget
+}
+\def\uulm@cols@anim@init{1} % start on the first column
+\def\uulm@cols@anim@step@sign{+} % count up (if there is anything to count)
+\newdimen\uulm@cols@total@width % holds the column width
+\def\uulm@cols@widths@max{100} % the maximum number to be used for widths
 \pgfqkeys{/uulm columns}{
   /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
-  align/c/.code              = \def\uulm@cols@align{c},
-  align/t/.code              = \def\uulm@cols@align{t},
-  align/b/.code              = \def\uulm@cols@align{b},
-  align/T/.code              = \def\uulm@cols@align{T},
-  extra/columns/.code        = \def\uulm@cols@extra{#1}, % supply custom columns arguments with columns=...
+  align/c/.code              = \def\uulm@cols@valign{c},
+  align/t/.code              = \def\uulm@cols@valign{t},
+  align/b/.code              = \def\uulm@cols@valign{b},
+  align/T/.code              = \def\uulm@cols@valign{T},
+  align/T/.code              = \def\uulm@cols@valign{T},
+  width/.code                = \setlength\uulm@cols@total@width{#1},
+  widths/.code               = \def\uulm@cols@widths{#1},
+  extra/columns/.code        = \def\uulm@cols@extra{#1},
+  % supply custom columns arguments with columns=...
   extra/custom/.code         = #1, % just execute a custom configuration
   columns/.code              = \def\uulm@columncount{#1},
   animation/.is choice,
-  animation/all/.code           = \def\uulm@anim@init{1}\def\uulm@anim@step{0},
-  animation/left to right/.code = \def\uulm@anim@init{1}\def\uulm@anim@step{1}
+  animation/keep/.code       = \uulm@cols@animation{1}{-},
+  animation/forget/.code     = \uulm@cols@animation{1}{},
+  animation/none/.code       = \uulm@cols@animation{0}{-},
+  % explicitly do not allow just writing 'none'
+  keep/.forward to           =  /uulm columns/animation=keep,
+  forget/.forward to         =  /uulm columns/animation=forget,
+  reverse/.code              =  \def\uulm@cols@anim@init{\uulm@columncount}\def\uulm@cols@anim@step@sign{-},
+  % by overwriting the style '/uulm columns/@defaults',
+  % the user can change these defaults
+  @defaults/.style           = {
+    c, % center align
+    columns = 1, animation=none,
+    widths = {}, % use default widths
+    width = .95\linewidth% TODO: margins; by default, use the complete line
+  }
 }
 
 \newcounter{uulm@cols@current}
 \newcounter{uulm@cols@currentanim}
-\newdimen\uulm@columnwidth
-
-
-\def\uulm@mynextcolumn{
-    % TODO: animation % TODO: error if used more % TODO: keep
-    % TODO: animations that hide again
-    \global\advance\c@uulm@cols@current1\relax
-    \typeout{In column \the\c@uulm@cols@current}
-    \ifnum\number\c@uulm@cols@current>\uulm@columncount\relax
-        \uulm@columnerror
-    \fi
-    % TODO: fix counter nesting?
-    % TODO: allow hooks for column 'X'
-    \typeout{Currently animating for: \the\c@uulm@cols@currentanim}
-    \column<\number\c@uulm@cols@currentanim->{\uulm@columnwidth}
-    % TODO: global and nesting :c
-    \global\advance\c@uulm@cols@currentanim\uulm@anim@step\relax
-}
-\def\uulm@cols@init{% TODO: manipulate width, padding etc (with onlytextwidth)
-    \uulm@columnwidth=\dimexpr.95\linewidth/\uulm@columncount\relax
-    \c@uulm@cols@currentanim\uulm@anim@init
+% TODO: if recording support!
+\def\uulm@cols@init{%
+    \c@uulm@cols@current=0 % reset the counter locally to the group
+    % initialize the current animation counter
+    \c@uulm@cols@currentanim=\uulm@cols@anim@init
+    % activate(/overwrite) the '\mynextcolumn' macro
     \let\mynextcolumn\uulm@mynextcolumn
+    % deal with 'widths'
+    \@tempcnta0% temporary counter
+    % initialize the remaining width for all columns
+    \let\uulm@cols@remaining@width\uulm@cols@widths@max
+    \@for\@width:=\uulm@cols@widths\do{%
+        % define the width for column with number '\@tempcnta'
+        \protected@csedef{uulm@cols@col@\number\@tempcnta}{\the\dimexpr\uulm@cols@total@width*\@width/\uulm@cols@widths@max\relax}%
+        % reduce remaining (only int)
+        \edef\uulm@cols@remaining@width{\the\numexpr\uulm@cols@remaining@width-\@width}%
+        % step the counter
+        \advance\@tempcnta1\relax
+    }%
+    % for the remaining columns, distribute remaining width evenly
+    \edef\@remainingcols{\the\numexpr\uulm@columncount-\@tempcnta}%
+    \typeout{Using auto-width for \@remainingcols\space columns}%
+    \edef\@remainingcolwidth{\the\dimexpr
+    \uulm@cols@total@width*
+    \uulm@cols@remaining@width/\uulm@cols@widths@max/\@remainingcols}%
+    % TODO: errors if too many columns?
+    \@whilenum\@tempcnta<\uulm@columncount\do{%
+        \protected@csedef{uulm@cols@col@\number\@tempcnta}{\@remainingcolwidth}%
+        \advance\@tempcnta1\relax
+    }%
+    % issue the first column
+    % NOTE: we don't guard if 'columns' is below 1
     \mynextcolumn
 }
 
+% TODO: animation % TODO: error if used more % TODO: keep
+% TODO: animations that hide again
+
+\def\uulm@mynextcolumn{
+    % issue an error if too many columns
+    \ifnum\number\c@uulm@cols@current<\uulm@columncount\else
+        \uulm@cols@error
+    \fi
+    \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
+    % regarding the width, we use the macro 'uulm@cols@col@\number\c@uulm@cols@current'
+    \edef\@tmp{\noexpand\column<\number\c@uulm@cols@currentanim\uulm@cols@anim@suff>%
+    % the width of the column
+    {\csuse{uulm@cols@col@\number\c@uulm@cols@current}}}\@tmp
+    % update the current animation accordingly
+    \global\advance\c@uulm@cols@currentanim\uulm@cols@anim@step@sign\uulm@cols@anim@step\relax
+    % increase the current column counter (e.g. for error checking)
+    \global\advance\c@uulm@cols@current1\relax
+}
+
+% TODO: onlytextwidth
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{columns=2, animation=all, c, #1}%
-\c@uulm@cols@current0% reset the counter locally to the group
-\begin{columns}[onlytextwidth, \uulm@cols@align, \uulm@cols@extra]% TODO: other parameters like onlytextwith
+\pgfqkeys{/uulm columns}{@defaults, #1}%
+\begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
+    % TODO: other parameters like onlytextwith
     \uulm@cols@init
 }{\end{columns}\endgroup}
 
