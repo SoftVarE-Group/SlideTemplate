@@ -312,7 +312,7 @@
   extra/columns/.code        = \def\uulm@cols@extra{#1},
   % supply custom columns arguments with columns=...
   extra/custom/.code         = #1, % just execute a custom configuration
-  columns/.code              = \def\uulm@columncount{#1},
+  columns/.code              = \def\uulm@cols@count{#1},
   animation/.is choice,
   animation/keep/.code       = \uulm@cols@animation{1}{-},
   % forget will behave like keep without recording
@@ -321,7 +321,7 @@
   % explicitly do not allow just writing 'none'
   keep/.style                =  {animation=keep},
   forget/.style              =  {animation=forget},
-  reverse/.code              =  \def\uulm@cols@anim@init{\uulm@columncount}\def\uulm@cols@anim@step@sign{-},
+  reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults
   @defaults/.style           = {
@@ -353,15 +353,15 @@
         % step the counter
         \advance\@tempcnta1\relax
         % too many?
-        \ifnum\number\@tempcnta>\uulm@columncount\relax
-            \PackageError{beamerthemeuulm}{You specified '\number\uulm@columncount' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line)}{Reduce the amount of widths supplied or increase the number of columns}
+        \ifnum\number\@tempcnta>\uulm@cols@count\relax
+            \PackageError{beamerthemeuulm}{You specified '\number\uulm@cols@count' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line)}{Reduce the amount of widths supplied or increase the number of columns}
         \fi
     }%
     \ifnum\uulm@cols@remaining@width<0\relax
         \PackageError{beamerthemeuulm}{Widths (\uulm@cols@widths) sum up to more than the allowed max '\uulm@cols@widths@max' (page: \thepage, frame: \insertframenumber,\on@line)}{Please current the supplied widths}
     \fi
     % for the remaining columns, distribute remaining width evenly
-    \edef\@remainingcols{\the\numexpr\uulm@columncount-\@tempcnta}%
+    \edef\@remainingcols{\the\numexpr\uulm@cols@count-\@tempcnta}%
     % \typeout{Using auto-width for \@remainingcols\space columns}%
     % NOTE: maybe a warning if? \ifnum\uulm@cols@remaining@width>0
     % To tell the user about auto-filling besides typeout?
@@ -371,7 +371,7 @@
         \uulm@cols@total@width*
         \uulm@cols@remaining@width/\uulm@cols@widths@max/\@remainingcols}%
         % TODO: errors if too many columns?
-        \@whilenum\@tempcnta<\uulm@columncount\do{%
+        \@whilenum\@tempcnta<\uulm@cols@count\do{%
             \protected@csedef{uulm@cols@col@\number\@tempcnta}{\@remainingcolwidth}%
             \advance\@tempcnta1\relax
         }%
@@ -386,7 +386,7 @@
 
 \def\uulm@mynextcolumn{
     % issue an error if too many columns
-    \ifnum\number\c@uulm@cols@current<\uulm@columncount\else
+    \ifnum\number\c@uulm@cols@current<\uulm@cols@count\else
         \uulm@cols@error
     \fi
     % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
