@@ -345,7 +345,7 @@
     \fi
     % for the remaining columns, distribute remaining width evenly
     \edef\@remainingcols{\the\numexpr\uulm@columncount-\@tempcnta}%
-    \typeout{Using auto-width for \@remainingcols\space columns}%
+    % \typeout{Using auto-width for \@remainingcols\space columns}%
     % NOTE: maybe a warning if? \ifnum\uulm@cols@remaining@width>0
     % To tell the user about auto-filling besides typeout?
     % TODO: warning in general if width is below max width?
@@ -372,7 +372,7 @@
     \ifnum\number\c@uulm@cols@current<\uulm@columncount\else
         \uulm@cols@error
     \fi
-    \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
+    % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
     % regarding the width, we use the macro 'uulm@cols@col@\number\c@uulm@cols@current'
     \edef\@tmp{\noexpand\column<\number\c@uulm@cols@currentanim\uulm@cols@anim@suff>%
     % the width of the column
