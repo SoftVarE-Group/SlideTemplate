@@ -19,9 +19,17 @@
 % ---------------------------------------------
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
-\graphicspath{{../pics/logos}{../pics/uulm}{../pics/nature}}
+\graphicspath{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
 
 \newif\ifrecording % for enabling or disabling recording mode
+
+\newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
+\newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+
+\DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
+\DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+
+\ProcessOptions
 
 \setlength{\parskip}{1.5ex} % set the parskip
 \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
@@ -67,6 +75,7 @@
 % fonts
 % ---------------------------------------------
 \setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, series=\bfseries}
 \setbeamerfont{section in toc}{size=\large, series=\bfseries}
 
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
@@ -148,13 +157,21 @@
 % ---------------------------------------------
 % table of contents
 % ---------------------------------------------
+\ifsectiontitleslide
 \AtBeginSection{
+    \ifsectionoverview
     \begin{frame}{\thesection.~\insertsection}
-        \setlength{\parskip}{0ex}
-        \vfill
-        \tableofcontents[currentsection,hideothersubsections]
+    \setlength{\parskip}{0ex}
+    \vfill
+    \tableofcontents[currentsection,hideothersubsections]
     \end{frame}
+    \else
+    \begin{frame}
+        \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
+    \end{frame}
+    \fi
 }
+\fi
 
 \newcommand{\lectureoverview}{
     \begin{frame}{\inserttitle}
@@ -393,27 +410,6 @@
 
 
 % ---------------------------------------------
-
-
-% ---------------------------------------------
-% color boxes
-% ---------------------------------------------
-\tcbset{%
-    % by definig styles we avoid their replication
-    uulm@basic-boxstyle/.style n args=4{
-        title={#2},
-        colframe=#3!30,
-        coltitle=black,
-        before title={\setlength{\parskip}{0ex}\vphantom{/}},
-        fonttitle=\bfseries,
-        left=#4, right=#4, top=#4, bottom=#4,
-        #1
-    },
-    % style definition for the normal boxes
-    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
-    % style definition for their tight variant
-    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
-}
 
 % name | color
 \def\uulm@MakeNewBox#1#2{

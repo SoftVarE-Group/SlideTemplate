@@ -1,6 +1,8 @@
 \documentclass[
 	aspectratio=169, % default is 43
 	8pt, % font size, default is 11pt
+	%sectiontitleslides, % enable an automatic section title slide at the begin of each section
+	sectionoverviews, % enable an automatic section overview at the begin of each section
 	%handout, % handout mode without animations, comment out to add animations
 ]{beamer}
 
@@ -11,6 +13,7 @@
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
 \usepackage{minted} % exemplify verbatim-safe-boxes
+%\includeonlyframes{current} % default mechanism of beamer to include only labeled frames, can be used for debugging or drafting
 
 \title[Short Title]{This is the Long Title} % short title is used for the slide footer but optional
 \subtitle[Short Subtitle]{This is the Long Subtitle} % subtitles are optional at all
@@ -34,7 +37,7 @@
 \section{Lists and Boxes}
 
 \subsection{Lists and Numbered Lists}
-\begin{frame}{\insertsubsection}
+\begin{frame}[label=current]{\insertsubsection}
 	\leftandright{
 	    Lists can be nested to a depth of three:
 	    \begin{itemize}
