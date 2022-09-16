@@ -410,6 +410,24 @@
 
 
 % ---------------------------------------------
+% color boxes
+% ---------------------------------------------
+\tcbset{%
+    % by definig styles we avoid their replication
+    uulm@basic-boxstyle/.style n args=4{
+        title={#2},
+        colframe=#3!30,
+        coltitle=black,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}},
+        fonttitle=\bfseries,
+        left=#4, right=#4, top=#4, bottom=#4,
+        #1
+    },
+    % style definition for the normal boxes
+    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
+    % style definition for their tight variant
+    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
+}
 
 % name | color
 \def\uulm@MakeNewBox#1#2{
