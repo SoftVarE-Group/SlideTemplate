@@ -298,7 +298,8 @@
   columns/.code              = \def\uulm@columncount{#1},
   animation/.is choice,
   animation/keep/.code       = \uulm@cols@animation{1}{-},
-  animation/forget/.code     = \uulm@cols@animation{1}{},
+  % forget will behave like keep without recording
+  animation/forget/.code     = \ifrecording\uulm@cols@animation{1}{}\else\uulm@cols@animation{1}{-}\fi,
   animation/none/.code       = \uulm@cols@animation{0}{-},
   % explicitly do not allow just writing 'none'
   keep/.forward to           =  /uulm columns/animation=keep,
