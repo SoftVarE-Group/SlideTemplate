@@ -302,8 +302,8 @@
   animation/forget/.code     = \ifrecording\uulm@cols@animation{1}{}\else\uulm@cols@animation{1}{-}\fi,
   animation/none/.code       = \uulm@cols@animation{0}{-},
   % explicitly do not allow just writing 'none'
-  keep/.forward to           =  /uulm columns/animation=keep,
-  forget/.forward to         =  /uulm columns/animation=forget,
+  keep/.style                =  {animation=keep},
+  forget/.style              =  {animation=forget},
   reverse/.code              =  \def\uulm@cols@anim@init{\uulm@columncount}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults

@@ -20,57 +20,57 @@
 \begin{document}
 
 \maketitle % title page with default picture
-% % examples for alternative title pictures
-% \maketitle[mar22-bee1][0] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[may21-north1][50] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[oct20-o25b][100] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[may21-west1][150] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[may21-south][175] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[may21-q47][200] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[oct20-o27c][250] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[may21-ulm][300] % optional parameters to change title picture and offset to move it upwards
-% \maketitle[oct20-q37][350] % optional parameters to change title picture and offset to move it upwards
+% examples for alternative title pictures
+\maketitle[mar22-bee1][0] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-north1][50] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-o25b][100] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-west1][150] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-south][175] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-q47][200] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-o27c][250] % optional parameters to change title picture and offset to move it upwards
+\maketitle[may21-ulm][300] % optional parameters to change title picture and offset to move it upwards
+\maketitle[oct20-q37][350] % optional parameters to change title picture and offset to move it upwards
 
 \section{Lists and Boxes}
 
-% \subsection{Lists and Numbered Lists}
-% \begin{frame}{\insertsubsection}
-% 	\leftandright{
-% 	    Lists can be nested to a depth of three:
-% 	    \begin{itemize}
-% 	        \item Item on the first level
-% 	    	\item Another item on the first level
-% 	        \begin{itemize}
-% 	            \item Item on the second level
-% 	        	\item Another item on the second level
-% 	            \begin{itemize}
-% 	                \item Item on the third level
-% 	                \item Another item on the third level
-% 	            \end{itemize}
-% 	        \end{itemize}
-% 	    \end{itemize}
-%     }{
-% 		Numbered lists can be nested to a depth of three:
-% 		\begin{enumerate}
-% 			\item Item on the first level
-% 			\item Another item on the first level
-% 			\begin{enumerate}
-% 				\item Item on the second level
-% 				\item Another item on the second level
-% 				\begin{enumerate}
-% 					\item Item on the third level
-% 					\item Another item on the third level
-% 				\end{enumerate}
-% 			\end{enumerate}
-% 		\end{enumerate}
-% 	}
-% \end{frame}
+\subsection{Lists and Numbered Lists}
+\begin{frame}{\insertsubsection}
+	\leftandright{
+	    Lists can be nested to a depth of three:
+	    \begin{itemize}
+	        \item Item on the first level
+	    	\item Another item on the first level
+	        \begin{itemize}
+	            \item Item on the second level
+	        	\item Another item on the second level
+	            \begin{itemize}
+	                \item Item on the third level
+	                \item Another item on the third level
+	            \end{itemize}
+	        \end{itemize}
+	    \end{itemize}
+    }{
+		Numbered lists can be nested to a depth of three:
+		\begin{enumerate}
+			\item Item on the first level
+			\item Another item on the first level
+			\begin{enumerate}
+				\item Item on the second level
+				\item Another item on the second level
+				\begin{enumerate}
+					\item Item on the third level
+					\item Another item on the third level
+				\end{enumerate}
+			\end{enumerate}
+		\end{enumerate}
+	}
+\end{frame}
 
 \subsection{Colored Boxes}
 \begin{frame}[fragile]{\insertsubsection\ with a really really really really really really really really really really really long title\hfill With Fill!}
 	Normal versions:
 
-\begin{mycolumns}[columns=3]
+\begin{mycolumns}[columns=3,forget,reverse]
 		\begin{definition}{A Definition}
 			This is a definition.
 \begin{minted}{java}
@@ -103,251 +103,203 @@ System.out.println("foo");
 	}
 \end{frame}
 
-\begin{frame}{Normal}
-	\begin{mycolumns}[columns=5,widths={50},animation=keep]
-		\mydefinition{X}{}
-	\mynextcolumn
-		\mydefinition{Y}{}
-	\mynextcolumn
-		\mydefinition{Z}{}
-	\mynextcolumn
-		\mydefinition{A}{}
-	\mynextcolumn
-		\mydefinition{B}{}
-	\end{mycolumns}
-	\begin{mycolumns}[columns=4,widths={30, 50},animation=forget,reverse]
-		\mydefinition{X}{}
-	\mynextcolumn
-		\mydefinition{Y}{}
-	\mynextcolumn
-		\mydefinition{Z}{}
-	\mynextcolumn
-		\mydefinition{A}{}
-	\end{mycolumns}
+\section{Slide Layouts}
+
+\subsection{Left and Right}
+\begin{frame}{\insertsubsection}
+    \leftandright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\begin{note}{Explanation}
+		Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	\end{note}
 \end{frame}
 
-\begin{frame}{No auto-width}
-	\begin{mycolumns}[columns=3,widths={10,10,80},animation=keep,reverse]
-		\mydefinition{X}{}
-	\mynextcolumn
-		\mydefinition{Y}{}
-	\mynextcolumn
-		\mydefinition{Z}{}
-	\end{mycolumns}
-	\begin{mycolumns}[columns=3,widths={10,10,80},animation=forget]
-		\mydefinition{X}{}
-	\mynextcolumn
-		\mydefinition{Y}{}
-	\mynextcolumn
-		\mydefinition{Z}{}
-	\end{mycolumns}
-	Non-Reverse, does only show on last, which is probably not desired but part of the current implementation:
-	\begin{mycolumns}[columns=3,widths={10,80,10},reverse]
-		\mydefinition{X}{}
-	\mynextcolumn
-		\mydefinition{Y}{}
-	\mynextcolumn
-		\mydefinition{Z}{}
-	\end{mycolumns}
+\subsection{Left, Middle, and Right}
+\begin{frame}{\insertsubsection}
+	\leftmiddleandright{
+		This is an example text that is shown in the \textbf{left column}.
+	}{
+		This is an example text that is shown in the \textbf{middle column}.
+	}{
+		This is an example text that is shown in the \textbf{right column}.
+	}
+	\vfill
+	\mynote{Explanation}{
+		All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
+	}
 \end{frame}
 
-% \section{Slide Layouts}
+\subsection{Columns with Customized Width}
+\begin{frame}{\insertsubsection}
+	\partofpage{10}{This is an example text that is shown in a column with \textbf{10 percent of the width}.}
+	\hfill % two and three column layouts use about 4% of the width as space in between
+	\partofpage{30}{This is an example text that is shown in a column with \textbf{30 percent of the width}.}
+	\hfill
+	\partofpage{50}{This is an example text that is shown in a column with \textbf{50 percent of the width}.}
+\end{frame}
 
-% \subsection{Left and Right}
-% \begin{frame}{\insertsubsection}
-%     \leftandright{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		Both columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
-% 	\end{note}
-% \end{frame}
+\section{Animated Slide Layouts}
 
-% \subsection{Left, Middle, and Right}
-% \begin{frame}{\insertsubsection}
-% 	\leftmiddleandright{
-% 		This is an example text that is shown in the \textbf{left column}.
-% 	}{
-% 		This is an example text that is shown in the \textbf{middle column}.
-% 	}{
-% 		This is an example text that is shown in the \textbf{right column}.
-% 	}
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		All columns are visible in \textbf{handout}, \textbf{slide}, and \textbf{recording} mode (i.e., there are no animations).
-% 	}
-% \end{frame}
+\subsection{Left then Right}
+\begin{frame}{\insertsubsection}
+    \leftthenright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, both columns are visible.
 
-% \subsection{Columns with Customized Width}
-% \begin{frame}{\insertsubsection}
-% 	\partofpage{10}{This is an example text that is shown in a column with \textbf{10 percent of the width}.}
-% 	\hfill % two and three column layouts use about 4% of the width as space in between
-% 	\partofpage{30}{This is an example text that is shown in a column with \textbf{30 percent of the width}.}
-% 	\hfill
-% 	\partofpage{50}{This is an example text that is shown in a column with \textbf{50 percent of the width}.}
-% \end{frame}
+		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then both columns.
+	}
+\end{frame}
 
-% \section{Animated Slide Layouts}
+\begin{frame}{Right then Left}
+    \rightthenleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, both columns are visible.
 
-% \subsection{Left then Right}
-% \begin{frame}{\insertsubsection}
-%     \leftthenright{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout} mode, both columns are visible.
+		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then both columns.
+	}
+\end{frame}
 
-% 		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then both columns.
-% 	}
-% \end{frame}
+\subsection{Left, Middle, then Right}
+\begin{frame}{\insertsubsection}
+    \leftmiddlethenright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, all columns are visible.
 
-% \begin{frame}{Right then Left}
-%     \rightthenleft{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout} mode, both columns are visible.
+		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
+	}
+\end{frame}
 
-% 		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then both columns.
-% 	}
-% \end{frame}
+\begin{frame}{Right, Middle, then Left}
+    \rightmiddlethenleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout} mode, all columns are visible.
 
-% \subsection{Left, Middle, then Right}
-% \begin{frame}{\insertsubsection}
-%     \leftmiddlethenright{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{middle column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout} mode, all columns are visible.
+		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then additionally the middle column, and finally all columns.
+	}
+\end{frame}
 
-% 		In \textbf{slide} and \textbf{recording} mode, only the left column is shown at the beginning, then additionally the middle column, and finally all columns.
-% 	}
-% \end{frame}
+\subsection{Left or Right}
+\begin{frame}{\insertsubsection}
+    \leftorright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, both columns are visible.
 
-% \begin{frame}{Right, Middle, then Left}
-%     \rightmiddlethenleft{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{middle column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout} mode, all columns are visible.
+		In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
 
-% 		In \textbf{slide} and \textbf{recording} mode, only the right column is shown at the beginning, then additionally the middle column, and finally all columns.
-% 	}
-% \end{frame}
+		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
+	}
+\end{frame}
 
-% \subsection{Left or Right}
-% \begin{frame}{\insertsubsection}
-%     \leftorright{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout mode}, both columns are visible.
+\begin{frame}{Right or Left}
+    \rightorleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, both columns are visible.
 
-% 		In \textbf{slide mode}, only the left column is shown at the beginning and then both columns (cf. \textbf{Left then Right}).
+		In \textbf{slide mode}, only the right column is shown at the beginning and then both columns (cf. \textbf{Right then Left}).
 
-% 		In \textbf{recording mode}, only the left column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the right column.
-% 	}
-% \end{frame}
+		In \textbf{recording mode}, only the right column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the left column.
+	}
+\end{frame}
 
-% \begin{frame}{Right or Left}
-%     \rightorleft{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout mode}, both columns are visible.
+\subsection{Left, Middle, or Right}
+\begin{frame}{\insertsubsection}
+    \leftmiddleorright{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, all columns are visible.
 
-% 		In \textbf{slide mode}, only the right column is shown at the beginning and then both columns (cf. \textbf{Right then Left}).
+		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle, then Right}).
 
-% 		In \textbf{recording mode}, only the right column is shown at the beginning, then an empty slide (to walk to the other side), and finally only the left column.
-% 	}
-% \end{frame}
+		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
+	}
+\end{frame}
 
-% \subsection{Left, Middle, or Right}
-% \begin{frame}{\insertsubsection}
-%     \leftmiddleorright{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{middle column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout mode}, all columns are visible.
+\begin{frame}{Right, Middle, or Left}
+    \rightmiddleorleft{
+        This is an example text that is shown in the \textbf{left column}.
+    }{
+        This is an example text that is shown in the \textbf{middle column}.
+    }{
+        This is an example text that is shown in the \textbf{right column}.
+    }
+	\vfill
+	\mynote{Explanation}{
+		In \textbf{handout mode}, all columns are visible.
 
-% 		In \textbf{slide mode}, only the left column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Left, Middle, then Right}).
+		In \textbf{slide mode}, only the right column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Right, Middle, then Left}).
 
-% 		In \textbf{recording mode}, only the left column is shown at the beginning, then only the middle column, and finally only the right column (again interleaved with empty slides).
-% 	}
-% \end{frame}
+		In \textbf{recording mode}, only the right column is shown at the beginning, then only the middle column, and finally only the left column (again interleaved with empty slides).
+	}
+\end{frame}
 
-% \begin{frame}{Right, Middle, or Left}
-%     \rightmiddleorleft{
-%         This is an example text that is shown in the \textbf{left column}.
-%     }{
-%         This is an example text that is shown in the \textbf{middle column}.
-%     }{
-%         This is an example text that is shown in the \textbf{right column}.
-%     }
-% 	\vfill
-% 	\mynote{Explanation}{
-% 		In \textbf{handout mode}, all columns are visible.
+\section{Other Features}
 
-% 		In \textbf{slide mode}, only the right column is shown at the beginning, then additionally the middle column, and finally all columns (cf. \textbf{Right, Middle, then Left}).
+\subsection{Auto-Scaling for Long Titles}
+\begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
+	\mynote{Explanation}{
+		Very long frame titles are scaled down automatically.
 
-% 		In \textbf{recording mode}, only the right column is shown at the beginning, then only the middle column, and finally only the left column (again interleaved with empty slides).
-% 	}
-% \end{frame}
+		This can avoid annoying linebreaks for a single character or word.
 
-% \section{Other Features}
+		Use with care.
+	}
+\end{frame}
 
-% \subsection{Auto-Scaling for Long Titles}
-% \begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
-% 	\mynote{Explanation}{
-% 		Very long frame titles are scaled down automatically.
+\subsection{Easy Navigation in Slides}
+\begin{frame}{\insertsubsection}
+	\vfill
+	Click on the title (here \textbf{\insertshorttitle}) or subtitle (here \textbf{\insertshortsubtitle}) in the slide footer to jump to the title slide.
+	\vfill
+	Click on the section title (here \textbf{\insertsection}) in the slide footer to jump to the section overview.
+	\vfill
+	In the section overview, click on sections or subsections to jump to another part.
+	\vfill
+\end{frame}
 
-% 		This can avoid annoying linebreaks for a single character or word.
-
-% 		Use with care.
-% 	}
-% \end{frame}
-
-% \subsection{Easy Navigation in Slides}
-% \begin{frame}{\insertsubsection}
-% 	\vfill
-% 	Click on the title (here \textbf{\insertshorttitle}) or subtitle (here \textbf{\insertshortsubtitle}) in the slide footer to jump to the title slide.
-% 	\vfill
-% 	Click on the section title (here \textbf{\insertsection}) in the slide footer to jump to the section overview.
-% 	\vfill
-% 	In the section overview, click on sections or subsections to jump to another part.
-% 	\vfill
-% \end{frame}
-
-% \lectureoverview
+\lectureoverview
 
 \end{document}
