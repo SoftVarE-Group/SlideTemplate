@@ -98,6 +98,26 @@
 % ---------------------------------------------
 % frame layout
 % ---------------------------------------------
+% [options for includegraphics]{logoname}
+\newcommand*\institutelogo[2][]{\def\@institutelogo{\includegraphics[height=4.5ex,#1]{#2}}}
+\newcommand*\clearinstitutelogo{\def\@institutelogo{}}
+\newcommand*\universitylogo[2][]{\def\@universitylogo{\includegraphics[height=4.5ex,#1]{#2}}}
+\newcommand*\clearuniversitylogo{\def\@universitylogo{}}
+\def\@mainlogo{\@institutelogo\hskip0pt plus 1filll\relax\@universitylogo}
+\newif\ifuulm@logos@first@
+\newcommand*\uulmlogos[2][]{\def\@mainlogo{%
+    \uulm@logos@first@true
+    \@for\@image:={#2}\do{%
+        \ifuulm@logos@first@\uulm@logos@first@false\else \hskip0pt plus 1filll\fi
+        \ifthenelse{\equal{\@image}{}}{}{%
+            \includegraphics[height=4.5ex,#1]{\@image}%
+        }%
+    }%
+}}
+% default for the university, after all, it is the layout of uulm
+\universitylogo{uulm}
+\clearinstitutelogo
+
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     {
     \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}
@@ -114,14 +134,11 @@
             \ifx \insertdate \empty \else $\vert$ \insertdate \fi
             \hspace*{20pt}
         \end{beamercolorbox}%
-        \nointerlineskip%
+        \nointerlineskip
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
-            \centering
-            \vspace{-1ex}
+            \vspace{-1ex}%
             \hspace{10pt}
-            \includegraphics[height=4.5ex]{sp} % SPECIFY INSTITUTE LOGO HERE
-            \hfill
-            \includegraphics[height=4.5ex]{uulm}
+            \@mainlogo
             \hspace{10pt}
         \end{beamercolorbox}%
     \end{frame}
