@@ -108,7 +108,7 @@
         \end{beamercolorbox}%
         \nointerlineskip%
         \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{subtitlebox}
-            \small 
+            \small
             \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
             \insertauthor\
             \ifx \insertdate \empty \else $\vert$ \insertdate \fi
@@ -125,7 +125,7 @@
             \hspace{10pt}
         \end{beamercolorbox}%
     \end{frame}
-    }  
+    }
 }
 
 \setbeamertemplate{frametitle}{
@@ -142,9 +142,9 @@
             \insertshortauthor
             \hfill
             \insertshorttitle\
-            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi 
-            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi 
-            \hspace{0.03\textwidth} 
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi
+            \hspace{0.03\textwidth}
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
             \insertframenumber
@@ -198,131 +198,368 @@
 	\end{minipage}
 }
 
+% corresponds to '\halfpage', however, with the new columns we could use larger values
+% (same for thirdnext)
+\def\halfnext{.489\textwidth}
+% corresponds to '\thirdpage'
+\def\thirdnext{.31\textwidth}
 
-\newcommand{\leftandright}[2]{
-    \halfpage{#1}
+\newcommand\leftandright[2]{%
+    \halfpage{#1}%
     \hfill
-    \halfpage{#2}
+    \halfpage{#2}%
 }
 
-\newcommand{\leftmiddleandright}[3]{
-	\thirdpage{#1}
+\newcommand\leftmiddleandright[3]{%
+    \thirdpage{#1}%
     \hfill
-    \thirdpage{#2}
+    \thirdpage{#2}%
     \hfill
-    \thirdpage{#3}
+    \thirdpage{#3}%
 }
 
-\newcommand{\leftthenright}[2]{
-    \halfpage{#1}
+\newcommand\leftthenright[2]{%
+    \halfpage{#1}%
     \hfill
-    \onslide<2->{\halfpage{#2}}
+    \onslide<2->{\halfpage{#2}}%
 }
 
-\newcommand{\rightthenleft}[2]{
+\newcommand\rightthenleft[2]{
     \onslide<2->{\halfpage{#1}}
     \hfill
     \halfpage{#2}
 }
 
-\newcommand{\leftmiddlethenright}[3]{
-	\thirdpage{#1}
+\newcommand\leftmiddlethenright[3]{%
+    \thirdpage{#1}%
     \hfill
-    \onslide<2->{\thirdpage{#2}}
+    \onslide<2->{\thirdpage{#2}}%
     \hfill
-    \onslide<3->{\thirdpage{#3}}
+    \onslide<3->{\thirdpage{#3}}%
 }
 
-\newcommand{\rightmiddlethenleft}[3]{
-	\onslide<3->{\thirdpage{#1}}
+\newcommand\rightmiddlethenleft[3]{%
+    \onslide<3->{\thirdpage{#1}}%
     \hfill
-    \onslide<2->{\thirdpage{#2}}
+    \onslide<2->{\thirdpage{#2}}%
     \hfill
-    \thirdpage{#3}
+    \thirdpage{#3}%
 }
 
-\newcommand{\leftorright}[2]{ % only works in recording mode
-    \ifrecording
-    \onslide<1>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\halfpage{#2}}
-    \else
-	\leftthenright{#1}{#2}
-	\fi
+\newcommand\leftorright[2]{% only works in recording mode
+\ifrecording
+    \onslide<1>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\halfpage{#2}}%
+\else
+    \leftthenright{#1}{#2}%
+\fi
 }
 
-\newcommand{\rightorleft}[2]{ % only works in recording mode
-    \ifrecording
-    \onslide<3>{\halfpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\halfpage{#2}}
-    \else
-	\rightthenleft{#1}{#2}
-	\fi
+\newcommand\rightorleft[2]{% only works in recording mode
+\ifrecording
+    \onslide<3>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\halfpage{#2}}%
+\else
+    \rightthenleft{#1}{#2}%
+\fi
 }
 
-\newcommand{\leftmiddleorright}[3]{ % only works in recording mode
-    \ifrecording
-    \onslide<1>{\thirdpage{#1}}
-    \onslide<2>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<4>{\hfill}
-    \onslide<5>{\thirdpage{#3}}
-    \else
-	\leftmiddlethenright{#1}{#2}{#3}
-	\fi
+\newcommand\leftmiddleorright[3]{% only works in recording mode
+\ifrecording
+    \onslide<1>{\thirdpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<4>{\hfill}%
+    \onslide<5>{\thirdpage{#3}}%
+\else
+    \leftmiddlethenright{#1}{#2}{#3}%
+\fi
 }
 
-\newcommand{\rightmiddleorleft}[3]{ % only works in recording mode
-    \ifrecording
-    \onslide<5>{\thirdpage{#1}}
-    \onslide<4>{\hfill}
-    \onslide<3>{\thirdpage{#2}}
-    \onslide<2>{\hfill}
-    \onslide<1>{\thirdpage{#3}}
-    \else
-	\rightmiddlethenleft{#1}{#2}{#3}
-	\fi
+\newcommand\rightmiddleorleft[3]{% only works in recording mode
+\ifrecording
+    \onslide<5>{\thirdpage{#1}}%
+    \onslide<4>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\thirdpage{#3}}%
+\else
+    \rightmiddlethenleft{#1}{#2}{#3}%
+\fi
 }
-% ---------------------------------------------
+
+% here, we configure the defaults
+\def\uulm@cols@extra{} % no extra options for the columns environment
+% init | step
+\def\uulm@cols@animation#1#2{%
+    % defines the increment for each step (always positive)
+    % you can supply a step greater than 0, allowing for 'empty-animations' between the columns
+    \def\uulm@cols@anim@step{#1}%
+    % '-' for keep, '' (empty) for forget
+    \def\uulm@cols@anim@suff{#2}%
+}
+\def\uulm@cols@anim@init{1}     % start on the first column
+\def\uulm@cols@anim@step@sign{+}% count up (if there is anything to count)
+\newdimen\uulm@cols@total@width % holds the column width
+\newdimen\uulm@cols@margin      % holds the margin in-between columns
+\def\uulm@cols@widths@max{100}  % the maximum number to be used for widths
+% with this, we define the keys that are usable within the optional argument of '\mycolumns'
+\pgfqkeys{/uulm columns}{
+  % search also allows to write 'c' instead of 'align/c' etc.
+  /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
+  align/c/.code              = \def\uulm@cols@valign{c}, % centered
+  align/t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
+  align/b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
+  align/T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
+  % with 'width' the user can set the total width to be occupied by the columns
+  width/.code                = \setlength\uulm@cols@total@width{#1},
+  % define the margin between columns
+  margin/.code               = \setlength\uulm@cols@margin{#1},
+  % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
+  widths/.code               = \def\uulm@cols@widths{#1},
+  % this key is only for users who need to change anything for the underlying columns mechanism
+  extra/columns/.code        = \def\uulm@cols@extra{#1},
+  % control the number of columns
+  columns/.code              = \def\uulm@cols@count{#1},
+  % allow for 'animation=...'
+  animation/.is choice,
+  % similar to 'then'
+  animation/keep/.code       = \uulm@cols@animation{1}{-},
+  % similar to 'or', forget will behave like keep without recording
+  animation/forget/.code     = \ifrecording\uulm@cols@animation{1}{}\else\uulm@cols@animation{1}{-}\fi,
+  % no animation, show all
+  animation/none/.code       = \uulm@cols@animation{0}{-},
+  % comfort variants, just so the user does not have to write 'animation='
+  keep/.style                =  {animation=keep},
+  forget/.style              =  {animation=forget},
+  % deliberately not offer a comfort-variant for the default (none)
+  % reverse animation order by setting the initial animation to the amount of columns and making the step (animation delta
+  % per column) negative (\uulm@cols@anim@step@sign controls if the animation goes up (+) or down (-))
+  reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
+  % by overwriting the style '/uulm columns/@defaults',
+  % the user can change these defaults
+  @defaults/.style           = {
+    c, % center align
+    columns = 2, animation=none, % one column, no animation
+    widths = {}, % use default widths (evenly distribute)
+    % we could also use the default columnsep of latex,
+    % this number was merly chosen to look visually pleasing
+    margin = 0.035\linewidth,
+    width = \linewidth
+  }
+}
+
+% allows to user to overwrite the defaults
+\newcommand\setmycolumnsdefault[1]{\pgfqkeys{/uulm columns}{@defaults/.append style={#1}}}
+
+% we need two counters
+% 'uulm@cols@current' holds the column we are currently in (starts with 0)
+\newcounter{uulm@cols@current}
+% 'uulm@cols@currentanim' holds the slide the current column should appear on
+\newcounter{uulm@cols@currentanim}
+% 'uulm@cols@current' will increment by 1 for each column
+% 'uulm@cols@currentanim' may increment similarly (animation without reverse)
+% ...                     may decrement by 1      (animation with reverse)
+% ...                     may remain constant     (without animation)
+
+% code to be executed at the start of the columns
+\newcommand\uulm@cols@init{%
+    % reset the counter for the current column
+    \setcounter{uulm@cols@current}{0}%
+    % initialize the current animation counter with the start animation
+    % this is 1 without reverse, and the number of columns if reverse is active
+    \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}%
+    % due to the way beamer calculates the columns, we remove the margin from the width
+    % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
+    \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
+    % activate(/overwrite) the '\mynextcolumn' macro within the environment
+    \let\mynextcolumn\uulm@mynextcolumn
+    % a rather complicated macro, which sets/calculates the widths for all columns
+    \uulm@cols@initialize@widths
+    % issue the first column
+    % NOTE: we don't guard if 'columns' is below 1 (e.g. we always assume, there is 1 column)
+    \mynextcolumn
+}
+
+% a temporary counter so we do not need to use low-level tex counters (like @tempcnta)
+% with '\value{uulm@cols@temp}' we get the numerical value of the counter
+% with '\arabic{uulm@cols@temp}' we get the (textual) "number"-value of the counter
+\newcounter{uulm@cols@temp}
+
+% the only thing important by this macro are other commands sequences:
+% \uulm@cols@col@0, \uulm@cols@col@1, \uulm@cols@col@2, ...
+% which hold the total width, column with number 0, 1, 2, ... should occupy
+% it uses the total number of columns, the supplied total width of all columns
+% and the desired 'widths={...}'. If there are more columns (e.g. widths={30}, columns=3)
+% it will automatically distributed the remaining space evenly.
+% note, that while we assume the units of 'widths' to be percentages, it is really the
+% macro '\uulm@cols@widths@max' which holds the number they should sum up to (i.e. 100)
+\newcommand\uulm@cols@initialize@widths{%
+    % first of all, we iterate over the given 'widths={...}' (stored within \uulm@cols@widths)
+    % we use 'uulm@cols@temp' to count the number of widths supplied
+    \setcounter{uulm@cols@temp}{0}%
+    % The macro '\uulm@cols@widths@max' holds the desired target which all the supplied widths should sum up to it is
+    % probably 100 (therefore, supplying widths={20,10}, would reduce '\uulm@cols@remaining@width' from 100 to 70)
+    \let\uulm@cols@remaining@width\uulm@cols@widths@max
+    % now we use '@for' which iterates over all widths (comma-separated) stored in '\uulm@cols@widths'
+    % the loop variable '\@uulm@cols@width' will hold the current width in each loop
+    \@for\@uulm@cols@width:=\uulm@cols@widths\do{%
+        % with 'protected@csedef' we (in short) define a new macro but supply its name in terms of another macro
+        % this macro name can contain numbers etc.
+        % essential, we define '\uulm@cols@col@<current column>' that is, 'widths={20,30}' would create:
+        % \uulm@cols@col@0, which holds the calculated value for 20
+        % \uulm@cols@col@1, which holds the calculated value for 20
+        % See the etoolbox package for an explanation of '\csdimdef'
+        \csdimdef{uulm@cols@col@\arabic{uulm@cols@temp}}{%
+            % We make math on dimensions. Essentially, we calculate the total width to be occupied
+            % by those column (i.e. translating from the percentages of 'widths' to the real dimension)
+            \uulm@cols@total@width*\@uulm@cols@width/\uulm@cols@widths@max
+            % Example:
+            % with '\uulm@cols@total@width' being probably something like '\linewidth' and '\uulm@cols@widths@max' being 100
+            % this can be read as: '\linewidth * \@uulm@cols@width/100'
+            % Suppose, the current '\@uulm@cols@width' is 20, this would result in '\linewidth * 0.2' or "20% of the width of the line"
+        }%
+        % now we update the amount of widths left (e.g., when we have '\uulm@cols@remaining@width' as 100 and a '\@uulm@cols@width' of 20,
+        % this will reduce the remaining number to 80). See etoolbox for an explanation of numdef
+        \numdef\uulm@cols@remaining@width{\uulm@cols@remaining@width-\@uulm@cols@width}%
+        % step the counter to move to the width for the next column
+        \stepcounter{uulm@cols@temp}%
+        % check, if we have too many columns
+        \ifnum\value{uulm@cols@temp}>\uulm@cols@count\relax
+            \PackageWarning{beamerthemeuulm}{You specified '\uulm@cols@count' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line). Reduce the amount of widths supplied or increase the number of columns}%
+        \fi
+    }%
+    % after processing all 'widths={...}' we check, if the user supplied (in sum) more than we have 'e.g., when having percentages (with 100)
+    % supplying 'widths={90,20}' would issue this error as we now have a '110%' column
+    \ifnum\uulm@cols@remaining@width<0\relax
+        \PackageWarning{beamerthemeuulm}{Widths (\uulm@cols@widths) sum up to more than the allowed max '\uulm@cols@widths@max' (page: \thepage, frame: \insertframenumber,\on@line). Please update the supplied widths.}%
+    \fi
+    % for the remaining columns, distribute remaining width evenly
+    % if the user supplied 'columns=5' (stored in \uulm@cols@count) and 'widths={15,30}',
+    % this will set '\@uulm@cols@remaining@cols' to 3.
+    \edef\@uulm@cols@remaining@cols{\the\numexpr\uulm@cols@count-\value{uulm@cols@temp}}%
+    % NOTE: maybe we should notify the user of the even distribution?
+    % we only do something, if there is at least one column that the user supplied no width
+    \ifnum\@uulm@cols@remaining@cols>0
+        % we distribute the width evenly. therefore we calculate the width that remains for each column
+        % if there are 60%, and 3 columns remaining, we give each '\uulm@cols@total@width * 0.2' or 20%
+        % of the total column width.
+        \dimdef\@uulm@cols@remaining@colwidth{%
+            \uulm@cols@total@width*%
+                % this part of the expression basically calculates the percentage (20%...)
+                \uulm@cols@remaining@width/\uulm@cols@widths@max/\@uulm@cols@remaining@cols%
+        }%
+        % now, we use a while loop to iterate over the remaining columns
+        \@whilenum\value{uulm@cols@temp}<\uulm@cols@count\do{% 'while(i < #columns) { ... }
+            % we define the '\uulm@cols@col@<current column>'
+            % macros holding the width. With 60%, a total width of '\linewidth'
+            % and three out of 5 columns remaining, this would define:
+            % \uulm@cols@col@2, which holds \linewidth*0.2
+            % \uulm@cols@col@3, which holds \linewidth*0.2
+            % \uulm@cols@col@4, which holds \linewidth*0.2
+            \csedef{uulm@cols@col@\arabic{uulm@cols@temp}}{\@uulm@cols@remaining@colwidth}%
+            % increment the counter
+            \stepcounter{uulm@cols@temp}% i += 1
+        }%
+    \fi
+}
+
+% this is the macro, that will become '\mynextcolumn' within the 'mycolumns' environment
+\newcommand\uulm@mynextcolumn{%
+    % issue a warning if too many columns
+    \ifnum\value{uulm@cols@current}<\uulm@cols@count\else
+        % this mus be an error, we calculate widths etc. only for the given columns
+        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line).}{Either remove the command, or choose another Layout}%
+    \fi
+    % this is a debug statement, that can be used to se the current state within the animation
+    % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
+    % now we issue the beamer '\column' command. In order to expand all arguments we first
+    % regarding the width, we use the macro 'uulm@cols@col@\number\c@uulm@cols@current'
+    % do a 'edef' (expanded definition, with LaTeX protection mechanism):
+    \protected@edef\@uulm@cols@tmp{\noexpand%
+        % with '<...>' we define the animation of this column
+        % counter 'uulm@cols@currentanim' holds the slide, this column should appear on
+        % '\uulm@cols@anim@suff' is either '-' (with animation=keep)
+        % or empty (with animation=forget)
+        % with 'animation=keep' (without reverse) this would be
+        % '\column<1->' for the first, '\column<2->' for the second, ...
+        \column<\arabic{uulm@cols@currentanim}\uulm@cols@anim@suff>{%
+            % the width of the column. For this, we use the 'uulm@cols@col@0', 'uulm@cols@col@1', ... macros
+            % defined by '\uulm@cols@initialize@widths'
+            \csuse{uulm@cols@col@\arabic{uulm@cols@current}}%
+        }%
+    }%
+    % basically execute the expanded macro (e.g. insert the column)
+    \@uulm@cols@tmp
+    % update the current animation accordingly (with reverse '\uulm@cols@anim@step@sign' will be '-',
+    % without it will be '+') the step '\uulm@cols@anim@step' is 0 for animation=none and probably 1 otherwise.
+    % therefore, using 'animation=keep' without reverse, would increment the counter by '+1' (a positive 1)
+    \addtocounter{uulm@cols@currentanim}{\uulm@cols@anim@step@sign\uulm@cols@anim@step}%
+    % increase the current column counter (e.g. for error checking, and for getting the correct width)
+    \stepcounter{uulm@cols@current}%
+}
+
+% #1: arguments like 'columns=3, keep, reverse'
+\newenvironment{mycolumns}[1][]{\begingroup
+\pgfqkeys{/uulm columns}{@defaults, #1}%
+\begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
+    \uulm@cols@init
+}{\end{columns}\endgroup}
 
 
 % ---------------------------------------------
 % color boxes
 % ---------------------------------------------
-\newcommand{\mydefinition}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=orange!10,colframe=orange!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
+\tcbset{%
+    % by definig styles, we avoid their replication
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding
+    uulm@basic-boxstyle/.style n args=4{
+        title={#2},
+        colframe=#3!30,
+        coltitle=black,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}},
+        fonttitle=\bfseries,
+        left=#4, right=#4, top=#4, bottom=#4,
+        #1
+    },
+    % style definition for the normal boxes
+    % #1: extra arguments, #2: title, #3: color of the frame and background
+    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
+    % style definition for their tight variant
+    % #1: extra arguments, #2: title, #3: color of the frame
+    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
 }
 
-\newcommand{\mydefinitiontight}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=white,colframe=orange!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
+% #1: name, #2: color
+\def\uulm@MakeNewBox#1#2{
+    % renew will not work if we define a box that does not already exist in beamer
+    % we could check this by \ifcsname #1\endcsname...\else...\fi
+    % however, for the moment this is not necessary
+    % in the definition #1 and #2 refer to the arguments of \uulm@MakeNewBox
+    % while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
+    % therefore, with '\uulm@MakeNewBox{definition}{orange}', we create a new tcolorbox
+    % named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
+    % will result in the option list 'uulm@boxstyle={top=10mm}{My title}{orange}'
+    \renewtcolorbox{#1}[2][]{uulm@boxstyle={##1}{##2}{#2}}
+    % here, we re-create the old macros (e.g. '\mydefinition')
+    % 'capture=minipage' ensures their behavior is similar to the previous one (the default for
+    % tcbox would be hbox and no longer fill the width)
+    \expandafter\newtcbox\csname my#1\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{#2}}
+    % now, we do the same for the tight-version of the boxes
+    \newtcolorbox{#1tight}[2][]{uulm@tightboxstyle={##1}{##2}{#2}}
+    \expandafter\newtcbox\csname my#1tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{#2}}
 }
 
-\newcommand{\myexample}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=blue!10,colframe=blue!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\myexampletight}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=white,colframe=blue!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\mynote}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=red!10,colframe=red!30,coltitle=black,fonttitle=\bfseries,left=1mm,right=1mm,top=1mm,bottom=1mm]
-		#2
-	\end{tcolorbox}
-}
-
-\newcommand{\mynotetight}[2]{
-	\begin{tcolorbox}[title={#1},before title={\setlength{\parskip}{0ex}\vphantom{/}},colback=white,colframe=red!30,coltitle=black,fonttitle=\bfseries,left=0mm,right=0mm,top=0mm,bottom=0mm]
-		#2
-	\end{tcolorbox}
-}
+% now we simply define the boxes by name and color
+% => \mydefinition and \mydefinitiontight
+% furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
+\uulm@MakeNewBox{definition}{orange}
+% => \myexample and \myexampletight
+% furthermore defines the environment \begin{example}{<title>} ... \end{note}
+\uulm@MakeNewBox{example}{blue}
+% => \mynote and \mynotetight
+% furthermore defines the environment \begin{note}{<title>} ... \end{note}
+\uulm@MakeNewBox{note}{red}
 % ---------------------------------------------
