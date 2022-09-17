@@ -24,16 +24,64 @@ The title picture can be changed with an optional parameter: ``\maketitle[<path-
 
 
 ### Slide Layout
+
+You can use the the `mycolumns` environment to layout your slides (it is safe to use with verbatim, but still requires the beamer `fragile`-option for the frame ).
+Within, the `\mynextcolumn` can be used to separate columns, various options allow you to customize the appearance:
+
+```latex
+\begin{mycolumns}[columns=3, t]
+   Content of Column 1
+\mynextcolumn
+		Content of Column 2
+\mynextcolumn
+		Content of Column 3
+\end{mycolumns}
+```
+
+In total, there are the following options:
+| Option | Default | Description |
+|:-------|:--------|:------------|
+|`c`     | yes | Will center the content of the columns vertically |
+|`t`     | no  | Will vertically align based on the baseline of the first line of each column |
+|`b`     | no  | Will vertically align based on the baseline of the last line of each column |
+|`T`     | no  | Similar to `t` but will use the very top of the first line (good for images, ...). |
+| `width=<width>` | `\linewidth` | The total width of all columns (including margins) |
+| `margin=<width>` | `0.035\linewidth` | The horizontal space between columns. |
+| `columns=<amount>` | `2` | The number of columns |
+| `widths={<widths>}` | `{}` | A comma-separated list of values, which determine how wide the columns should be. For example, using `columns=4, widths={40,30}` will cause the first column to occupy 40% of the width, the next one 30%, and evenly distribute the remaining 30% among the other two columns (equivalent to `columns=4, widths={40,30,15,15}`). |
+| `animation=none` | yes | Will make all slides visible by default, without any animation (should not be combined with `reverse`). |
+| `keep` or `animation=keep`| no | Similar to the "and" mode of the old layouts. This will cause the columns to be animated one after the other, with previous columns remaining visible. |
+| `forget` or `animation=forget`| no | Similar to the "or" mode of the old layouts. This will cause the columns to be animated one after the other, with previous columns disappearing again. This behavior is active *only in recording mode* (`\recordingtrue`), otherwise, this is similar to `animation=keep`. |
+| `reverse`| no | With the default animation order being left-to-right, this makes it right-to-left. |
+| `extra/columns=<value>`| `{}` | Only for people who know, what they are doing. This allows direct, overwriting access on the beamer-`columns` mechanism working behind the scenes. |
+
+Some of these defaults may appear arbitrary. They can be changed (locally to the current group) with the macro `\setmycolumnsdefault` (accumulative):
+
+```latex
+\setmycolumnsdefault{margin=7mm,t}
+```
+
+
+
+
+
+#### Old Macros
+
+Please note that, all of the macros in this section are deprecated (for not being verbatim-safe). Please use the `mycolumns`-mechanism described above.
+
 The following layouts can be used to arrange content into multiple columns on a frame. Some of them are also animated.
 * ``\leftandright{<left>}{<right>}``, ``\leftmiddleandright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments.
 * ``\leftthenright{<left>}{<right>}``, ``\leftmiddlethenright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments and are displayed column by column with the previous columns remaining on the slide (only if not in ``handout``-mode).
 * ``\leftorright{<left>}{<right>}``, ``\leftmiddleorright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments and are displayed column by column individually with a blank frame in between (only if not in ``handout``-mode). <br> **Hint:** This only works if the recording mode is enabled via ``\recordingtrue``, otherwise it will act the same as ``\leftthenright`` or ``\leftmiddlethenright``.
 
+
 ### Color Boxes
 The following colorboxes can be used for writing definitions, examples and notes. The each consist of a title and a content part.
 * ``\mydefinition{<title>}{<content>}``
 * ``\myexample{<title>}{<content>}``
-* ``\mynote{<title>}{<content>}`` 
+* ``\mynote{<title>}{<content>}``
+
+Additionally there are environments named `environment`, `example` and `note`, that can be used as verbatim-safe alternatives.
 
 ### Other Functionalities
 * **Table of contents:** At the begin of each section, a frame with a table of contents is automatically generated as a section overview. Only the subsections of the current sections are shown and the other sections are displayed shaded.
