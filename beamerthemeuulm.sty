@@ -490,6 +490,7 @@
 }
 
 % TODO: onlytextwidth
+% #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
 \pgfqkeys{/uulm columns}{@defaults, #1}%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
@@ -502,7 +503,8 @@
 % color boxes
 % ---------------------------------------------
 \tcbset{%
-    % by definig styles we avoid their replication
+    % by definig styles, we avoid their replication
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding
     uulm@basic-boxstyle/.style n args=4{
         title={#2},
         colframe=#3!30,
@@ -513,12 +515,14 @@
         #1
     },
     % style definition for the normal boxes
+    % #1: extra arguments, #2: title, #3: color of the frame and background
     uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
     % style definition for their tight variant
+    % #1: extra arguments, #2: title, #3: color of the frame
     uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
 }
 
-% name | color
+% #1: name, #2: color
 \def\uulm@MakeNewBox#1#2{
     % renew will not work if we define a box that does not already exist in beamer
     % we could check this by \ifcsname #1\endcsname...\else...\fi
@@ -539,7 +543,13 @@
 }
 
 % now we simply define the boxes by name and color
+% => \mydefinition and \mydefinitiontight
+% furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
 \uulm@MakeNewBox{definition}{orange}
+% => \myexample and \myexampletight
+% furthermore defines the environment \begin{example}{<title>} ... \end{note}
 \uulm@MakeNewBox{example}{blue}
+% => \mynote and \mynotetight
+% furthermore defines the environment \begin{note}{<title>} ... \end{note}
 \uulm@MakeNewBox{note}{red}
 % ---------------------------------------------
