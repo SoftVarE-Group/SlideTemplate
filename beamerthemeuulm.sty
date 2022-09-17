@@ -404,8 +404,8 @@
     % probably 100 (therefore, supplying widths={20,10}, would reduce '\uulm@cols@remaining@width' from 100 to 70)
     \let\uulm@cols@remaining@width\uulm@cols@widths@max
     % now we use '@for' which iterates over all widths (comma-separated) stored in '\uulm@cols@widths'
-    % the loop variable '\@width' will hold the current width in each loop
-    \@for\@width:=\uulm@cols@widths\do{%
+    % the loop variable '\@uulm@cols@width' will hold the current width in each loop
+    \@for\@uulm@cols@width:=\uulm@cols@widths\do{%
         % with 'protected@csedef' we (in short) define a new macro but supply its name in terms of another macro
         % this macro name can contain numbers etc.
         % essential, we define '\uulm@cols@col@<current column>' that is, 'widths={20,30}' would create:
@@ -415,15 +415,15 @@
         \csdimdef{uulm@cols@col@\arabic{uulm@cols@temp}}{%
             % We make math on dimensions. Essentially, we calculate the total width to be occupied
             % by those column (i.e. translating from the percentages of 'widths' to the real dimension)
-            \uulm@cols@total@width*\@width/\uulm@cols@widths@max
+            \uulm@cols@total@width*\@uulm@cols@width/\uulm@cols@widths@max
             % Example:
             % with '\uulm@cols@total@width' being probably something like '\linewidth' and '\uulm@cols@widths@max' being 100
-            % this can be read as: '\linewidth * \@width/100'
-            % Suppose, the current '\@width' is 20, this would result in '\linewidth * 0.2' or "20% of the width of the line"
+            % this can be read as: '\linewidth * \@uulm@cols@width/100'
+            % Suppose, the current '\@uulm@cols@width' is 20, this would result in '\linewidth * 0.2' or "20% of the width of the line"
         }%
-        % now we update the amount of widths left (e.g., when we have '\uulm@cols@remaining@width' as 100 and a '\@width' of 20,
+        % now we update the amount of widths left (e.g., when we have '\uulm@cols@remaining@width' as 100 and a '\@uulm@cols@width' of 20,
         % this will reduce the remaining number to 80). See etoolbox for an explanation of numdef
-        \numdef\uulm@cols@remaining@width{\uulm@cols@remaining@width-\@width}%
+        \numdef\uulm@cols@remaining@width{\uulm@cols@remaining@width-\@uulm@cols@width}%
         % step the counter to move to the width for the next column
         \stepcounter{uulm@cols@temp}%
         % check, if we have too many columns
@@ -438,18 +438,18 @@
     \fi
     % for the remaining columns, distribute remaining width evenly
     % if the user supplied 'columns=5' (stored in \uulm@cols@count) and 'widths={15,30}',
-    % this will set '\@remainingcols' to 3.
-    \edef\@remainingcols{\the\numexpr\uulm@cols@count-\value{uulm@cols@temp}}%
+    % this will set '\@uulm@cols@remaining@cols' to 3.
+    \edef\@uulm@cols@remaining@cols{\the\numexpr\uulm@cols@count-\value{uulm@cols@temp}}%
     % NOTE: maybe we should notify the user of the even distribution?
     % we only do something, if there is at least one column that the user supplied no width
-    \ifnum\@remainingcols>0
+    \ifnum\@uulm@cols@remaining@cols>0
         % we distribute the width evenly. therefore we calculate the width that remains for each column
         % if there are 60%, and 3 columns remaining, we give each '\uulm@cols@total@width * 0.2' or 20%
         % of the total column width.
-        \dimdef\@remainingcolwidth{%
+        \dimdef\@uulm@cols@remaining@colwidth{%
             \uulm@cols@total@width*%
                 % this part of the expression basically calculates the percentage (20%...)
-                \uulm@cols@remaining@width/\uulm@cols@widths@max/\@remainingcols%
+                \uulm@cols@remaining@width/\uulm@cols@widths@max/\@uulm@cols@remaining@cols%
         }%
         % now, we use a while loop to iterate over the remaining columns
         \@whilenum\value{uulm@cols@temp}<\uulm@cols@count\do{% 'while(i < #columns) { ... }
@@ -459,7 +459,7 @@
             % \uulm@cols@col@2, which holds \linewidth*0.2
             % \uulm@cols@col@3, which holds \linewidth*0.2
             % \uulm@cols@col@4, which holds \linewidth*0.2
-            \csedef{uulm@cols@col@\arabic{uulm@cols@temp}}{\@remainingcolwidth}%
+            \csedef{uulm@cols@col@\arabic{uulm@cols@temp}}{\@uulm@cols@remaining@colwidth}%
             % increment the counter
             \stepcounter{uulm@cols@temp}% i += 1
         }%
@@ -478,7 +478,7 @@
     % now we issue the beamer '\column' command. In order to expand all arguments we first
     % regarding the width, we use the macro 'uulm@cols@col@\number\c@uulm@cols@current'
     % do a 'edef' (expanded definition, with LaTeX protection mechanism):
-    \protected@edef\@tmp{\noexpand%
+    \protected@edef\@uulm@cols@tmp{\noexpand%
         % with '<...>' we define the animation of this column
         % counter 'uulm@cols@currentanim' holds the slide, this column should appear on
         % '\uulm@cols@anim@suff' is either '-' (with animation=keep)
@@ -492,7 +492,7 @@
         }%
     }%
     % basically execute the expanded macro (e.g. insert the column)
-    \@tmp
+    \@uulm@cols@tmp
     % update the current animation accordingly (with reverse '\uulm@cols@anim@step@sign' will be '-',
     % without it will be '+') the step '\uulm@cols@anim@step' is 0 for animation=none and probably 1 otherwise.
     % therefore, using 'animation=keep' without reverse, would increment the counter by '+1' (a positive 1)
