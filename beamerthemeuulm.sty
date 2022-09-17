@@ -245,7 +245,7 @@
     \onslide<2->{\thirdpage{#2}}\hfill\thirdpage{#2}%
 }
 
-\newcommand\leftorright[2]{%
+\newcommand\leftorright[2]{% only works in recording mode
 \ifrecording
     \onslide<1>{\halfpage{#1}}%
     \onslide<2>{\hfill}%
@@ -255,7 +255,7 @@
 \fi
 }
 
-\newcommand\rightorleft[2]{%
+\newcommand\rightorleft[2]{% only works in recording mode
 \ifrecording
     \onslide<3>{\halfpage{#1}}%
     \onslide<2>{\hfill}%
@@ -265,7 +265,7 @@
 \fi
 }
 
-\newcommand\leftmiddleorright[3]{%
+\newcommand\leftmiddleorright[3]{% only works in recording mode
 \ifrecording
     \onslide<1>{\thirdpage{#1}}%
     \onslide<2>{\hfill}%
@@ -277,7 +277,7 @@
 \fi
 }
 
-\newcommand\rightmiddleorleft[3]{%
+\newcommand\rightmiddleorleft[3]{% only works in recording mode
 \ifrecording
     \onslide<5>{\thirdpage{#1}}%
     \onslide<4>{\hfill}%
