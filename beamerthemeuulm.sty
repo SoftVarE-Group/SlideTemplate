@@ -203,7 +203,6 @@
 \def\halfnext{.489\textwidth}
 % corresponds to '\thirdpage'
 \def\thirdnext{.31\textwidth}
-\def\uulm@cols@error{\PackageError{beamerthemeuulm}{The layout <TODO> you selected does not allow another \string\mynextcolumn\space (page: \thepage, frame: \insertframenumber,\on@line)}{Either remove the command, or choose another Layout}}
 
 \newcommand\leftandright[2]{%
     \halfpage{#1}%
@@ -417,13 +416,13 @@
         \stepcounter{uulm@cols@temp}%
         % check, if we have too many columns
         \ifnum\value{uulm@cols@temp}>\uulm@cols@count\relax
-            \PackageError{beamerthemeuulm}{You specified '\uulm@cols@count' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line)}{Reduce the amount of widths supplied or increase the number of columns}%
+            \PackageWarning{beamerthemeuulm}{You specified '\uulm@cols@count' columns, but supplied more lengths to widths (\uulm@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line). Reduce the amount of widths supplied or increase the number of columns}%
         \fi
     }%
     % after processing all 'widths={...}' we check, if the user supplied (in sum) more than we have 'e.g., when having percentages (with 100)
     % supplying 'widths={90,20}' would issue this error as we now have a '110%' column
     \ifnum\uulm@cols@remaining@width<0\relax
-        \PackageError{beamerthemeuulm}{Widths (\uulm@cols@widths) sum up to more than the allowed max '\uulm@cols@widths@max' (page: \thepage, frame: \insertframenumber,\on@line)}{Please current the supplied widths}
+        \PackageWarning{beamerthemeuulm}{Widths (\uulm@cols@widths) sum up to more than the allowed max '\uulm@cols@widths@max' (page: \thepage, frame: \insertframenumber,\on@line). Please update the supplied widths.}
     \fi
     % for the remaining columns, distribute remaining width evenly
     % if the user supplied 'columns=5' (stored in \uulm@cols@count) and 'widths={15,30}',
@@ -457,9 +456,10 @@
 
 % this is the macro, that will become '\mynextcolumn' within the 'mycolumns' environment
 \newcommand\uulm@mynextcolumn{
-    % issue an error if too many columns
+    % issue a warning if too many columns
     \ifnum\value{uulm@cols@current}<\uulm@cols@count\else
-        \uulm@cols@error
+        % this mus be an error, we calculate widths etc. only for the given columns
+        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line).}{Either remove the command, or choose another Layout}%
     \fi
     % this is a debug statement, that can be used to se the current state within the animation
     % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
