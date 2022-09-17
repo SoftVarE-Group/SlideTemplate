@@ -12,6 +12,9 @@
 %\usepackage[ngerman]{babel} % use this line for slides in German
 %\recordingtrue % special recording mode for use with a greenscreen, gives you space to show yourself in a layer in front of the slides, has no effect in the handout mode
 
+% allows to change the default for 'mycolumns' environment
+% \setmycolumnsdefault{margin=7mm,t} % make margins 7mm and make all of them top-aligned (by default)
+
 \usepackage{minted} % exemplify verbatim-safe-boxes
 %\includeonlyframes{current} % default mechanism of beamer to include only labeled frames, can be used for debugging or drafting
 
@@ -72,7 +75,6 @@
 \subsection{Colored Boxes}
 \begin{frame}[fragile]{\insertsubsection\ with a really really really really really really really really really really really long title\hfill With Fill!}
 	Normal versions:
-
 \begin{mycolumns}[columns=3,forget,reverse]
 		\begin{definition}{A Definition}
 			This is a definition.
@@ -91,19 +93,19 @@ System.out.println("foo");
 
 	Tight versions (e.g., for use with pictures):
 
-	\leftmiddleandright{%
+\begin{mycolumns}[columns=3]%
 		\begin{definitiontight}{A Definition}
 			This is a definition.
 		\end{definitiontight}
-	}{%
+	\mynextcolumn
 		\begin{exampletight}{An Example}
 			This is an example.
 		\end{exampletight}
-	}{%
+	\mynextcolumn
 		\begin{notetight}{A Note}
 			This is a note.
 		\end{notetight}
-	}
+\end{mycolumns}
 \end{frame}
 
 \section{Slide Layouts}
