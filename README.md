@@ -42,6 +42,14 @@ The color-scheme of the template can be adapted to each faculty of Ulm Universit
 * `math`: "Mathematik"
 * `nat`: "Naturwissenschaften"
 
+### Setting the Logos
+
+The title slide contains a university (bottom right) and an institute (bottom left) logo. By default, the university logo is the logo of Ulm University and the institute logo is empty.
+
+Your can set the logos yourself using the commands `\universitylogo{<image-file>}` and `\institutelogo{<image-file>}`. The commands `\clearuniversitylogo` and `\clearinstitutelogo` can be used to remove the logos.
+
+You can also freely configure as many logos as you want using the command `\uulmlogos{<list-of-logos>}` (with the logos separated by commas).
+
 ### Slide Layout
 
 You can use the the `mycolumns` environment to layout your slides (it is safe to use with verbatim, but still requires the beamer `fragile`-option for the frame ).
