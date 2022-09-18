@@ -22,6 +22,25 @@ To add a title frame, you can use the standard ``\maketitle`` command. It create
 
 The title picture can be changed with an optional parameter: ``\maketitle[<path-to-picture>]``. The picture's width will automatically be set to fill the frame. To move the picture up or down you can pass an additional optional parameter to set an offset: ``\maketitle[<path-to-picture>][<offset>]``.
 
+If no picture is given (`\maketitle`), a default picture is used. To create a title frame without a picture, you can use `\maketitle[]`.
+
+### Section Frames
+
+At the begin of each section a title slide is automatically generated. If you are in handout-mode, this slide also includes an overview of all sections and subsections that can be used to navigate through the slides easily.
+
+You can overwrite this behaviour by using one of the following documentclass-options:
+* `\nosectionframes`: no automatic frames at the begin of each section
+* `\sectiontitleslides`: automatic title frames at the begin of each section
+* `\sectionoverviews`: automatic section overviews at the begin of each section
+
+### Faculty Colors
+
+The color-scheme of the template can be adapted to each faculty of Ulm University with the command `\setfaculty{<faculty>}`. It can take the following values:
+
+* `infIngPsy`: "Informatik, Ingenieurwissenschaften, Psychologie"
+* `med`: "Medizin"
+* `math`: "Mathematik"
+* `nat`: "Naturwissenschaften"
 
 ### Slide Layout
 
@@ -61,10 +80,6 @@ Some of these defaults may appear arbitrary. They can be changed (locally to the
 \setmycolumnsdefault{margin=7mm,t}
 ```
 
-
-
-
-
 #### Old Macros
 
 Please note that, all of the macros in this section are deprecated (for not being verbatim-safe). Please use the `mycolumns`-mechanism described above.
@@ -73,7 +88,6 @@ The following layouts can be used to arrange content into multiple columns on a 
 * ``\leftandright{<left>}{<right>}``, ``\leftmiddleandright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments.
 * ``\leftthenright{<left>}{<right>}``, ``\leftmiddlethenright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments and are displayed column by column with the previous columns remaining on the slide (only if not in ``handout``-mode).
 * ``\leftorright{<left>}{<right>}``, ``\leftmiddleorright{<left>}{<middle>}{<right>}`` <br> Splits the frame into multiple columns, which contain the content given by the multiple arguments and are displayed column by column individually with a blank frame in between (only if not in ``handout``-mode). <br> **Hint:** This only works if the recording mode is enabled via ``\recordingtrue``, otherwise it will act the same as ``\leftthenright`` or ``\leftmiddlethenright``.
-
 
 ### Color Boxes
 The following colorboxes can be used for writing definitions, examples and notes. The each consist of a title and a content part.
