@@ -11,6 +11,7 @@
 \usepackage{fitbox} % used to auto-scale long frame titles
 \usepackage{tcolorbox} % used for color boxes (definition, example, note)
 \usepackage{ifthen}
+\usepackage{multicol} % for auto multi-column in content overview
 % ---------------------------------------------
 
 
@@ -182,9 +183,9 @@
 \AtBeginSection{
     \ifsectionoverview
     \begin{frame}{\thesection.~\insertsection}
-    \setlength{\parskip}{0ex}
-    \vfill
-    \tableofcontents[currentsection,hideothersubsections]
+        \linespread{.5}
+        \vfill
+        \tableofcontents[currentsection,hideothersubsections]
     \end{frame}
     \else
     \begin{frame}
@@ -194,12 +195,17 @@
 }
 \fi
 
-\newcommand{\lectureoverview}{
+\newcommand{\contentoverview}{
     \begin{frame}{\inserttitle}
-        \setlength{\parskip}{0ex}
-        \tableofcontents
+        \linespread{.5}
+        \vfill
+        \begin{multicols}{2}
+            \tableofcontents
+        \end{multicols}
     \end{frame}
 }
+
+\newcommand{\lectureoverview}{\contentoverview} % deprecated version of \contentoverview, do not use anymore
 % ---------------------------------------------
 
 
