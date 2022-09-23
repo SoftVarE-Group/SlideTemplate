@@ -21,8 +21,6 @@
 
 \graphicspath{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
 
-\newif\ifrecording % for enabling or disabling recording mode
-
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
 
@@ -269,6 +267,8 @@
     \thirdpage{#3}%
 }
 
+\newif\ifrecording % for enabling or disabling recording mode
+
 \newcommand\leftorright[2]{% only works in recording mode
 \ifrecording
     \onslide<1>{\halfpage{#1}}%
@@ -350,13 +350,13 @@
   animation/.is choice,
   % similar to 'then'
   animation/keep/.code       = \uulm@cols@animation{1}{-},
-  % similar to 'or', forget will behave like keep without recording
-  animation/forget/.code     = \ifrecording\uulm@cols@animation{1}{}\else\uulm@cols@animation{1}{-}\fi,
+  % similar to 'or', but ifrecording is no longer needed
+  animation/forget/.code     = \uulm@cols@animation{1}{},
   % no animation, show all
   animation/none/.code       = \uulm@cols@animation{0}{-},
   % comfort variants, just so the user does not have to write 'animation='
-  keep/.style                =  {animation=keep},
-  forget/.style              =  {animation=forget},
+  keep/.style                = {animation=keep},
+  forget/.style              = {animation=forget},
   % deliberately not offer a comfort-variant for the default (none)
   % reverse animation order by setting the initial animation to the amount of columns and making the step (animation delta
   % per column) negative (\uulm@cols@anim@step@sign controls if the animation goes up (+) or down (-))
@@ -545,7 +545,7 @@
         coltitle=black,
         before title={\setlength{\parskip}{0ex}\vphantom{/}},
         fonttitle=\bfseries,
-        left=#4, right=#4, top=#4, bottom=#4,
+        left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
         #1
     },
     % style definition for the normal boxes
@@ -581,7 +581,7 @@
 % furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
 \uulm@MakeNewBox{definition}{orange}
 % => \myexample and \myexampletight
-% furthermore defines the environment \begin{example}{<title>} ... \end{note}
+% furthermore defines the environment \begin{example}{<title>} ... \end{example}
 \uulm@MakeNewBox{example}{blue}
 % => \mynote and \mynotetight
 % furthermore defines the environment \begin{note}{<title>} ... \end{note}
