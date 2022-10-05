@@ -335,13 +335,17 @@
 \newdimen\uulm@cols@margin      % holds the margin in-between columns
 \def\uulm@cols@widths@max{100}  % the maximum number to be used for widths
 % with this, we define the keys that are usable within the optional argument of '\mycolumns'
+
+\def\@uulm@animation@none{\uulm@cols@animation{0}{-}}
+\def\@uulm@animation@keep{\uulm@cols@animation{1}{-}}
+\def\@uulm@animation@forget{\uulm@cols@animation{1}{}}
+
+
 \pgfqkeys{/uulm columns}{
-  % search also allows to write 'c' instead of 'align/c' etc.
-  /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
-  align/c/.code              = \def\uulm@cols@valign{c}, % centered
-  align/t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
-  align/b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
-  align/T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
+  c/.code              = \def\uulm@cols@valign{c}, % centered
+  t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
+  b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
+  T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
   width/.code                = \setlength\uulm@cols@total@width{#1},
   % define the margin between columns
@@ -353,13 +357,15 @@
   % control the number of columns
   columns/.code              = \def\uulm@cols@count{#1},
   % allow for 'animation=...'
-  animation/.is choice,
-  % similar to 'then'
-  animation/keep/.code       = \uulm@cols@animation{1}{-},
-  % similar to 'or', but ifrecording is no longer needed
-  animation/forget/.code     = \uulm@cols@animation{1}{},
-  % no animation, show all
-  animation/none/.code       = \uulm@cols@animation{0}{-},
+  animation/.code = {%
+    \expandafter\ifcsname @uulm@animation@#1\endcsname
+        \csname @uulm@animation@#1\endcsname
+        \typeout{Done!}%
+    \else
+        \typeout{Nothing!}%
+        % TODO: error!
+    \fi
+  },
   % comfort variants, just so the user does not have to write 'animation='
   keep/.style                = {animation=keep},
   forget/.style              = {animation=forget},
@@ -531,9 +537,20 @@
     \ignorespaces
 }
 
+\long\def\pgfkeysalso#1{\typeout{At: #1}\pgfkeys@parse#1,\pgfkeys@mainstop \typeout{After}}
+\def\pgfkeys@parse{\typeout{Parsing}\futurelet\pgfkeys@possiblerelax\pgfkeys@parse@main}
+\def\pgfkeys@parse@main{%
+  % \typeout{Consumed: \meaning\pgfkeys@possiblerelax}%
+  \ifx\pgfkeys@possiblerelax\pgfkeys@mainstop%
+    \expandafter\pgfkeys@cleanup%
+  \else%
+    \expandafter\pgfkeys@normal%
+  \fi%
+}
+
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{@defaults, #1}%
+\pgfqkeys{/uulm columns}{@defaults, #1}%, #1
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
 }{\end{columns}\endgroup}
