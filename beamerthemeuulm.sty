@@ -20,7 +20,9 @@
 % ---------------------------------------------
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
-\graphicspath{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
+\AtEndPreamble{
+    \appto\Ginput@path{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
+}
 
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
