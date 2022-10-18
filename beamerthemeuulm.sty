@@ -404,7 +404,7 @@
     \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}%
     % due to the way beamer calculates the columns, we remove the margin from the width
     % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
-    \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
+    \dimdef{\uulm@cols@total@width}{\uulm@cols@total@width-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
     % activate(/overwrite) the '\mynextcolumn' macro within the environment
     \let\mynextcolumn\uulm@mynextcolumn
     % a rather complicated macro, which sets/calculates the widths for all columns
