@@ -348,6 +348,7 @@
   width/.code                = \setlength\uulm@cols@total@width{#1},
   % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
   height/.code                = \setlength\uulm@cols@height{#1},
+  no height/.style            = { height = -1pt },
   % define the margin between columns
   margin/.code               = \setlength\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
@@ -375,7 +376,7 @@
   % the user can change these defaults
   @defaults/.style           = {
     c, % center align
-    height=-1pt,
+    no height,
     columns = 2, animation=none, % one column, no animation
     widths = {}, % use default widths (evenly distribute)
     % we could also use the default columnsep of latex,
