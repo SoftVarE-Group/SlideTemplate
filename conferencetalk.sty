@@ -1,0 +1,39 @@
+\pdfstringdefDisableCommands{\def\underline#1{<#1>}}
+
+% hack to have a more spacious title slide for conference talks with a copyright text
+\makeatletter
+\setbeamercolor{copyrightbox}{fg=white}
+\renewcommandx{\maketitle}[3][1=,2=150,3=]{
+	{
+	\def \picture {#1}
+	\ifx \picture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}} \fi
+	\begin{frame}[plain]
+		\vskip0pt plus 1filll
+		\begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,left]{copyrightbox}
+            \tiny\hspace{1mm}#3
+        \end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=\paperwidth,ht=11ex,dp=3ex,right]{titlebox}
+			\LARGE\textbf{\inserttitle}\hspace*{20pt}
+
+			\ifx \insertsubtitle \empty \else \vspace{1ex}\textbf{\insertsubtitle}\hspace*{20pt} \fi
+		\end{beamercolorbox}%
+		\nointerlineskip%
+		\begin{beamercolorbox}[wd=\paperwidth,ht=10ex,dp=2.5ex,right]{subtitlebox}
+			\small
+			\ifx \insertdate \empty \else \insertdate \fi\hspace*{20pt}
+
+			\vspace{1ex}\insertauthor\hspace*{20pt}
+
+			\ifx \insertinstitute \empty \else \vspace{1ex}\insertinstitute \fi\hspace*{20pt}
+		\end{beamercolorbox}%
+		\nointerlineskip
+		\begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,left]{logobox}
+			\vspace{-1ex}%
+			\hspace{10pt}
+			\@mainlogo
+			\hspace{10pt}
+		\end{beamercolorbox}%
+	\end{frame}
+	}
+}
+\makeatother

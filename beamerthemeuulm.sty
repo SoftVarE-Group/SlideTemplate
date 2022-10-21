@@ -593,3 +593,300 @@
 % furthermore defines the environment \begin{note}{<title>} ... \end{note}
 \uulm@MakeNewBox{note}{red}
 % ---------------------------------------------
+
+% ---------------------------------------------
+% Elias' personal adjustments
+% ---------------------------------------------
+
+% ---------------------------------------------
+% feature diagrams
+% ---------------------------------------------
+
+\clearuniversitylogo
+
+\usepackage{xstring}
+\usepackage{forest}
+\usepackage{xcolor}
+
+\usetikzlibrary{angles}
+\usetikzlibrary{tikzmark}
+\definecolor{drawColor}{RGB}{128 128 128}
+
+\newcommand{\circleSize}{0.175em}
+\newcommand{\angleSize}{0.75em}
+
+\forestset{
+	/tikz/mandatory/.style={
+		circle,fill=drawColor,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	/tikz/optional/.style={
+		circle,
+		fill=white,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	featureDiagram/.style={
+		for tree={
+			text depth = 0,
+			parent anchor = south,
+			child anchor = north,
+			draw = drawColor,
+			edge = {draw=drawColor},
+		}
+	},
+	featureDiagramEmpty/.style={
+	},
+	/tikz/abstract/.style={
+		fill = blue!85!cyan!5,
+		draw = drawColor
+	},
+	/tikz/concrete/.style={
+		fill = blue!85!cyan!20,
+		draw = drawColor
+	},
+	mandatory/.style={
+		edge label={node [mandatory] {} }
+	},
+	optional/.style={
+		edge label={node [optional] {} }
+	},
+	or/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[fill=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/or/.style={
+	},
+	alternative/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[draw=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/alternative/.style={
+	},
+	/tikz/placeholder/.style={
+	},
+	collapsed/.style={
+		rounded corners,
+		no edge,
+		for tree={
+			fill opacity=0,
+			draw opacity=0,
+			l = 0em,
+		}
+	},
+	/tikz/hiddenNodes/.style={
+		midway,
+		rounded corners,
+		draw=drawColor,
+		fill=white,
+		minimum size = 1.2em,
+		minimum width = 0.8em,
+		scale=0.9
+	},
+}
+
+\newcommand{\legend}{
+	\matrix [draw=drawColor,anchor=north west] at (current bounding box.north east) {
+		\node [label=center:\underline{Legend:}] {}; \\
+		\node [abstract,label=right:Abstract Feature] {}; \\
+		\node [concrete,label=right:Concrete Feature] {}; \\
+		\node [mandatory,label=right:Mandatory] {}; \\
+		\node [optional,label=right:Optional] {}; \\
+			\filldraw[drawColor] (0.1,0) - +(-0,-0.2) - +(0.2,-0.2)- +(0.1,0);
+			\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\fill[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [or,label=right:Or Group] {}; \\
+		\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\draw[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [alternative,label=right:Alternative Group] {}; \\
+	};
+}
+
+\newcommand{\featureDiagramWithLegend}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+		\matrix [anchor=north west] at (current bounding box.north east) {
+			\node [placeholder] {}; \\
+		};
+		{\small\legend}
+	\end{forest}
+}
+
+\newcommand{\featureDiagram}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+	\end{forest}
+}
+
+\newcommand{\featureDiagramLegend}{
+	\begin{forest}
+		featureDiagramEmpty[]
+		{\small\legend}
+	\end{forest}
+}
+
+\newcommand{\featureDiagramOverlay}[1]{
+	\begin{tikzpicture}[overlay,remember picture]
+		#1
+	\end{tikzpicture}
+}
+
+\newcommand{\featureEmph}[2][draw=black]{
+		\foreach \f in {#2} {
+			\node [fit=\f,fill opacity=0.4,line width=0.6pt,rounded corners,#1] {};
+		}
+}
+
+\newcommand{\featureDeemph}[2][fill=white]{
+	\foreach \f in {#2} {
+		\node [fit=\f,fill opacity=0.4,line width=0.6pt,rounded corners,#1] {};
+	}
+}
+
+\newcommand{\featureSelected}[1]{
+	\featureEmph[fill=green,draw=green,fill opacity=0.1,draw opacity=0.2]{#1}
+}
+
+\newcommand{\featureDeselected}[1]{
+	\featureEmph[fill=red,draw=red,fill opacity=0.1,draw opacity=0.2]{#1}
+}
+
+% ---------------------------------------------
+% code listings
+% ---------------------------------------------
+
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\tcbuselibrary{listings}
+
+\newcommand{\definelanguage}[2]{
+	\lstdefinelanguage{#1}{#2}
+	\lstnewenvironment{#1}[1][]{\lstset{language=#1,##1}}{}
+	\newtcblisting{#1tight}[2][]{uulm@tightboxstyle={top=-6pt,bottom=-6pt}{##2}{blue},listing only,listing options={language=#1,##1}}
+}
+
+% listing style inherited by all languages
+\lstset{
+	numbers=none, % where to put the line-numbers
+	showspaces=false, % show spaces with underscores
+	showstringspaces=false, % underline spaces within strings
+	showtabs=false, % show tabs within strings with underscores
+	tabsize=2, % sets default tabsize to 2 spaces
+	breaklines=true, % sets automatic line breaking
+	breakatwhitespace=false,
+	columns=fullflexible,
+	commentstyle=\color{green},
+	keywordstyle=\color{blue},
+	stringstyle=\color{red},
+}
+
+% language-specific styles
+\definelanguage{code}{
+	moredelim=**[is][\color{red}]{@}{@},
+	moredelim=**[is][\color{green}]{?}{?},
+	moredelim=**[is][\color{blue}]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+}
+
+\definelanguage{uvl}{
+	alsoletter={=, >, |},
+	morekeywords={features, constraints, namespace, mandatory, optional, or, alternative, abstract, =>, |}
+}
+
+\definelanguage{dimacs}{
+	alsoletter={0},
+	morekeywords={p, cnf, 0},
+	morecomment=[f]{c},
+}
+
+\definelanguage{kconfig}{
+	keepspaces=true,
+	morekeywords={config, bool, default, if, help, def_bool, depends, on, select},
+	morecomment=[f]{\#},
+	morestring=*[d]{"},
+	literate={-}{{-}}1,
+}
+
+\definelanguage{cpp}{
+	language=C++,
+	moredelim=**[is][\color{green}\bfseries\itshape]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+}
+
+% ---------------------------------------------
+% recurring commands
+% ---------------------------------------------
+
+\renewcommand{\emph}[1]{{\color{blue}\textbf{#1}}}
+
+\newcommand{\deutsch}[1]{{\color{blue}(#1)}}
+\newcommand{\deutschertitel}[1]{{\tiny\deutsch{#1}}}
+
+\newcommand{\mycite}[1]{``#1''}
+\newcommand{\mycitebegin}{``}
+\newcommand{\myciteend}{''}
+\newcommand{\mytitlesource}[1]{{\tiny\normalfont\mbox{[#1]}}}
+\newcommand{\mysource}[1]{\ifthenelse{\equal{#1}{}}{}{\phantom{.}~\hfill~\mytitlesource{#1}}}
+\newcommand{\mypage}[1]{, p.~#1}
+\newcommand{\mypages}[1]{, pp.~#1}
+
+\newcommand{\todo}[1]{{\color{red}\textbf{[#1]}}}
+\newcommand{\fodo}[1]{\todo{\footnote{\todo{#1}}}}
+\newcommand{\todots}{\todo{\ldots}}
+
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}} % semantics brackets
+\newcommand{\pand}{\wedge} % conjunction
+\newcommand{\por}{\vee} % disjunction
+\newcommand{\pnot}{\neg} % negation
+\newcommand{\pequals}{\leftrightarrow} % biconditional
+\newcommand{\npequals}{\nleftrightarrow} % exclusive disjunction
+\newcommand{\mequals}{\Leftrightarrow} % equivalence (meta-level)
+\newcommand{\pimplies}{\rightarrow} % conditional
+\newcommand{\mimplies}{\Rightarrow} % implication (meta-level)
+\newcommand{\defeq}{\vcentcolon=} % defining equals
+\newcommand{\power}[1]{\mathcal{P}(#1)} % power set
+\newcommand{\refslide}[1]{\hyperlink{#1}{(see Slide \autoref{#1})}} % link to slide
+\newcommand{\fs}[1]{\ensuremath{{\color{green}#1}}} % selected feature
+\newcommand{\fd}[1]{\ensuremath{{\color{red}#1}}} % deselected feature
+\newcommand{\clause}[1]{\ensuremath{{\color{red}#1}}} % clause in a CNF
+\newcommand{\cfg}[3][0]{\ensuremath({{\only<#1>{\color{green}}\{#2\}}, {\only<#1>{\color{red}}\{#3\}})}} % configuration
+\newcommand{\notleftright}{\mathrel{\ooalign{$\leftrightarrow$\cr\hidewidth$/$\hidewidth}}}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolute value
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\newcommand{\aff}[1]{\texorpdfstring{$^#1$}{}} % affiliation
+\newcommand{\svgsuffix}{} % can be used to load SVG files named <name><suffix>.svg
+\newcommand{\pw}{\paperwidth} % slide width
+\newcommand{\ph}{\paperheight} % slide height
+\newcommand{\lw}{\linewidth} % width of text box
+\newcommand{\pic}[2][]{\includegraphics[width=\linewidth,#1]{#2}} % include a picture
+\renewcommand{\a}{$\Longrightarrow$\xspace} % draw an arrow
+\newcommand{\f}[3][t]{\begin{frame}[#1]{#2}#3\end{frame}} % frame
+\newcommand{\backup}{\f[plain,noframenumbering]{}{}} % begin backup slides
+\newcommand{\for}[3][\n]{\foreach #1 in {1,...,#2} {#3}} % for loop, useful for including animated images/SVG files named <name><number>.svg
+\newcommand{\add}[2]{\the\numexpr#1+#2\relax} % adds two arguments, useful for offsetting animations and positions
+\newcommand{\mult}[2]{\the\numexpr#1*#2\relax} % adds two arguments, useful for offsetting animations and positions
+\newcommand{\ul}[2][]{\begin{itemize}[#1]\setlength\itemsep{5pt}#2\end{itemize}} % list of items
+\newcommand{\ulanim}[2][0]{\ul[<+(#1)->]{#2}} % animated list of items
+\newcommand{\li}[1]{\item #1} % list item
+\newcommand{\liskip}[1]{\item<.-> #1} % list item that is shown together with the previous list item
+\newcommand{\nest}[2][\a]{\ul{\liskip[#1] #2}} % a single nested list item
+
+\usepackage{textpos}
+\renewcommand{\b}[5][1-]{\only<#1>{\begin{textblock*}{#4}(#2,#3)#5\end{textblock*}}\def\boxx{#2}\def\boxy{#3}\def\boxwidth{#4}} % text box
+\renewcommand{\c}[3][1-]{\b[#1]{\boxx}{\dimexpr\boxy+#2\relax}{\boxwidth}{\centering#3}} % image caption
+\newcommand{\img}[8][1-]{\b[#1]{#2}{#3}{#4}{\centering\adjustimage{margin=5pt 0pt 5pt 0pt, max size={#6}{#7},#8}{#5}}} % include image
+\renewcommand{\i}[5][1-]{\img[#1]{#2}{#3}{#4}{#5}{\lw}{\lw}{}} % include image, adjusts to text box
+\newcommand{\ih}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{#3}{.73\ph}{}} % include image such that it fills the slide height
+\newcommand{\iw}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{\pw}{#3}{}} % include image such that it fills the slide width
+\newcommand{\ic}[2][1-]{\img[#1]{0pt}{0pt}{.96\pw}{#2}{\lw}{\lw}{}} % include image such that it fills the slide
+\newcommand{\svg}[5][1-]{\b[#1]{#3}{#4}{#5}{\centering\includesvg[inkscapelatex=false,width=\linewidth]{#2\svgsuffix}}} % include SVG files, requires Inkscape
+\newcommand{\svgs}[4]{\foreach \file/\num/\off in {#1} {\for{\num}{\svg[\add{\n}{\off}]{\file\n}{#2}{#3}{#4}}}} % include (multiple) SVG animations
