@@ -10,6 +10,11 @@ First, you need to create a new beamer presentation. For that, add ``\documentcl
 ### Including the Theme
 The beamer theme can be used for a beamer presentation by the command ``\usetheme{uulm}``.
 
+### Creating a Symbolic Link
+To use the template from another directory, you can create a symbolic link to the directory of the cloned template. The terminal-commands to create such links vary between different operating systems:
+- **Windows:** `mklink /J \path\to\slides\template path\to\template`
+- **Linux/macOS:** `ln -s /path/to/slides/template /path/to/template`
+
 ## Functionality of the Theme
 ### Title Page
 
