@@ -135,7 +135,7 @@
 	\end{note}
 \end{frame}
 
-\subsection{Columns with Customized Width}
+\subsection{Columns with Custom Width}
 \begin{frame}{\insertsubsection}
 	\begin{mycolumns}[columns=3,widths={20,30}]
 		\begin{example}{}
@@ -156,6 +156,23 @@
 
 		All columns whose width is not specified are equally split over the remaining space.
 	\end{note}
+\end{frame}
+
+\subsection{Columns with Custom Height}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[height=6cm]
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{note}{Explanation}
+			If the content of a column exceeds a certain height, the common centering of all columns will not work anymore because beamer does not define the height of a slide. In this case, you can set the height of the columns manually by adding the option \texttt{height=<height>}.
+		\end{note}
+	\mynextcolumn
+		\begin{example}{}
+			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
+			\vspace{80mm}
+		\end{example}
+	\end{mycolumns}	
 \end{frame}
 
 \subsection{Column Animations}
