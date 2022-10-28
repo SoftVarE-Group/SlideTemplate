@@ -351,7 +351,7 @@
   b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
   T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  width/.code                = \setlength\uulm@cols@total@width{#1},
+  width/.code                = \def\uulm@cols@target@width{#1},
   % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
   height/.code                = \setlength\uulm@cols@height{#1},
   no height/.style            = { height = -1pt },
@@ -550,10 +550,10 @@
 \else
     \pgfqkeys{/uulm columns}{@defaults, #1}%
 \fi
-\ifdim\uulm@cols@height<0pt\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@total@width}\fi%
+\ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
-}{\end{columns}\ifdim\uulm@cols@height<0pt\else\end{minipage}\fi\endgroup}
+}{\end{columns}\end{minipage}\endgroup}
 
 
 % ---------------------------------------------
