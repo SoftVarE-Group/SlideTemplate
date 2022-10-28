@@ -7,7 +7,9 @@
 	%sectionoverviews, % enable an automatic section overview at the begin of each section
 ]{beamer}
 
-\usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
+\usepackage[
+	pageoverlay % will uniquely identify pages with overlays by a little suffix
+]{../beamerthemeuulm} % use the inofficial uulm beamer theme
 \setfaculty{infIngPsy} % set the color scheme for your faculty here [med/infIngPsy/math/nat]
 
 %\institutelogo{sp} % set the institute logo
@@ -172,7 +174,7 @@
 			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
 			\vspace{80mm}
 		\end{example}
-	\end{mycolumns}	
+	\end{mycolumns}
 \end{frame}
 
 \subsection{Column Animations}
