@@ -360,7 +360,7 @@
   animation/.code = {%
     \expandafter\ifcsname @uulm@animation@#1\endcsname
         \csname @uulm@animation@#1\endcsname
-        \typeout{Done!}%
+        % \typeout{Done!}%
     \else
         \typeout{Nothing!}%
         % TODO: error!
@@ -375,14 +375,14 @@
   reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults
-  @defaults/.style           = {
+  @defaults/.style           = {%
     c, % center align
     columns = 2, animation=none, % one column, no animation
     widths = {}, % use default widths (evenly distribute)
     % we could also use the default columnsep of latex,
-    % this number was merly chosen to look visually pleasing
-    margin = 0.035\linewidth,
-    width = \linewidth
+    % this number was merely chosen to look visually pleasing
+    % width = \linewidth, % TODO: this is the problem when setting nested?
+    margin = 0.035\linewidth
   }
 }
 
@@ -401,11 +401,11 @@
 
 % code to be executed at the start of the columns
 \newcommand\uulm@cols@init{%
-    % reset the counter for the current column
-    \setcounter{uulm@cols@current}{0}%
+    % reset the counter for the current column (locally)
+    \c@uulm@cols@current\z@
     % initialize the current animation counter with the start animation
     % this is 1 without reverse, and the number of columns if reverse is active
-    \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}%
+    \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}% TODO: make local
     % due to the way beamer calculates the columns, we remove the margin from the width
     % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
     \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
@@ -533,24 +533,23 @@
     % therefore, using 'animation=keep' without reverse, would increment the counter by '+1' (a positive 1)
     \addtocounter{uulm@cols@currentanim}{\uulm@cols@anim@step@sign\uulm@cols@anim@step}%
     % increase the current column counter (e.g. for error checking, and for getting the correct width)
-    \stepcounter{uulm@cols@current}%
+    \advance\c@uulm@cols@current\@ne
     \ignorespaces
 }
 
-\long\def\pgfkeysalso#1{\typeout{At: #1}\pgfkeys@parse#1,\pgfkeys@mainstop \typeout{After}}
-\def\pgfkeys@parse{\typeout{Parsing}\futurelet\pgfkeys@possiblerelax\pgfkeys@parse@main}
-\def\pgfkeys@parse@main{%
-  % \typeout{Consumed: \meaning\pgfkeys@possiblerelax}%
-  \ifx\pgfkeys@possiblerelax\pgfkeys@mainstop%
-    \expandafter\pgfkeys@cleanup%
-  \else%
-    \expandafter\pgfkeys@normal%
-  \fi%
+\def\pgfkeys@case@one{%
+  \typeout{Running: \pgfkeyscurrentkey}%
+  \pgfkeysifdefined{\pgfkeyscurrentkey/.@cmd}%
+  {\pgfkeysgetvalue{\pgfkeyscurrentkey/.@cmd}{\pgfkeys@code}%
+    \ifx\pgfkeys@code\relax\expandafter\pgfkeys@firstoftwo\else\expandafter\pgfkeys@secondoftwo\fi
+    {\pgfkeys@unknown}%
+    {\expandafter\pgfkeys@code\pgfkeyscurrentvalue\pgfeov}}
+  {\pgfkeys@case@two}%
 }
 
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{@defaults, #1}%, #1
+\pgfqkeys{/uulm columns}{@defaults, #1}%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
 }{\end{columns}\endgroup}
