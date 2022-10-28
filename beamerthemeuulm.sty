@@ -408,7 +408,7 @@
 % code to be executed at the start of the columns
 \newcommand\uulm@cols@init{%
     % reset the counter for the current column (locally)
-    \c@uulm@cols@current\z@
+    \setcounter{uulm@cols@current}{0}%
     % initialize the current animation counter with the start animation
     % this is 1 without reverse, and the number of columns if reverse is active
     \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}% TODO: make local
@@ -512,7 +512,7 @@
     % issue a warning if too many columns
     \ifnum\value{uulm@cols@current}<\uulm@cols@count\else
         % this mus be an error, we calculate widths etc. only for the given columns
-        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line).}{Either remove the command, or choose another Layout}%
+        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line)}{Either remove the command, or choose another Layout}%
     \fi
     % this is a debug statement, that can be used to se the current state within the animation
     % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
@@ -539,7 +539,7 @@
     % therefore, using 'animation=keep' without reverse, would increment the counter by '+1' (a positive 1)
     \addtocounter{uulm@cols@currentanim}{\uulm@cols@anim@step@sign\uulm@cols@anim@step}%
     % increase the current column counter (e.g. for error checking, and for getting the correct width)
-    \advance\c@uulm@cols@current\@ne
+    \stepcounter{uulm@cols@current}%
     \ignorespaces
 }
 
@@ -550,10 +550,11 @@
 \else
     \pgfqkeys{/uulm columns}{@defaults, #1}%
 \fi
+\edef\uulm@previous@uulm@cols{\theuulm@cols@current}% store the current column counter
 \ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
-}{\end{columns}\end{minipage}\endgroup}
+}{\end{columns}\end{minipage}\setcounter{uulm@cols@current}{\uulm@previous@uulm@cols}\endgroup}
 
 
 % ---------------------------------------------
