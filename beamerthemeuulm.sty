@@ -123,10 +123,9 @@
 \universitylogo{uulm}
 \clearinstitutelogo
 
-\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
+\newcommand{\createtitleslide}[2]{
     {
-    \def \picture {#1}
-    \ifx \picture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}} \fi
+    \ifx \uulmtitlepicture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}} \fi
     \begin{frame}[plain]
         \vskip0pt plus 1filll
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
@@ -149,6 +148,16 @@
         \end{beamercolorbox}%
     \end{frame}
     }
+}
+
+\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
+    \def \uulmtitlepicture {#1}
+    \def \uulmtitlepictureoffset {#2}
+    \createtitleslide{\uulmtitlepicture}{\uulmtitlepictureoffset}
+}
+
+\newcommand{\againtitle}{
+    \createtitleslide{\uulmtitlepicture}{\uulmtitlepictureoffset}
 }
 
 \setbeamertemplate{frametitle}{
