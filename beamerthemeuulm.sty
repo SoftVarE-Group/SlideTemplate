@@ -347,7 +347,7 @@
   b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
   T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  breadth/.code                = \setlength\uulm@cols@total@width{#1},
+  width/.code                = \setlength\uulm@cols@total@width{#1},
   % define the margin between columns
   margin/.code               = \setlength\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
@@ -379,7 +379,7 @@
     widths = {}, % use default widths (evenly distribute)
     % we could also use the default columnsep of latex,
     % this number was merely chosen to look visually pleasing
-    breadth = \linewidth, % TODO: this is the problem when setting nested?
+    width = \linewidth, % TODO: this is the problem when setting nested?
     margin = 0.035\linewidth
   }
 }
