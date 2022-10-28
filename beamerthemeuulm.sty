@@ -345,25 +345,27 @@
 
 
 \pgfqkeys{/uulm columns}{
-  c/.code             = \def\uulm@cols@valign{c}, % centered
-  t/.code             = \def\uulm@cols@valign{t}, % top (baseline)
-  b/.code             = \def\uulm@cols@valign{b}, % bottom (baseline)
-  T/.code             = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
+  % search also allows to write 'c' instead of 'align/c' etc.
+  /uulm columns/.search also = {/uulm columns/align },
+  align/c/.code              = \def\uulm@cols@valign{c}, % centered
+  align/t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
+  align/b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
+  align/T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  width/.code         = \def\uulm@cols@target@width{#1},
+  width/.code                = \def\uulm@cols@target@width{#1},
   % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
-  height/.code        = \setlength\uulm@cols@height{#1},
-  no height/.style    = { height = -1pt },
+  height/.code               = \setlength\uulm@cols@height{#1},
+  no height/.style           = { height = -1pt },
   % define the margin between columns
-  margin/.code        = \def\uulm@cols@margin{#1},
+  margin/.code               = \def\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
-  widths/.code        = \def\uulm@cols@widths{#1},
+  widths/.code               = \def\uulm@cols@widths{#1},
   % this key is only for users who need to change anything for the underlying columns mechanism
-  extra/columns/.code = \def\uulm@cols@extra{#1},
+  extra/columns/.code        = \def\uulm@cols@extra{#1},
   % control the number of columns
-  columns/.code       = \def\uulm@cols@count{#1},
+  columns/.code              = \def\uulm@cols@count{#1},
   % allow for 'animation=...'
-  animation/.code     = {%
+  animation/.code            = {%
     \expandafter\ifcsname @uulm@animation@#1\endcsname
         \csname @uulm@animation@#1\endcsname
     \else
@@ -371,15 +373,15 @@
     \fi
   },
   % comfort variants, just so the user does not have to write 'animation='
-  keep/.style         = {animation=keep},
-  forget/.style       = {animation=forget},
+  keep/.style                = {animation=keep},
+  forget/.style              = {animation=forget},
   % deliberately not offer a comfort-variant for the default (none)
   % reverse animation order by setting the initial animation to the amount of columns and making the step (animation delta
   % per column) negative (\uulm@cols@anim@step@sign controls if the animation goes up (+) or down (-))
-  reverse/.code       =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
+  reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults
-  @defaults/.style    = {%
+  @defaults/.style           = {%
     c, % center align
     no height,
     columns = 2, animation=none, % one column, no animation
