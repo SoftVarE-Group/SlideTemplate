@@ -563,33 +563,46 @@
 }
 
 % #1: name, #2: color
-\def\uulm@MakeNewBox#1#2{
-    % renew will not work if we define a box that does not already exist in beamer
-    % we could check this by \ifcsname #1\endcsname...\else...\fi
-    % however, for the moment this is not necessary
+\def\uulm@MakeNewBox#1#2{%
+    \colorlet{uulm@box@#1}{#2}%
     % in the definition #1 and #2 refer to the arguments of \uulm@MakeNewBox
     % while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
     % therefore, with '\uulm@MakeNewBox{definition}{orange}', we create a new tcolorbox
     % named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
     % will result in the option list 'uulm@boxstyle={top=10mm}{My title}{orange}'
-    \renewtcolorbox{#1}[2][]{uulm@boxstyle={##1}{##2}{#2}}
+    % first we assure, that we can build this box
+    \newtcolorbox{#1}[2][]{uulm@boxstyle={##1}{##2}{uulm@box@#1}}
     % here, we re-create the old macros (e.g. '\mydefinition')
     % 'capture=minipage' ensures their behavior is similar to the previous one (the default for
     % tcbox would be hbox and no longer fill the width)
-    \expandafter\newtcbox\csname my#1\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{#2}}
+    \expandafter\newtcbox\csname my#1\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{uulm@box@#1}}
     % now, we do the same for the tight-version of the boxes
-    \newtcolorbox{#1tight}[2][]{uulm@tightboxstyle={##1}{##2}{#2}}
-    \expandafter\newtcbox\csname my#1tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{#2}}
+    \newtcolorbox{#1tight}[2][]{uulm@tightboxstyle={##1}{##2}{uulm@box@#1}}
+    \expandafter\newtcbox\csname my#1tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{uulm@box@#1}}
 }
+% like newBox but does not care if the box does already exist
+\def\uulm@DeclareBox#1#2{\csundef{#1}\csundef{end#1}\csundef{my#1}\csundef{#1tight}\csundef{end#1tight}\csundef{my#1tight}%
+\uulm@MakeNewBox{#1}{#2}}
+
+\def\uulm@UpdateBoxColor#1#2{%
+\ifcsname #1\endcsname
+    \colorlet{uulm@box@#1}{#2}%
+\else
+    \PackageError{beamerthemeuulm}{You can not change the color for '#1' to '#2' because there is no such box!}
+\fi}
+
+\let\MakeNewBox\uulm@MakeNewBox
+\let\DeclareBox\uulm@DeclareBox
+\let\UpdateBoxColor\uulm@UpdateBoxColor
 
 % now we simply define the boxes by name and color
 % => \mydefinition and \mydefinitiontight
 % furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
-\uulm@MakeNewBox{definition}{orange}
+\uulm@DeclareBox{definition}{orange}
 % => \myexample and \myexampletight
 % furthermore defines the environment \begin{example}{<title>} ... \end{example}
-\uulm@MakeNewBox{example}{blue}
+\uulm@DeclareBox{example}{blue}
 % => \mynote and \mynotetight
 % furthermore defines the environment \begin{note}{<title>} ... \end{note}
-\uulm@MakeNewBox{note}{red}
+\uulm@DeclareBox{note}{red}
 % ---------------------------------------------

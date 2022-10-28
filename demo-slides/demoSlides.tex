@@ -114,6 +114,21 @@
 	\end{mycolumns}
 \end{frame}
 
+{\MakeNewBox{amazing}{purple}
+\begin{frame}{Create new Boxes}
+	\begin{amazing}{An Amazing Box}
+		You can create new boxes with \texttt{\textbackslash MakeNewBox\{name\}\{color\}} (which will check if any of the new box commands is already taken) or \texttt{\textbackslash DeclareBox\{name\}\{color\}} (which may overwrite existing commands). This box was created by \texttt{\textbackslash MakeNewBox\{amazing\}\{purple\}}.
+	\end{amazing}
+	\bigskip
+	{\UpdateBoxColor{definition}{teal}
+	\begin{definition}{This is a Definition}
+		With \texttt{\textbackslash MakeNewBox\{name\}\{color\}} you can change the color of a box (locally to the current group). This definition was changed with \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}}.
+	\end{definition}}
+	\begin{definition}{Another Definition}
+		This definition appears outside of the group with \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}} active.
+	\end{definition}
+\end{frame}
+
 \section{Slide Layouts}
 
 \subsection{Multiple Columns}
