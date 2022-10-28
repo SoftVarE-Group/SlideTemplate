@@ -166,7 +166,7 @@
 	\end{note}
 \end{frame}
 
-\subsection{Columns with Customized Width}
+\subsection{Columns with Custom Width}
 \begin{frame}{\insertsubsection}
 	\begin{mycolumns}[columns=3,widths={20,30}]
 		\begin{example}{}
@@ -187,6 +187,23 @@
 
 		All columns whose width is not specified are equally split over the remaining space.
 	\end{note}
+\end{frame}
+
+\subsection{Columns with Custom Height}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[height=6cm]
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{note}{Explanation}
+			If the content of a column exceeds a certain height, the common centering of all columns will not work anymore because beamer does not define the height of a slide. In this case, you can set the height of the columns manually by adding the option \texttt{height=<height>}.
+		\end{note}
+	\mynextcolumn
+		\begin{example}{}
+			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
+			\vspace{80mm}
+		\end{example}
+	\end{mycolumns}	
 \end{frame}
 
 \subsection{Column Animations}
@@ -284,15 +301,16 @@
 \subsection{Alternative Title Pictures}
 \maketitle[] % title page without a picture
 % examples for alternative title pictures:
-\maketitle[mar22-bee1][0] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-north1][50] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-o25b][100] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-west1][150] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-south][175] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-q47][200] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-o27c][250] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-ulm][300] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-q37][350] % optional parameters to change title picture and offset to move it upwards
+\maketitle[jun22-clouds1] % optional parameter to change title picture
+\maketitle[mar22-bee1][0]
+\maketitle[may21-north1][50] % optional parameter to move it upwards
+\maketitle[oct20-o25b][100]
+\maketitle[may21-west1][150]
+\maketitle[may21-south][175]
+\maketitle[may21-q47][200]
+\maketitle[oct20-o27c][250]
+\maketitle[may21-ulm][300]
+\maketitle[oct20-q37][350]
 
 \contentoverview
 

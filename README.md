@@ -78,6 +78,8 @@ In total, there are the following options:
 |`b`     | no  | Will vertically align based on the baseline of the last line of each column |
 |`T`     | no  | Similar to `t` but will use the very top of the first line (good for images, ...). |
 | `width=<width>` | `\linewidth` | The total width of all columns (including margins) |
+| `height=<width>` | `no height` | The artificial height of the columns environment (e.g. for animations with different heights). |
+| `no height` |  | Counterpart of `height =<width>` makes the layout use the natural height again. |
 | `margin=<width>` | `0.035\linewidth` | The horizontal space between columns. |
 | `columns=<amount>` | `2` | The number of columns |
 | `widths={<widths>}` | `{}` | A comma-separated list of values, which determine how wide the columns should be. For example, using `columns=4, widths={40,30}` will cause the first column to occupy 40% of the width, the next one 30%, and evenly distribute the remaining 30% among the other two columns (equivalent to `columns=4, widths={40,30,15,15}`). |
