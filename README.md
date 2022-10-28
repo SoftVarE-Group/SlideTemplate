@@ -64,9 +64,9 @@ Within, the `\mynextcolumn` can be used to separate columns, various options all
 \begin{mycolumns}[columns=3, t]
    Content of Column 1
 \mynextcolumn
-		Content of Column 2
+   Content of Column 2
 \mynextcolumn
-		Content of Column 3
+   Content of Column 3
 \end{mycolumns}
 ```
 
