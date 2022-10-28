@@ -26,10 +26,12 @@
 
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+\newif\ifdarkmode
 
 \DeclareOption{nosectionframes}{\sectiontitleslidefalse \sectionoverviewfalse}
 \DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
 \DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\DeclareOption{darkmode}{\darkmodetrue}
 
 \ExecuteOptions{sectiontitleslides} % use sectiontitleslides as default
 \mode<handout>{\ExecuteOptions{sectionoverviews}} % use sectionoverviews as default in handout mode
@@ -55,14 +57,38 @@
 \definecolor{blue}{HTML}{26547C}
 
 % beamer colors:
+\ifdarkmode
+\colorlet{uulm@text}{white!89!darkgray}
+\colorlet{uulm@background}{darkgray}
+\colorlet{uulm@boxmix}{darkgray!50!white}
+\setbeamercolor{background canvas}{bg=uulm@background}
+\setbeamercolor{frametitle}{fg=uulm@text}
+\setbeamercolor{structure}{fg=uulm@text}
+\setbeamercolor{normal text}{fg=uulm@text}
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg!95!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
+\setbeamercolor{item}{fg=uulm@text}
+\setbeamercolor{myfooter}{fg=uulm@text,bg=darkgray!90!black}%
+% overwrite faculty?
+\AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
+\setbeamercolor{logobox}{bg=uulm@background}
+\else
+\colorlet{uulm@background}{white}
+\colorlet{uulm@text}{white}
+\colorlet{uulm@boxmix}{white}
 \setbeamercolor{frametitle}{fg=black}
-\setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
-\setbeamercolor{mypagenumber}{fg=white,bg=red}
-\setbeamercolor{titlebox}{fg=white,bg=red}
-\setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
-\setbeamercolor{logobox}{bg=white}
+\setbeamercolor{item}{fg=black}
 \setbeamercolor{section in toc}{fg=black}
 \setbeamercolor{subsection in toc}{fg=black}
+\setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
+\setbeamercolor{mypagenumber}{fg=white,bg=red}
+\setbeamercolor{logobox}{bg=white}
+\fi
+
+\setbeamercolor{titlebox}{fg=white,bg=red}
+\setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
 
 \newcommand{\setfaculty}[1]{
     \ifthenelse{\equal{#1}{med}}{\setbeamercolor{mypagenumber}{fg=white,bg=blue}\setbeamercolor{titlebox}{fg=white,bg=blue}}{
@@ -91,7 +117,6 @@
 % ---------------------------------------------
 % list environments
 % ---------------------------------------------
-\setbeamercolor{item}{fg=black}
 \setbeamertemplate{itemize items}[circle]
 \setbeamertemplate{enumerate item}{\arabic{enumi}.}
 \setbeamertemplate{enumerate subitem}{\arabic{enumii}.}
@@ -556,8 +581,8 @@
     % #1: extra arguments, #2: title, #3: color of the frame, #4: padding
     uulm@basic-boxstyle/.style n args=4{
         title={#2},
-        colframe=#3!30,
-        coltitle=black,
+        colframe=#3!30!uulm@boxmix,
+        coltitle=uulm@text,coltext=uulm@text,
         before title={\setlength{\parskip}{0ex}\vphantom{/}},
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
@@ -565,10 +590,10 @@
     },
     % style definition for the normal boxes
     % #1: extra arguments, #2: title, #3: color of the frame and background
-    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
+    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10!uulm@background},
     % style definition for their tight variant
     % #1: extra arguments, #2: title, #3: color of the frame
-    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
+    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=uulm@background}
 }
 
 % #1: name, #2: color
