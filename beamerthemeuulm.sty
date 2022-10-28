@@ -347,7 +347,7 @@
   b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
   T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  width/.code                = \setlength\uulm@cols@total@width{#1},
+  breadth/.code                = \setlength\uulm@cols@total@width{#1},
   % define the margin between columns
   margin/.code               = \setlength\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
@@ -360,10 +360,8 @@
   animation/.code = {%
     \expandafter\ifcsname @uulm@animation@#1\endcsname
         \csname @uulm@animation@#1\endcsname
-        % \typeout{Done!}%
     \else
-        \typeout{Nothing!}%
-        % TODO: error!
+        \PackageError{beamerthemeuulm}{The animation '#1' does not exist! Choose either 'keep', 'forget', or 'none'.}%
     \fi
   },
   % comfort variants, just so the user does not have to write 'animation='
@@ -381,7 +379,7 @@
     widths = {}, % use default widths (evenly distribute)
     % we could also use the default columnsep of latex,
     % this number was merely chosen to look visually pleasing
-    % width = \linewidth, % TODO: this is the problem when setting nested?
+    breadth = \linewidth, % TODO: this is the problem when setting nested?
     margin = 0.035\linewidth
   }
 }
@@ -408,7 +406,7 @@
     \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}% TODO: make local
     % due to the way beamer calculates the columns, we remove the margin from the width
     % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
-    \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
+    \dimdef{\uulm@cols@total@width}{\uulm@cols@total@width-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
     % activate(/overwrite) the '\mynextcolumn' macro within the environment
     \let\mynextcolumn\uulm@mynextcolumn
     % a rather complicated macro, which sets/calculates the widths for all columns
@@ -537,19 +535,13 @@
     \ignorespaces
 }
 
-\def\pgfkeys@case@one{%
-  \typeout{Running: \pgfkeyscurrentkey}%
-  \pgfkeysifdefined{\pgfkeyscurrentkey/.@cmd}%
-  {\pgfkeysgetvalue{\pgfkeyscurrentkey/.@cmd}{\pgfkeys@code}%
-    \ifx\pgfkeys@code\relax\expandafter\pgfkeys@firstoftwo\else\expandafter\pgfkeys@secondoftwo\fi
-    {\pgfkeys@unknown}%
-    {\expandafter\pgfkeys@code\pgfkeyscurrentvalue\pgfeov}}
-  {\pgfkeys@case@two}%
-}
-
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{@defaults, #1}%
+\ifcsname mynextcolumn\endcsname
+    \pgfqkeys{/uulm columns}{#1}%
+\else
+    \pgfqkeys{/uulm columns}{@defaults, #1}%
+\fi
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
 }{\end{columns}\endgroup}
