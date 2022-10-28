@@ -386,7 +386,7 @@
     widths = {}, % use default widths (evenly distribute)
     % we could also use the default columnsep of latex,
     % this number was merely chosen to look visually pleasing
-    width = \linewidth, % TODO: this is the problem when setting nested?
+    width = \linewidth, %
     margin = 0.035\linewidth
   }
 }
@@ -410,7 +410,7 @@
     \setcounter{uulm@cols@current}{0}%
     % initialize the current animation counter with the start animation
     % this is 1 without reverse, and the number of columns if reverse is active
-    \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}% TODO: make local
+    \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}%
     % due to the way beamer calculates the columns, we remove the margin from the width
     % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
     \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
