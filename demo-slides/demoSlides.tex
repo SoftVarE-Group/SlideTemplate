@@ -29,288 +29,294 @@
 
 \begin{document}
 
-\begin{frame}
-\begin{mycolumns}
-\myexampletight{Given a Feature Model for Graphs \ldots}{
-	% more content here
-}
-\myexample{\ldots and a Valid Configuration}{
-	\small
-	\begin{mycolumns}[columns=3]
-		$\{G\}$\\
-		$\{G,C\}$\\
-		$\{G,D\}$\\
-		$\{G,C,D\}$\\
-	\mynextcolumn
-		$\{G,W\}$\\
-		$\{G,C,W\}$\\
-		$\{G,D,W\}$\\
-		$\{G,C,D,W\}$\\
-	\mynextcolumn
-		$\{G,W,S\}$\\
-		$\{G,C,W,S\}$\\
-		$\{G,D,W,S\}$\\
-		$\{G,C,D,W,S\}$\\
+\maketitle % title page with default picture
+
+\section{Lists and Boxes}
+
+\subsection{Lists and Numbered Lists}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}
+	    Lists can be nested to a depth of three:
+	    \begin{itemize}
+	        \item Item on the first level
+	    	\item Another item on the first level
+	        \begin{itemize}
+	            \item Item on the second level
+	        	\item Another item on the second level
+	            \begin{itemize}
+	                \item Item on the third level
+	                \item Another item on the third level
+	            \end{itemize}
+	        \end{itemize}
+	    \end{itemize}
+    \mynextcolumn
+		Numbered lists can be nested to a depth of three:
+		\begin{enumerate}
+			\item Item on the first level
+			\item Another item on the first level
+			\begin{enumerate}
+				\item Item on the second level
+				\item Another item on the second level
+				\begin{enumerate}
+					\item Item on the third level
+					\item Another item on the third level
+				\end{enumerate}
+			\end{enumerate}
+		\end{enumerate}
 	\end{mycolumns}
-}
-\mynextcolumn
-more content here
-\end{mycolumns}
 \end{frame}
 
-% \maketitle % title page with default picture
+\subsection{Colored Boxes}
+\begin{frame}{\insertsubsection}
+	Normal versions:
+	\begin{mycolumns}[columns=3]
+		\begin{definition}{A Definition}
+			This is a definition.
+		\end{definition}
+	\mynextcolumn
+		\begin{example}{An Example}
+			This is an example.
+		\end{example}
+	\mynextcolumn
+		\begin{note}{A Note}
+			This is a note.
+		\end{note}
+	\end{mycolumns}
+	\vfill
+	Versions without captions:
+	\begin{mycolumns}[columns=3]
+		\begin{definition}{}
+			This is a definition.
+		\end{definition}
+	\mynextcolumn
+		\begin{example}{}
+			This is an example.
+		\end{example}
+	\mynextcolumn
+		\begin{note}{}
+			This is a note.
+		\end{note}
+	\end{mycolumns}
+	\vfill
+	Tight versions with white background (e.g., for use with pictures):
+	\begin{mycolumns}[columns=3]
+		\begin{definitiontight}{A Definition}
+			\includegraphics[width=\linewidth]{sp}
+		\end{definitiontight}
+	\mynextcolumn
+		\begin{exampletight}{An Example}
+			\includegraphics[width=\linewidth]{uulm}
+		\end{exampletight}
+	\mynextcolumn
+		\begin{notetight}{A Note}
+			\includegraphics[width=\linewidth]{sp}
+		\end{notetight}
+	\end{mycolumns}
+\end{frame}
 
-% \section{Lists and Boxes}
+\section{Slide Layouts}
 
-% \subsection{Lists and Numbered Lists}
-% \begin{frame}{\insertsubsection}
-% 	\begin{mycolumns}
-% 	    Lists can be nested to a depth of three:
-% 	    \begin{itemize}
-% 	        \item Item on the first level
-% 	    	\item Another item on the first level
-% 	        \begin{itemize}
-% 	            \item Item on the second level
-% 	        	\item Another item on the second level
-% 	            \begin{itemize}
-% 	                \item Item on the third level
-% 	                \item Another item on the third level
-% 	            \end{itemize}
-% 	        \end{itemize}
-% 	    \end{itemize}
-%     \mynextcolumn
-% 		Numbered lists can be nested to a depth of three:
-% 		\begin{enumerate}
-% 			\item Item on the first level
-% 			\item Another item on the first level
-% 			\begin{enumerate}
-% 				\item Item on the second level
-% 				\item Another item on the second level
-% 				\begin{enumerate}
-% 					\item Item on the third level
-% 					\item Another item on the third level
-% 				\end{enumerate}
-% 			\end{enumerate}
-% 		\end{enumerate}
-% 	\end{mycolumns}
-% \end{frame}
+\subsection{Multiple Columns}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[columns=4] % default: 2 columns
+		This is an example text that is shown in the \textbf{first column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{second column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{third column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{last column}.
+	\end{mycolumns}
+	\vfill
+	\begin{note}{Explanation}
+		Columns are separated by the command \texttt{\textbackslash mynextcolumn}.
 
-% \subsection{Colored Boxes}
-% \begin{frame}{\insertsubsection}
-% 	Normal versions:
-% 	\begin{mycolumns}[columns=3]
-% 		\begin{definition}{A Definition}
-% 			This is a definition.
-% 		\end{definition}
-% 	\mynextcolumn
-% 		\begin{example}{An Example}
-% 			This is an example.
-% 		\end{example}
-% 	\mynextcolumn
-% 		\begin{note}{A Note}
-% 			This is a note.
-% 		\end{note}
-% 	\end{mycolumns}
-% 	\vfill
-% 	Versions without captions:
-% 	\begin{mycolumns}[columns=3]
-% 		\begin{definition}{}
-% 			This is a definition.
-% 		\end{definition}
-% 	\mynextcolumn
-% 		\begin{example}{}
-% 			This is an example.
-% 		\end{example}
-% 	\mynextcolumn
-% 		\begin{note}{}
-% 			This is a note.
-% 		\end{note}
-% 	\end{mycolumns}
-% 	\vfill
-% 	Tight versions with white background (e.g., for use with pictures):
-% 	\begin{mycolumns}[columns=3]
-% 		\begin{definitiontight}{A Definition}
-% 			\includegraphics[width=\linewidth]{sp}
-% 		\end{definitiontight}
-% 	\mynextcolumn
-% 		\begin{exampletight}{An Example}
-% 			\includegraphics[width=\linewidth]{uulm}
-% 		\end{exampletight}
-% 	\mynextcolumn
-% 		\begin{notetight}{A Note}
-% 			\includegraphics[width=\linewidth]{sp}
-% 		\end{notetight}
-% 	\end{mycolumns}
-% \end{frame}
+		The option \texttt{columns} specifies the number of columns that should be generated. The default number of columns is two.
+	\end{note}
+\end{frame}
 
-% \section{Slide Layouts}
+\subsection{Columns with Custom Width}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[columns=3,widths={20,30}]
+		\begin{example}{}
+			The \textbf{first column} takes 20\,\% of the width of the slide.
+		\end{example}
+	\mynextcolumn
+		\begin{example}{}
+			The \textbf{second column} takes 30\,\% of the width of the slide.
+		\end{example}
+	\mynextcolumn
+		\begin{example}{}
+			The \textbf{third column} takes the remaining 50\,\% of the width of the slide.
+		\end{example}
+	\end{mycolumns}
+	\vfill
+	\begin{note}{Explanation}
+		The widths of the single columns can also be manually specified by a list of percentages given to the option \texttt{widths}.
 
-% \subsection{Multiple Columns}
-% \begin{frame}{\insertsubsection}
-% 	\begin{mycolumns}[columns=4] % default: 2 columns
-% 		This is an example text that is shown in the \textbf{first column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{second column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{third column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{last column}.
-% 	\end{mycolumns}
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		Columns are separated by the command \texttt{\textbackslash mynextcolumn}.
+		All columns whose width is not specified are equally split over the remaining space.
+	\end{note}
+\end{frame}
 
-% 		The option \texttt{columns} specifies the number of columns that should be generated. The default number of columns is two.
-% 	\end{note}
-% \end{frame}
+\subsection{Columns with Custom Height}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[height=6cm]
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{note}{Explanation}
+			If the content of a column exceeds a certain height, the common centering of all columns will not work anymore because beamer does not define the height of a slide. In this case, you can set the height of the columns manually by adding the option \texttt{height=<height>}.
+		\end{note}
+	\mynextcolumn
+		\begin{example}{}
+			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
+			\vspace{80mm}
+		\end{example}
+	\end{mycolumns}
+\end{frame}
 
-% \subsection{Columns with Custom Width}
-% \begin{frame}{\insertsubsection}
-% 	\begin{mycolumns}[columns=3,widths={20,30}]
-% 		\begin{example}{}
-% 			The \textbf{first column} takes 20\,\% of the width of the slide.
-% 		\end{example}
-% 	\mynextcolumn
-% 		\begin{example}{}
-% 			The \textbf{second column} takes 30\,\% of the width of the slide.
-% 		\end{example}
-% 	\mynextcolumn
-% 		\begin{example}{}
-% 			The \textbf{third column} takes the remaining 50\,\% of the width of the slide.
-% 		\end{example}
-% 	\end{mycolumns}
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		The widths of the single columns can also be manually specified by a list of percentages given to the option \texttt{widths}.
 
-% 		All columns whose width is not specified are equally split over the remaining space.
-% 	\end{note}
-% \end{frame}
+\subsection{Nested Columns}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{mycolumns}[columns=4]
+			\mynote{}{1.1}
+			\mynextcolumn
+			\mynote{}{1.2}
+			\mynextcolumn
+			\mynote{}{1.3}
+			\mynextcolumn
+			\mynote{}{1.4}
+		\end{mycolumns}
+	\mynextcolumn
+		\begin{example}{}
+			A column on the right side
+		\end{example}
+		\begin{mycolumns}
+			\mynote{}{2.1}
+			\begin{mycolumns}[columns=3]
+				\mynote{}{2.1.1}
+				\mynextcolumn
+				\mynote{}{2.1.2}
+				\mynextcolumn
+				\mynote{}{2.1.3}
+			\end{mycolumns}
+			\mynextcolumn
+			\mynote{}{2.2}
+		\end{mycolumns}
+	\end{mycolumns}
+\end{frame}
 
-% \subsection{Columns with Custom Height}
-% \begin{frame}{\insertsubsection}
-% 	\begin{mycolumns}[height=6cm]
-% 		\begin{example}{}
-% 			This is the content of the first column.
-% 		\end{example}
-% 		\begin{note}{Explanation}
-% 			If the content of a column exceeds a certain height, the common centering of all columns will not work anymore because beamer does not define the height of a slide. In this case, you can set the height of the columns manually by adding the option \texttt{height=<height>}.
-% 		\end{note}
-% 	\mynextcolumn
-% 		\begin{example}{}
-% 			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
-% 			\vspace{80mm}
-% 		\end{example}
-% 	\end{mycolumns}
-% \end{frame}
+\subsection{Column Animations}
+\begin{frame}{\insertsubsection\ -- Option keep}
+	\begin{mycolumns}[columns=3,keep] % short for animation=keep
+		This is an example text that is shown in the \textbf{first column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{second column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{third column}.
+	\end{mycolumns}
+	\vfill
+	\begin{note}{Explanation}
+		The option \texttt{keep} (short for \texttt{animation=keep}) introduces an animation which lets the columns appear one after another.
 
-% \subsection{Column Animations}
-% \begin{frame}{\insertsubsection\ -- Option keep}
-% 	\begin{mycolumns}[columns=3,keep] % short for animation=keep
-% 		This is an example text that is shown in the \textbf{first column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{second column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{third column}.
-% 	\end{mycolumns}
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		The option \texttt{keep} (short for \texttt{animation=keep}) introduces an animation which lets the columns appear one after another.
+		The previous columns are kept on the slide when a new column is displayed.
 
-% 		The previous columns are kept on the slide when a new column is displayed.
+		Animations are ignored in handout mode.
+	\end{note}
+\end{frame}
 
-% 		Animations are ignored in handout mode.
-% 	\end{note}
-% \end{frame}
+\begin{frame}{\insertsubsection\ -- Option forget}
+	\begin{mycolumns}[columns=3,forget] % short for animation=forget
+		This is an example text that is shown in the \textbf{first column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{second column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{third column}.
+	\end{mycolumns}
+	\vfill
+	\begin{note}{Explanation}
+		The option \texttt{forget} (short for \texttt{animation=forget}) introduces an animation which lets the columns appear one after another.
 
-% \begin{frame}{\insertsubsection\ -- Option forget}
-% 	\begin{mycolumns}[columns=3,forget] % short for animation=forget
-% 		This is an example text that is shown in the \textbf{first column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{second column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{third column}.
-% 	\end{mycolumns}
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		The option \texttt{forget} (short for \texttt{animation=forget}) introduces an animation which lets the columns appear one after another.
+		The previous columns are removed when a new column is displayed.
 
-% 		The previous columns are removed when a new column is displayed.
+		Animations are ignored in handout mode.
+	\end{note}
+\end{frame}
 
-% 		Animations are ignored in handout mode.
-% 	\end{note}
-% \end{frame}
+\begin{frame}{\insertsubsection\ -- Option animation=none}
+	\begin{mycolumns}[columns=3,animation=none]
+		This is an example text that is shown in the \textbf{first column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{second column}.
+	\mynextcolumn
+		This is an example text that is shown in the \textbf{third column}.
+	\end{mycolumns}
+	\vfill
+	\begin{note}{Explanation}
+		The option \texttt{animation=none} deactivates the animation of the columns.
 
-% \begin{frame}{\insertsubsection\ -- Option animation=none}
-% 	\begin{mycolumns}[columns=3,animation=none]
-% 		This is an example text that is shown in the \textbf{first column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{second column}.
-% 	\mynextcolumn
-% 		This is an example text that is shown in the \textbf{third column}.
-% 	\end{mycolumns}
-% 	\vfill
-% 	\begin{note}{Explanation}
-% 		The option \texttt{animation=none} deactivates the animation of the columns.
+		In the template, this is the default. However, you can overwrite the defaults to animate all slides easily (see \texttt{setmycolumnsdefault} in the source code). Then, it might be necessary to deactivate those animations for some slides.
+	\end{note}
+\end{frame}
 
-% 		In the template, this is the default. However, you can overwrite the defaults to animate all slides easily (see \texttt{setmycolumnsdefault} in the source code). Then, it might be necessary to deactivate those animations for some slides.
-% 	\end{note}
-% \end{frame}
+\begin{frame}[label=current]{\insertsubsection\ -- Option reverse}
+	\begin{mycolumns}[columns=4,forget,reverse,b]
+		\adjincludegraphics[width=\linewidth,trim={.425\width} {.625\height} {.425\width} {.225\height},clip]{mar22-bee1}\\[0mm]~
+	\mynextcolumn
+		\adjincludegraphics[width=\linewidth,trim={.4\width} {.6\height} {.4\width} {.2\height},clip]{mar22-bee1}\\[5mm]~
+	\mynextcolumn
+		\adjincludegraphics[width=\linewidth,trim={.375\width} {.575\height} {.375\width} {.175\height},clip]{mar22-bee1}\\[10mm]~
+	\mynextcolumn
+		\adjincludegraphics[width=\linewidth,trim={.35\width} {.55\height} {.35\width} {.15\height},clip]{mar22-bee1}\\[15mm]~
+	\end{mycolumns}
+	\begin{note}{Explanation}
+		The option \texttt{reverse} inverts the order of any animation that is specified (i.e., using \texttt{keep} or \texttt{forget}).
+	\end{note}
+\end{frame}
 
-% \begin{frame}[label=current]{\insertsubsection\ -- Option reverse}
-% 	\begin{mycolumns}[columns=4,forget,reverse,b]
-% 		\adjincludegraphics[width=\linewidth,trim={.425\width} {.625\height} {.425\width} {.225\height},clip]{mar22-bee1}\\[0mm]~
-% 	\mynextcolumn
-% 		\adjincludegraphics[width=\linewidth,trim={.4\width} {.6\height} {.4\width} {.2\height},clip]{mar22-bee1}\\[5mm]~
-% 	\mynextcolumn
-% 		\adjincludegraphics[width=\linewidth,trim={.375\width} {.575\height} {.375\width} {.175\height},clip]{mar22-bee1}\\[10mm]~
-% 	\mynextcolumn
-% 		\adjincludegraphics[width=\linewidth,trim={.35\width} {.55\height} {.35\width} {.15\height},clip]{mar22-bee1}\\[15mm]~
-% 	\end{mycolumns}
-% 	\begin{note}{Explanation}
-% 		The option \texttt{reverse} inverts the order of any animation that is specified (i.e., using \texttt{keep} or \texttt{forget}).
-% 	\end{note}
-% \end{frame}
+\section{Other Features}
 
-% \section{Other Features}
+\subsection{Auto-Scaling for Long Titles}
+\begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
+	\begin{note}{Explanation}
+		Very long frame titles are scaled down automatically.
 
-% \subsection{Auto-Scaling for Long Titles}
-% \begin{frame}{\insertsubsection\ -- Long Titles are Scaled Down to the Available Space}
-% 	\begin{note}{Explanation}
-% 		Very long frame titles are scaled down automatically.
+		\hfill\hfill\hfill This can avoid annoying linebreaks for a single character or word.\hfill~
 
-% 		\hfill\hfill\hfill This can avoid annoying linebreaks for a single character or word.\hfill~
+		\hfill Use with care.
+	\end{note}
+\end{frame}
 
-% 		\hfill Use with care.
-% 	\end{note}
-% \end{frame}
+\subsection{Easy Navigation in Slides}
+\begin{frame}{\insertsubsection}
+	\vfill
+	Click on the title (here \textbf{\insertshorttitle}) or subtitle (here \textbf{\insertshortsubtitle}) in the slide footer to jump to the title slide.
+	\vfill
+	Click on the section title (here \textbf{\insertsection}) in the slide footer to jump to the section overview.
+	\vfill
+	In the section overview, click on sections or subsections to jump to another part.
+	\vfill
+\end{frame}
 
-% \subsection{Easy Navigation in Slides}
-% \begin{frame}{\insertsubsection}
-% 	\vfill
-% 	Click on the title (here \textbf{\insertshorttitle}) or subtitle (here \textbf{\insertshortsubtitle}) in the slide footer to jump to the title slide.
-% 	\vfill
-% 	Click on the section title (here \textbf{\insertsection}) in the slide footer to jump to the section overview.
-% 	\vfill
-% 	In the section overview, click on sections or subsections to jump to another part.
-% 	\vfill
-% \end{frame}
+\subsection{Alternative Title Pictures}
+\maketitle[] % title page without a picture
+% examples for alternative title pictures:
+\maketitle[jun22-clouds1] % optional parameter to change title picture
+\maketitle[mar22-bee1][0]
+\maketitle[may21-north1][50] % optional parameter to move it upwards
+\maketitle[oct20-o25b][100]
+\maketitle[may21-west1][150]
+\maketitle[may21-south][175]
+\maketitle[may21-q47][200]
+\maketitle[oct20-o27c][250]
+\maketitle[may21-ulm][300]
+\maketitle[oct20-q37][350]
 
-% \subsection{Alternative Title Pictures}
-% \maketitle[] % title page without a picture
-% % examples for alternative title pictures:
-% \maketitle[jun22-clouds1] % optional parameter to change title picture
-% \maketitle[mar22-bee1][0]
-% \maketitle[may21-north1][50] % optional parameter to move it upwards
-% \maketitle[oct20-o25b][100]
-% \maketitle[may21-west1][150]
-% \maketitle[may21-south][175]
-% \maketitle[may21-q47][200]
-% \maketitle[oct20-o27c][250]
-% \maketitle[may21-ulm][300]
-% \maketitle[oct20-q37][350]
-
-% \contentoverview
+\contentoverview
 
 %\section{Old Slide Layouts (Deprecated)}
 %

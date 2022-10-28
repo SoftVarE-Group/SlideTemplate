@@ -334,7 +334,6 @@
 \def\uulm@cols@anim@init{1}     % start on the first column
 \def\uulm@cols@anim@step@sign{+}% count up (if there is anything to count)
 \newdimen\uulm@cols@total@width % holds the column width
-\newdimen\uulm@cols@margin      % holds the margin in-between columns
 \newdimen\uulm@cols@height      % holds the target height of the columns environment (negative for auto)
 
 \def\uulm@cols@widths@max{100}  % the maximum number to be used for widths
@@ -356,7 +355,7 @@
   height/.code                = \setlength\uulm@cols@height{#1},
   no height/.style            = { height = -1pt },
   % define the margin between columns
-  margin/.code               = \setlength\uulm@cols@margin{#1},
+  margin/.code               = \def\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
   widths/.code               = \def\uulm@cols@widths{#1},
   % this key is only for users who need to change anything for the underlying columns mechanism
