@@ -151,8 +151,8 @@
 }
 
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
-    \def \uulmtitlepicture {#1}
-    \def \uulmtitlepictureoffset {#2}
+    \gdef\uulmtitlepicture{#1}
+    \gdef\uulmtitlepictureoffset{#2}
     \createtitleslide{\uulmtitlepicture}{\uulmtitlepictureoffset}
 }
 
