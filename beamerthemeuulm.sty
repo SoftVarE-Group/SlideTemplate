@@ -157,7 +157,11 @@
 }
 
 \newcommand{\againtitle}{
-    \createtitleslide
+    \ifcsname uulmtitlepicture\endcsname
+        \createtitleslide
+    \else
+        \PackageError{beamerthemeuulm}{To use \string\againtitle\space you must first use \string\maketitle!}{Either comment out this line or check if you forgot to issue the \string\maketitle-macro.}%
+    \fi
 }
 
 \setbeamertemplate{frametitle}{
