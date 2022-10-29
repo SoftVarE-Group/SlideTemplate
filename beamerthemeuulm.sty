@@ -123,7 +123,7 @@
 \universitylogo{uulm}
 \clearinstitutelogo
 
-\newcommand{\createtitleslide}{
+\newcommand{\@createtitleslide}{
     {
     \ifx \uulmtitlepicture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 \uulmtitlepictureoffset,clip,width=\paperwidth]{\uulmtitlepicture}} \fi
     \begin{frame}[plain]
@@ -153,12 +153,12 @@
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     \gdef\uulmtitlepicture{#1}
     \gdef\uulmtitlepictureoffset{#2}
-    \createtitleslide
+    \@createtitleslide
 }
 
 \newcommand{\againtitle}{
     \ifcsname uulmtitlepicture\endcsname
-        \createtitleslide
+        \@createtitleslide
     \else
         \PackageError{beamerthemeuulm}{To use \string\againtitle\space you must first use \string\maketitle!}{Either comment out this line or check if you forgot to issue the \string\maketitle-macro.}%
     \fi
