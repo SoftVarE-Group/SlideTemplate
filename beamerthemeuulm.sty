@@ -593,9 +593,9 @@
     \uulm@UpdateBoxColor{#2}{#3}%
 }
 % like newBox but does not care if the box does already exist
-% [optional number prefix] | name | color
-\newcommand\uulm@DeclareBox[3][]{\csundef{#2}\csundef{end#2}\csundef{my#2}\csundef{#2tight}\csundef{end#2tight}\csundef{my#2tight}%
-\uulm@MakeNewBox[#1]{#2}{#3}}
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\uulm@DeclareBox[4][1={},4={}]{\csundef{#2}\csundef{end#2}\csundef{my#2}\csundef{#2tight}\csundef{end#2tight}\csundef{my#2tight}%
+\uulm@MakeNewBox[#1]{#2}{#3}[#4]}
 
 
 % name | prefix | suffix
