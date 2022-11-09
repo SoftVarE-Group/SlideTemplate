@@ -334,25 +334,30 @@
 \def\uulm@cols@anim@init{1}     % start on the first column
 \def\uulm@cols@anim@step@sign{+}% count up (if there is anything to count)
 \newdimen\uulm@cols@total@width % holds the column width
-\newdimen\uulm@cols@margin      % holds the margin in-between columns
 \newdimen\uulm@cols@height      % holds the target height of the columns environment (negative for auto)
 
 \def\uulm@cols@widths@max{100}  % the maximum number to be used for widths
 % with this, we define the keys that are usable within the optional argument of '\mycolumns'
+
+\def\@uulm@animation@none{\uulm@cols@animation{0}{-}}
+\def\@uulm@animation@keep{\uulm@cols@animation{1}{-}}
+\def\@uulm@animation@forget{\uulm@cols@animation{1}{}}
+
+
 \pgfqkeys{/uulm columns}{
   % search also allows to write 'c' instead of 'align/c' etc.
-  /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
+  /uulm columns/.search also = {/uulm columns/align},
   align/c/.code              = \def\uulm@cols@valign{c}, % centered
   align/t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
   align/b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
   align/T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  width/.code                = \setlength\uulm@cols@total@width{#1},
+  width/.code                = \def\uulm@cols@target@width{#1},
   % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
-  height/.code                = \setlength\uulm@cols@height{#1},
-  no height/.style            = { height = -1pt },
+  height/.code               = \setlength\uulm@cols@height{#1},
+  no height/.style           = { height = -1pt },
   % define the margin between columns
-  margin/.code               = \setlength\uulm@cols@margin{#1},
+  margin/.code               = \def\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
   widths/.code               = \def\uulm@cols@widths{#1},
   % this key is only for users who need to change anything for the underlying columns mechanism
@@ -360,13 +365,13 @@
   % control the number of columns
   columns/.code              = \def\uulm@cols@count{#1},
   % allow for 'animation=...'
-  animation/.is choice,
-  % similar to 'then'
-  animation/keep/.code       = \uulm@cols@animation{1}{-},
-  % similar to 'or', but ifrecording is no longer needed
-  animation/forget/.code     = \uulm@cols@animation{1}{},
-  % no animation, show all
-  animation/none/.code       = \uulm@cols@animation{0}{-},
+  animation/.code            = {%
+    \expandafter\ifcsname @uulm@animation@#1\endcsname
+        \csname @uulm@animation@#1\endcsname
+    \else
+        \PackageError{beamerthemeuulm}{The animation '#1' does not exist! Choose either 'keep', 'forget', or 'none'.}%
+    \fi
+  },
   % comfort variants, just so the user does not have to write 'animation='
   keep/.style                = {animation=keep},
   forget/.style              = {animation=forget},
@@ -376,15 +381,15 @@
   reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults
-  @defaults/.style           = {
+  @defaults/.style           = {%
     c, % center align
     no height,
     columns = 2, animation=none, % one column, no animation
     widths = {}, % use default widths (evenly distribute)
-    % we could also use the default columnsep of latex,
-    % this number was merly chosen to look visually pleasing
-    margin = 0.035\linewidth,
-    width = \linewidth
+    width = \linewidth, %
+    % this number was merely chosen to look visually pleasing
+    % we could also use the default columnsep of latx,
+    margin = 0.035\linewidth
   }
 }
 
@@ -410,7 +415,7 @@
     \setcounter{uulm@cols@currentanim}{\uulm@cols@anim@init}%
     % due to the way beamer calculates the columns, we remove the margin from the width
     % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
-    \dimdef{\uulm@cols@total@width}{\uulm@cols@total@width-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
+    \dimdef{\uulm@cols@total@width}{\linewidth-\uulm@cols@margin*\uulm@cols@count+\uulm@cols@margin}%
     % activate(/overwrite) the '\mynextcolumn' macro within the environment
     \let\mynextcolumn\uulm@mynextcolumn
     % a rather complicated macro, which sets/calculates the widths for all columns
@@ -508,7 +513,7 @@
     % issue a warning if too many columns
     \ifnum\value{uulm@cols@current}<\uulm@cols@count\else
         % this mus be an error, we calculate widths etc. only for the given columns
-        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line).}{Either remove the command, or choose another Layout}%
+        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line)}{Either remove the command, or choose another Layout}%
     \fi
     % this is a debug statement, that can be used to se the current state within the animation
     % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
@@ -541,11 +546,16 @@
 
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{@defaults, #1}%
-\ifdim\uulm@cols@height<0pt\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@total@width}\fi%
+\ifcsname mynextcolumn\endcsname
+    \pgfqkeys{/uulm columns}{#1}%
+\else
+    \pgfqkeys{/uulm columns}{@defaults, #1}%
+\fi
+\edef\uulm@previous@uulm@cols{\theuulm@cols@current}% store the current column counter
+\ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
-}{\end{columns}\ifdim\uulm@cols@height<0pt\else\end{minipage}\fi\endgroup}
+}{\end{columns}\end{minipage}\setcounter{uulm@cols@current}{\uulm@previous@uulm@cols}\endgroup}
 
 
 % ---------------------------------------------
