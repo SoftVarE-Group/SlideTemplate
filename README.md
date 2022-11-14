@@ -29,6 +29,8 @@ The title picture can be changed with an optional parameter: ``\maketitle[<path-
 
 If no picture is given (`\maketitle`), a default picture is used. To create a title frame without a picture, you can use `\maketitle[]`.
 
+To repeat the title slide you can use the command `\againtitle` at any point. It creates a copy of the last title slide with the same picture and picture-offset.
+
 ### Section Frames
 
 At the begin of each section a title slide is automatically generated. If you are in handout-mode, this slide also includes an overview of all sections and subsections that can be used to navigate through the slides easily.
