@@ -133,7 +133,7 @@
 \begin{frame}{Counting Boxes!}
 	\UpdateBoxPrefix{definition}{Definition~\boxnumber: }%
 	\begin{definition}{Hey look at my number!}
-		With \texttt{\textbackslash UpdateBoxPrefix\{name\}\{prefix\}} you can change text to appear before the title of a box (locally to the current group). The macro \texttt{\textbackslash boxnumber} refers to the number of the current box that is robust against beamer overlays (but you do not have to do it).\medskip
+		With \texttt{\textbackslash UpdateBoxPrefix\{name\}\{prefix\}} you can change text to appear before the title of a box (locally to the current group). The macro \texttt{\textbackslash boxnumber} refers to the number of the current box that is robust against beamer overlays (but you do not have to use it).\medskip
 
 		This box was updated with \texttt{\textbackslash UpdateBoxPrefix\{definition\}\{Definition~\textbackslash boxnumber: \}}.
 		Similarly, there is \texttt{\textbackslash UpdateBoxSuffix\{name\}\{suffix\}} for text to appear after the title. As a comfort macro, there is \texttt{\textbackslash UpdateBoxSurround\{name\}\{prefix\}\{suffix\}}.
@@ -203,7 +203,7 @@
 			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
 			\vspace{80mm}
 		\end{example}
-	\end{mycolumns}	
+	\end{mycolumns}
 \end{frame}
 
 \subsection{Column Animations}
