@@ -13,7 +13,7 @@ The beamer theme can be used for a beamer presentation by the command ``\usethem
 ### Creating a Symbolic Link
 To use the template from another directory, you can create a symbolic link to the directory of the cloned template. The terminal-commands to create such links vary between different operating systems:
 - **Windows:** `mklink /J \path\to\slides\template path\to\template`
-- **Linux/macOS:** `ln -s /path/to/slides/template /path/to/template`
+- **Linux/macOS:** `ln -s /path/to/template /path/to/slides/template`
 
 ## Functionality of the Theme
 ### Title Page
@@ -28,6 +28,8 @@ To add a title frame, you can use the standard ``\maketitle`` command. It create
 The title picture can be changed with an optional parameter: ``\maketitle[<path-to-picture>]``. The picture's width will automatically be set to fill the frame. To move the picture up or down you can pass an additional optional parameter to set an offset: ``\maketitle[<path-to-picture>][<offset>]``.
 
 If no picture is given (`\maketitle`), a default picture is used. To create a title frame without a picture, you can use `\maketitle[]`.
+
+To repeat the title slide you can use the command `\againtitle` at any point. It creates a copy of the last title slide with the same picture and picture-offset.
 
 ### Section Frames
 
