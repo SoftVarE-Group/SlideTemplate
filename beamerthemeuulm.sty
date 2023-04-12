@@ -58,7 +58,11 @@
 
 % beamer colors:
 \ifdarkmode
-\colorlet{uulm@text}{white!89!darkgray}
+\colorlet{green}{green!90!white}
+\colorlet{red}{red!90!white}
+\colorlet{orange}{orange!90!white}
+\colorlet{blue}{blue!90!white}
+\colorlet{uulm@text}{white!90!darkgray}
 \colorlet{uulm@background}{darkgray}
 \colorlet{uulm@boxmix}{darkgray!50!white}
 \setbeamercolor{background canvas}{bg=uulm@background}
@@ -70,23 +74,22 @@
 \setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
 \setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
 \setbeamercolor{item}{fg=uulm@text}
-\setbeamercolor{myfooter}{fg=uulm@text,bg=darkgray!90!black}%
 % overwrite faculty?
-\AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
+%\AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
 \setbeamercolor{logobox}{bg=uulm@text}
 \else
-\colorlet{uulm@background}{white}
 \colorlet{uulm@text}{black}
+\colorlet{uulm@background}{white}
 \colorlet{uulm@boxmix}{white}
 \setbeamercolor{frametitle}{fg=black}
 \setbeamercolor{item}{fg=black}
 \setbeamercolor{section in toc}{fg=black}
 \setbeamercolor{subsection in toc}{fg=black}
-\setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
-\setbeamercolor{mypagenumber}{fg=white,bg=red}
 \setbeamercolor{logobox}{bg=white}
 \fi
 
+\setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
+\setbeamercolor{mypagenumber}{fg=white,bg=red}
 \setbeamercolor{titlebox}{fg=white,bg=red}
 \setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
 
