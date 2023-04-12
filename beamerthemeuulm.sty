@@ -73,7 +73,7 @@
 \setbeamercolor{myfooter}{fg=uulm@text,bg=darkgray!90!black}%
 % overwrite faculty?
 \AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
-\setbeamercolor{logobox}{bg=uulm@background}
+\setbeamercolor{logobox}{bg=uulm@text}
 \else
 \colorlet{uulm@background}{white}
 \colorlet{uulm@text}{white}
@@ -150,8 +150,9 @@
 
 \renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
     {
-    \def \picture {#1}
-    \ifx \picture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}} \fi
+    % using a lighter background for the title picture
+    \def\picture{#1}
+    \ifx\picture\empty \else\usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}}\fi
     \begin{frame}[plain]
         \vskip0pt plus 1filll
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
