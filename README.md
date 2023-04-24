@@ -97,6 +97,11 @@ Some of these defaults may appear arbitrary. They can be changed (locally to the
 \setmycolumnsdefault{margin=7mm,t}
 ```
 
+### Unique Slide-Numbering
+
+With the package option `uniqueslidenumber` you can ensure that even frames with overlays get a unique slide number at the bottom right.
+For this, this option adds a suffix to the slide number (`<slide>.<overlay>`) of slides with animations, so the slides can be uniquely identified.
+
 #### Old Macros
 
 Please note that, all of the macros in this section are deprecated (for not being verbatim-safe). Please use the `mycolumns`-mechanism described above.

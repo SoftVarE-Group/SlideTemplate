@@ -24,12 +24,14 @@
     \appto\Ginput@path{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
 }
 
+\newif\ifuniqueslidenumbersuffix
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
 
 \DeclareOption{nosectionframes}{\sectiontitleslidefalse \sectionoverviewfalse}
 \DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
 \DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\DeclareOption{uniqueslidenumber}{\uniqueslidenumbersuffixtrue}
 
 \ExecuteOptions{sectiontitleslides} % use sectiontitleslides as default
 \mode<handout>{\ExecuteOptions{sectionoverviews}} % use sectionoverviews as default in handout mode
@@ -170,7 +172,11 @@
         \vphantom{/}\insertframetitle{}%
     }%
 }
-
+\ifuniqueslidenumbersuffix
+    \def\uulm@page{\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi}
+\else
+    \def\uulm@page{\insertframenumber}
+\fi
 \setbeamertemplate{footline}{
     \hypersetup{linkcolor = white}
     \hbox{%
@@ -184,7 +190,8 @@
             \hspace{0.03\textwidth}
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
-            \insertframenumber
+            \usebeamerfont{page number in head/foot}%
+            \uulm@page
         \end{beamercolorbox}%
     }%
 }
