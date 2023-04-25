@@ -89,8 +89,8 @@ In total, there are the following options:
 | `margin=<width>` | `0.035\linewidth` | The horizontal space between columns. |
 | `columns=<amount>` | `2` | The number of columns |
 | `widths={<widths>}` | `{}` | A comma-separated list of values, which determine how wide the columns should be. For example, using `columns=4, widths={40,30}` will cause the first column to occupy 40% of the width, the next one 30%, and evenly distribute the remaining 30% among the other two columns (equivalent to `columns=4, widths={40,30,15,15}`). |
-| `animation=none` | yes | Will make all slides visible by default, without any animation (should not be combined with `reverse`). |
-| `keep` or `animation=keep`| no | Similar to the "and" mode of the old layouts. This will cause the columns to be animated one after the other, with previous columns remaining visible. |
+| `animation=none` | yes | Similar to the "and" mode of the old layouts. Will make all slides visible by default, without any animation (should not be combined with `reverse`). |
+| `keep` or `animation=keep`| no | Similar to the "then" mode of the old layouts. This will cause the columns to be animated one after the other, with previous columns remaining visible. |
 | `forget` or `animation=forget`| no | Similar to the "or" mode of the old layouts. This will cause the columns to be animated one after the other, with previous columns disappearing again. This behavior is active *only in recording mode* (`\recordingtrue`), otherwise, this is similar to `animation=keep`. |
 | `reverse`| no | With the default animation order being left-to-right, this makes it right-to-left. |
 | `extra/columns=<value>`| `{}` | Only for people who know, what they are doing. This allows direct, overwriting access on the beamer-`columns` mechanism working behind the scenes. |
