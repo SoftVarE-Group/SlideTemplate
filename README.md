@@ -36,9 +36,9 @@ To repeat the title slide you can use the command `\againtitle` at any point. It
 At the begin of each section a title slide is automatically generated. If you are in handout-mode, this slide also includes an overview of all sections and subsections that can be used to navigate through the slides easily.
 
 You can overwrite this behaviour by using one of the following documentclass-options:
-* `\nosectionframes`: no automatic frames at the begin of each section
-* `\sectiontitleslides`: automatic title frames at the begin of each section
-* `\sectionoverviews`: automatic section overviews at the begin of each section
+* `nosectionframes`: no automatic frames at the begin of each section
+* `sectiontitleslides`: automatic title frames at the begin of each section
+* `sectionoverviews`: automatic section overviews at the begin of each section
 
 ### Faculty Colors
 
