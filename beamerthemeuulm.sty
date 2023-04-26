@@ -76,6 +76,9 @@
 \setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
 \setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
 \setbeamercolor{item}{fg=uulm@text}
+\setbeamercolor{itemize/enumerate body}{use=normal text,fg=normal text.fg}
+\setbeamercolor{itemize/enumerate subbody}{use=itemize/enumerate body,fg=itemize/enumerate body.fg}
+\setbeamercolor{itemize/enumerate subsubbody}{use=itemize/enumerate subbody,fg=itemize/enumerate subbody.fg}
 % overwrite faculty?
 %\AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
 \setbeamercolor{logobox}{bg=uulm@text}
@@ -618,6 +621,7 @@
         coltitle=black,
         before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname uulm@box@#5@titleprefix\endcsname},
         after title={\let\boxnumber\thetcbcounter\csname uulm@box@#5@titlesuffix\endcsname},
+        before upper={\colorlet{uulm@text}{black}},
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
         #1
