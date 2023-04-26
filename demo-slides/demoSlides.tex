@@ -117,6 +117,37 @@
 	\end{mycolumns}
 \end{frame}
 
+{\MakeNewBox{amazing}{purple}
+\begin{frame}{Create new and modify existing Boxes}
+	\begin{amazing}{An Amazing Box}
+		You can create new boxes with \texttt{\textbackslash MakeNewBox\{name\}\{color\}} (which will check if any of the new box commands is already taken) or \texttt{\textbackslash DeclareBox\{name\}\{color\}} (which may overwrite existing commands). This box was created by \texttt{\textbackslash MakeNewBox\{amazing\}\{purple\}}.
+	\end{amazing}
+	\bigskip
+	{\UpdateBoxColor{definition}{teal}
+	\begin{definition}{This is a Definition}
+		With \texttt{\textbackslash UpdateBoxColor\{name\}\{color\}} you can change the color of a box (locally to the current group). This definition was changed with \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}}.
+	\end{definition}}
+	\begin{definition}{Another Definition}
+		This definition appears outside of the group, so \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}} is no longer active.
+	\end{definition}
+\end{frame}
+}
+{\MakeNewBox[Improved-Box: ]{improved}{purple}[\hfill Jeah! \boxnumber]
+\begin{frame}{Counting Boxes!}
+	\UpdateBoxPrefix{definition}{Definition~\boxnumber: }%
+	\begin{definition}{Hey look at my number!}
+		With \texttt{\textbackslash UpdateBoxPrefix\{name\}\{prefix\}} you can change text to appear before the title of a box (locally to the current group). The macro \texttt{\textbackslash boxnumber} refers to the number of the current box that is robust against beamer overlays (but you do not have to use it).\medskip
+
+		This box was updated with \texttt{\textbackslash UpdateBoxPrefix\{definition\}\{Definition~\textbackslash boxnumber: \}}.
+		Similarly, there is \texttt{\textbackslash UpdateBoxSuffix\{name\}\{suffix\}} for text to appear after the title. As a comfort macro, there is \texttt{\textbackslash UpdateBoxSurround\{name\}\{prefix\}\{suffix\}}.
+	\end{definition}
+	\bigskip
+	\onslide<2->{\begin{improved}{This can be done at construction!}
+		Both \texttt{\textbackslash MakeNewBox[prefix]\{name\}\{color\}[postfix]} and \texttt{\textbackslash DeclareBox[prefix]\{name\}\{color\}[postfix]} have optional arguments that allow to set the prefix and suffix at construction. This box was created with \texttt{\textbackslash MakeNewBox[Improved-Box: ]\{improved\}\{purple\}[\textbackslash hfill Jeah! \textbackslash boxnumber]}.
+	\end{improved}}%
+\end{frame}
+}
+
 \section{Slide Layouts}
 
 \subsection{Multiple Columns}
