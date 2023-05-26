@@ -621,7 +621,7 @@
         coltitle=black,
         before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname uulm@box@#5@titleprefix\endcsname},
         after title={\let\boxnumber\thetcbcounter\csname uulm@box@#5@titlesuffix\endcsname},
-        before upper={\colorlet{uulm@text}{black}\vskip-\parskip},
+        before upper={\colorlet{uulm@text}{black}\vskip-\parskip\relax},
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
         #1
