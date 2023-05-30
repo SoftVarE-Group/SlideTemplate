@@ -1,0 +1,15 @@
+\RequirePackage{etoolbox}
+\makeatletter
+\AtEndPreamble{\g@addto@macro\Ginput@path{{../../pics/logos/}{../../pics/uulm/}{../../pics/nature/}}}
+
+\documentclass[aspectratio=169,8pt,hyperref={draft}]{beamer}
+
+\usepackage{../../beamerthemeuulm}
+\setfaculty{infIngPsy}
+
+\uulmlogos{sp,uulm}
+
+\title[Short Title]{Title}
+\subtitle[Short Subtitle]{Subtitle}
+\author[Short Author]{Author}
+\date{30. 05. 2023} % fix date

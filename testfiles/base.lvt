@@ -1,0 +1,18 @@
+% setup additional input paths so it finds the images
+\input preamble.tex
+\input regression-test.tex
+
+\begin{document}
+\START
+\showoutput
+
+\maketitle
+
+\subsection{Lists and Numbered Lists}
+\begin{frame}[t]{\insertsubsection}
+	\begin{itemize}
+		\item
+	\end{itemize}
+\end{frame}
+
+\END
