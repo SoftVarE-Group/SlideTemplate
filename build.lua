@@ -5,17 +5,6 @@ module = "SlideTemplate"
 ctanpkg = module
 builddir = os.getenv("TMPDIR")
 
--- Package version ===================================================
-local handle = io.popen("git describe --tags $(git rev-list --tags --max-count=1)")
-local oldtag = handle:read("*a")
-handle:close()
-newsubtag = string.sub(oldtag, 4)
-newmajortag = string.sub(oldtag, 0, 3)
-if (options["target"] == "tag") then
-    newsubtag = newsubtag + 1
-end
-packageversion = newmajortag .. math.floor(newsubtag)
-
 -- Package date ======================================================
 packagedate = os.date("!%Y-%m-%d")
 

@@ -7,7 +7,7 @@ name: Tests
   workflow_call:
 
 jobs:
-  build-pdfs:
+  main-test:
     runs-on: ubuntu-latest
     container:
       image: danteev/texlive:latest
