@@ -6,13 +6,6 @@
 \START
 \showoutput
 
-\maketitle
-
-\subsection{Lists and Numbered Lists}
-\begin{frame}[t]{\insertsubsection}
-	\begin{itemize}
-		\item
-	\end{itemize}
-\end{frame}
+\input content.tex
 
 \END

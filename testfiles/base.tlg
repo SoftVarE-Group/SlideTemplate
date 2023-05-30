@@ -1,5 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
+(content.tex
 LaTeX Font Info:    Trying to load font information for U+msa on input line ....
 LaTeX Font Info:    Trying to load font information for U+msb on input line ....
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line ....
@@ -679,3 +680,4 @@ Completed box being shipped out [2]
 .....\glue 0.0 plus 1.0fil
 ....\pdfcolorstack 0 pop
 .\kern 0.0
+)
