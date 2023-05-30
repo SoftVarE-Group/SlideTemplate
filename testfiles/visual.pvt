@@ -1,0 +1,11 @@
+% setup additional input paths so it finds the images
+\input preamble.tex
+\input regression-test.tex
+
+\begin{document}
+\START
+\showoutput
+
+\input content.tex
+
+\END

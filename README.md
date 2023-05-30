@@ -142,4 +142,4 @@ If for any reason the desired output of the test changes, issue `l3build save <t
 l3build save base
 ```
 
-Make sure to commit the corresponding `.tlg` file for log-based testing.
+Make sure to commit the corresponding `.tlg` (for `.lvt` log based test) or `.tpf` (for `pvt` pdf based tests) file for log-based testing.
