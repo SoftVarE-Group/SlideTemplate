@@ -10,7 +10,7 @@ jobs:
   main-test:
     runs-on: ubuntu-latest
     container:
-      image: danteev/texlive:latest
+      image: texlive/texlive:latest
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
