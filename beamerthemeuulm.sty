@@ -617,8 +617,8 @@
     % #1: extra arguments, #2: title, #3: color of the frame, #4: padding, #5 boxname
     uulm@basic-boxstyle/.style n args=5{
         title={#2},
-        colframe=#3!30,
-        coltitle=black,
+        colframe=#3!30!uulm@boxmix,
+        coltitle=uulm@text,coltext=uulm@text,
         before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname uulm@box@#5@titleprefix\endcsname},
         after title={\let\boxnumber\thetcbcounter\csname uulm@box@#5@titlesuffix\endcsname},
         before upper={\colorlet{uulm@text}{black}},
@@ -628,10 +628,10 @@
     },
     % style definition for the normal boxes
     % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
-    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}{#4}, colback=#3!10},
+    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}{#4}, colback=#3!10!uulm@background},
     % style definition for their tight variant
     % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
-    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}{#4}, colback=white}
+    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}{#4}, colback=uulm@background}
 }
 
 % [optional prefix] | name | color | [optional suffix]
