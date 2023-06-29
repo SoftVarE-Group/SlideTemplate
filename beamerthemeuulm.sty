@@ -20,14 +20,20 @@
 % ---------------------------------------------
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
-\graphicspath{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
+\AtEndPreamble{
+    \appto\Ginput@path{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
+}
 
+\newif\ifuniqueslidenumbersuffix
 \newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
 \newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+\newif\ifdarkmode
 
 \DeclareOption{nosectionframes}{\sectiontitleslidefalse \sectionoverviewfalse}
 \DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
 \DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\DeclareOption{uniqueslidenumber}{\uniqueslidenumbersuffixtrue}
+\DeclareOption{darkmode}{\darkmodetrue}
 
 \ExecuteOptions{sectiontitleslides} % use sectiontitleslides as default
 \mode<handout>{\ExecuteOptions{sectionoverviews}} % use sectionoverviews as default in handout mode
@@ -53,14 +59,44 @@
 \definecolor{blue}{HTML}{26547C}
 
 % beamer colors:
+\ifdarkmode
+\colorlet{green}{green!90!white}
+\colorlet{red}{red!90!white}
+\colorlet{orange}{orange!90!white}
+\colorlet{blue}{blue!90!white}
+\colorlet{uulm@text}{white!90!darkgray}
+\colorlet{uulm@background}{darkgray}
+\colorlet{uulm@boxmix}{darkgray!50!white}
+\setbeamercolor{background canvas}{bg=uulm@background}
+\setbeamercolor{frametitle}{fg=uulm@text}
+\setbeamercolor{structure}{fg=uulm@text}
+\setbeamercolor{normal text}{fg=uulm@text}
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg!95!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
+\setbeamercolor{item}{fg=uulm@text}
+\setbeamercolor{itemize/enumerate body}{use=normal text,fg=normal text.fg}
+\setbeamercolor{itemize/enumerate subbody}{use=itemize/enumerate body,fg=itemize/enumerate body.fg}
+\setbeamercolor{itemize/enumerate subsubbody}{use=itemize/enumerate subbody,fg=itemize/enumerate subbody.fg}
+% overwrite faculty?
+%\AtEndPreamble{\setbeamercolor{mypagenumber}{fg=uulm@text,bg=darkgray!40!black}}
+\setbeamercolor{logobox}{bg=uulm@text}
+\else
+\colorlet{uulm@text}{black}
+\colorlet{uulm@background}{white}
+\colorlet{uulm@boxmix}{white}
 \setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{item}{fg=black}
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
+\setbeamercolor{logobox}{bg=white}
+\fi
+
 \setbeamercolor{myfooter}{fg=white,bg=uulmaccent}
 \setbeamercolor{mypagenumber}{fg=white,bg=red}
 \setbeamercolor{titlebox}{fg=white,bg=red}
 \setbeamercolor{subtitlebox}{fg=white,bg=uulmaccent}
-\setbeamercolor{logobox}{bg=white}
-\setbeamercolor{section in toc}{fg=black}
-\setbeamercolor{subsection in toc}{fg=black}
 
 \newcommand{\setfaculty}[1]{
     \ifthenelse{\equal{#1}{med}}{\setbeamercolor{mypagenumber}{fg=white,bg=blue}\setbeamercolor{titlebox}{fg=white,bg=blue}}{
@@ -89,7 +125,6 @@
 % ---------------------------------------------
 % list environments
 % ---------------------------------------------
-\setbeamercolor{item}{fg=black}
 \setbeamertemplate{itemize items}[circle]
 \setbeamertemplate{enumerate item}{\arabic{enumi}.}
 \setbeamertemplate{enumerate subitem}{\arabic{enumii}.}
@@ -121,10 +156,9 @@
 \universitylogo{uulm}
 \clearinstitutelogo
 
-\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
+\newcommand{\@createtitleslide}{
     {
-    \def \picture {#1}
-    \ifx \picture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 #2,clip,width=\paperwidth]{#1}} \fi
+    \ifx \uulmtitlepicture \empty \else \usebackgroundtemplate{\includegraphics[trim=0 0 0 \uulmtitlepictureoffset,clip,width=\paperwidth]{\uulmtitlepicture}} \fi
     \begin{frame}[plain]
         \vskip0pt plus 1filll
         \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
@@ -149,13 +183,31 @@
     }
 }
 
+\renewcommandx{\maketitle}[2][1=apr21-o25a,2=150]{
+    \gdef\uulmtitlepicture{#1}
+    \gdef\uulmtitlepictureoffset{#2}
+    \@createtitleslide
+}
+
+\newcommand{\againtitle}{
+    \ifcsname uulmtitlepicture\endcsname
+        \@createtitleslide
+    \else
+        \PackageError{beamerthemeuulm}{To use \string\againtitle\space you must first use \string\maketitle!}{Either comment out this line or check if you forgot to issue the \string\maketitle-macro.}%
+    \fi
+}
+
 \setbeamertemplate{frametitle}{
     \vspace{20pt}%
     \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
         \vphantom{/}\insertframetitle{}%
     }%
 }
-
+\ifuniqueslidenumbersuffix
+    \def\uulm@page{\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi}
+\else
+    \def\uulm@page{\insertframenumber}
+\fi
 \setbeamertemplate{footline}{
     \hypersetup{linkcolor = white}
     \hbox{%
@@ -169,7 +221,8 @@
             \hspace{0.03\textwidth}
         \end{beamercolorbox}%
         \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
-            \insertframenumber
+            \usebeamerfont{page number in head/foot}%
+            \uulm@page
         \end{beamercolorbox}%
     }%
 }
@@ -332,20 +385,30 @@
 \def\uulm@cols@anim@init{1}     % start on the first column
 \def\uulm@cols@anim@step@sign{+}% count up (if there is anything to count)
 \newdimen\uulm@cols@total@width % holds the column width
-\newdimen\uulm@cols@margin      % holds the margin in-between columns
+\newdimen\uulm@cols@height      % holds the target height of the columns environment (negative for auto)
+
 \def\uulm@cols@widths@max{100}  % the maximum number to be used for widths
 % with this, we define the keys that are usable within the optional argument of '\mycolumns'
+
+\def\@uulm@animation@none{\uulm@cols@animation{0}{-}}
+\def\@uulm@animation@keep{\uulm@cols@animation{1}{-}}
+\def\@uulm@animation@forget{\uulm@cols@animation{1}{}}
+
+
 \pgfqkeys{/uulm columns}{
   % search also allows to write 'c' instead of 'align/c' etc.
-  /uulm columns/.search also = {/uulm columns/align, /uulm columns/extras},
+  /uulm columns/.search also = {/uulm columns/align},
   align/c/.code              = \def\uulm@cols@valign{c}, % centered
   align/t/.code              = \def\uulm@cols@valign{t}, % top (baseline)
   align/b/.code              = \def\uulm@cols@valign{b}, % bottom (baseline)
   align/T/.code              = \def\uulm@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
   % with 'width' the user can set the total width to be occupied by the columns
-  width/.code                = \setlength\uulm@cols@total@width{#1},
+  width/.code                = \def\uulm@cols@target@width{#1},
+  % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
+  height/.code               = \setlength\uulm@cols@height{#1},
+  no height/.style           = { height = -1pt },
   % define the margin between columns
-  margin/.code               = \setlength\uulm@cols@margin{#1},
+  margin/.code               = \def\uulm@cols@margin{#1},
   % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
   widths/.code               = \def\uulm@cols@widths{#1},
   % this key is only for users who need to change anything for the underlying columns mechanism
@@ -353,13 +416,13 @@
   % control the number of columns
   columns/.code              = \def\uulm@cols@count{#1},
   % allow for 'animation=...'
-  animation/.is choice,
-  % similar to 'then'
-  animation/keep/.code       = \uulm@cols@animation{1}{-},
-  % similar to 'or', but ifrecording is no longer needed
-  animation/forget/.code     = \uulm@cols@animation{1}{},
-  % no animation, show all
-  animation/none/.code       = \uulm@cols@animation{0}{-},
+  animation/.code            = {%
+    \expandafter\ifcsname @uulm@animation@#1\endcsname
+        \csname @uulm@animation@#1\endcsname
+    \else
+        \PackageError{beamerthemeuulm}{The animation '#1' does not exist! Choose either 'keep', 'forget', or 'none'.}%
+    \fi
+  },
   % comfort variants, just so the user does not have to write 'animation='
   keep/.style                = {animation=keep},
   forget/.style              = {animation=forget},
@@ -369,14 +432,15 @@
   reverse/.code              =  \def\uulm@cols@anim@init{\uulm@cols@count}\def\uulm@cols@anim@step@sign{-},
   % by overwriting the style '/uulm columns/@defaults',
   % the user can change these defaults
-  @defaults/.style           = {
+  @defaults/.style           = {%
     c, % center align
+    no height,
     columns = 2, animation=none, % one column, no animation
     widths = {}, % use default widths (evenly distribute)
-    % we could also use the default columnsep of latex,
-    % this number was merly chosen to look visually pleasing
-    margin = 0.035\linewidth,
-    width = \linewidth
+    width = \linewidth, %
+    % this number was merely chosen to look visually pleasing
+    % we could also use the default columnsep of latx,
+    margin = 0.035\linewidth
   }
 }
 
@@ -500,7 +564,7 @@
     % issue a warning if too many columns
     \ifnum\value{uulm@cols@current}<\uulm@cols@count\else
         % this mus be an error, we calculate widths etc. only for the given columns
-        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line).}{Either remove the command, or choose another Layout}%
+        \PackageError{beamerthemeuulm}{You configured 'columns=\uulm@cols@count', but supplied more (at least \arabic{uulm@cols@current}, page: \thepage, frame: \insertframenumber,\on@line)}{Either remove the command, or choose another Layout}%
     \fi
     % this is a debug statement, that can be used to se the current state within the animation
     % \typeout{Creating col: \the\c@uulm@cols@current\space on slide: \the\c@uulm@cols@currentanim\uulm@cols@anim@suff, page: \thepage\space (width: \csuse{uulm@cols@col@\number\c@uulm@cols@current})}%
@@ -533,10 +597,16 @@
 
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\pgfqkeys{/uulm columns}{@defaults, #1}%
+\ifcsname mynextcolumn\endcsname
+    \pgfqkeys{/uulm columns}{#1}%
+\else
+    \pgfqkeys{/uulm columns}{@defaults, #1}%
+\fi
+\edef\uulm@previous@uulm@cols{\theuulm@cols@current}% store the current column counter
+\ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
     \uulm@cols@init
-}{\end{columns}\endgroup}
+}{\end{columns}\end{minipage}\setcounter{uulm@cols@current}{\uulm@previous@uulm@cols}\endgroup}
 
 
 % ---------------------------------------------
@@ -544,54 +614,100 @@
 % ---------------------------------------------
 \tcbset{%
     % by definig styles, we avoid their replication
-    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding
-    uulm@basic-boxstyle/.style n args=4{
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding, #5 boxname
+    uulm@basic-boxstyle/.style n args=5{
         title={#2},
-        colframe=#3!30,
-        coltitle=black,
-        before title={\setlength{\parskip}{0ex}\vphantom{/}},
+        colframe=#3!30!uulm@boxmix,
+        coltitle=uulm@text,coltext=uulm@text,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname uulm@box@#5@titleprefix\endcsname},
+        after title={\let\boxnumber\thetcbcounter\csname uulm@box@#5@titlesuffix\endcsname},
+        before upper={\colorlet{uulm@text}{black}\parskip\z@\relax},
         fonttitle=\bfseries,
         left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
         #1
     },
     % style definition for the normal boxes
-    % #1: extra arguments, #2: title, #3: color of the frame and background
-    uulm@boxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}, colback=#3!10},
+    % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
+    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}{#4}, colback=#3!10!uulm@background},
     % style definition for their tight variant
-    % #1: extra arguments, #2: title, #3: color of the frame
-    uulm@tightboxstyle/.style n args=3{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}, colback=white}
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
+    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}{#4}, colback=uulm@background}
 }
 
-% #1: name, #2: color
-\def\uulm@MakeNewBox#1#2{
-    % renew will not work if we define a box that does not already exist in beamer
-    % we could check this by \ifcsname #1\endcsname...\else...\fi
-    % however, for the moment this is not necessary
-    % in the definition #1 and #2 refer to the arguments of \uulm@MakeNewBox
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\uulm@MakeNewBox[4][1={},4={}]{%
+    % in the definition #2 and #3 refer to the arguments of \uulm@MakeNewBox
     % while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
     % therefore, with '\uulm@MakeNewBox{definition}{orange}', we create a new tcolorbox
     % named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
     % will result in the option list 'uulm@boxstyle={top=10mm}{My title}{orange}'
-    \renewtcolorbox{#1}[2][]{uulm@boxstyle={##1}{##2}{#2}}
+    % first we assure, that we can build this box
+    \newtcolorbox[auto counter,reset counter on overlays]{#2}[2][]{uulm@boxstyle={##1}{##2}{uulm@box@#2}{#2}}
     % here, we re-create the old macros (e.g. '\mydefinition')
     % 'capture=minipage' ensures their behavior is similar to the previous one (the default for
     % tcbox would be hbox and no longer fill the width)
-    \expandafter\newtcbox\csname my#1\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{#2}}
+    \expandafter\newtcbox\csname my#2\endcsname[2][]{capture=minipage,uulm@boxstyle={##1}{##2}{uulm@box@#2}{#2}}%
     % now, we do the same for the tight-version of the boxes
-    \newtcolorbox{#1tight}[2][]{uulm@tightboxstyle={##1}{##2}{#2}}
-    \expandafter\newtcbox\csname my#1tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{#2}}
+    \newtcolorbox[use counter from=#2]{#2tight}[2][]{uulm@tightboxstyle={##1}{##2}{uulm@box@#2}{#2}}%
+    \expandafter\newtcbox\csname my#2tight\endcsname[2][]{capture=minipage,uulm@tightboxstyle={##1}{##2}{uulm@box@#2}{#2}}%
+    % now, get the macros in effect:
+    \uulm@UpdateBoxSurround{#2}{#1}{#4}%
+    \uulm@UpdateBoxColor{#2}{#3}%
 }
+% like newBox but does not care if the box does already exist
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\uulm@DeclareBox[4][1={},4={}]{\csundef{#2}\csundef{end#2}\csundef{my#2}\csundef{#2tight}\csundef{end#2tight}\csundef{my#2tight}%
+\uulm@MakeNewBox[#1]{#2}{#3}[#4]}
+
+
+% name | prefix | suffix
+\def\uulm@UpdateBoxSurround#1#2#3{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname uulm@box@#1@titleprefix\endcsname{#2}%
+    \expandafter\def\csname uulm@box@#1@titlesuffix\endcsname{#3}%
+\else
+    \PackageError{beamerthemeuulm}{You can not set a box-prefix/-suffix for '#1' because there is no such box!}%
+\fi}
+
+\def\uulm@UpdateBoxPrefix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname uulm@box@#1@titleprefix\endcsname{#2}%
+\else
+    \PackageError{beamerthemeuulm}{You can not set a box-prefix for '#1' because there is no such box!}%
+\fi}
+
+\def\uulm@UpdateBoxSuffix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname uulm@box@#1@titlesuffix\endcsname{#2}%
+\else
+    \PackageError{beamerthemeuulm}{You can not set a box-suffix for '#1' because there is no such box!}%
+\fi}
+
+
+\def\uulm@UpdateBoxColor#1#2{%
+\ifcsname #1\endcsname
+    \colorlet{uulm@box@#1}{#2}%
+\else
+    \PackageError{beamerthemeuulm}{You can not change the color for '#1' to '#2' because there is no such box!}
+\fi}
+
+\let\MakeNewBox\uulm@MakeNewBox
+\let\DeclareBox\uulm@DeclareBox
+\let\UpdateBoxColor\uulm@UpdateBoxColor
+\let\UpdateBoxPrefix\uulm@UpdateBoxPrefix
+\let\UpdateBoxSuffix\uulm@UpdateBoxSuffix
+\let\UpdateBoxSurround\uulm@UpdateBoxSurround
 
 % now we simply define the boxes by name and color
 % => \mydefinition and \mydefinitiontight
 % furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
-\uulm@MakeNewBox{definition}{orange}
+\uulm@DeclareBox{definition}{orange}
 % => \myexample and \myexampletight
 % furthermore defines the environment \begin{example}{<title>} ... \end{example}
-\uulm@MakeNewBox{example}{blue}
+\uulm@DeclareBox{example}{blue}
 % => \mynote and \mynotetight
 % furthermore defines the environment \begin{note}{<title>} ... \end{note}
-\uulm@MakeNewBox{note}{red}
+\uulm@DeclareBox{note}{red}
 % ---------------------------------------------
 
 % ---------------------------------------------

@@ -5,6 +5,8 @@
 	%nosectionframes, % disable automatic frames at the begin of each section (default: sectiontitleslides in beamer mode and sectionoverviews in handout mode)
 	%sectiontitleslides, % enable an automatic section title slide at the begin of each section
 	%sectionoverviews, % enable an automatic section overview at the begin of each section
+	%uniqueslidenumber, % will uniquely identify pages with overlays by a little suffix
+	%darkmode, % switch to dark mode
 ]{beamer}
 
 \usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
@@ -15,6 +17,7 @@
 %\clearuniversitylogo % clear existing university logo
 %\clearinstitutelogo % clear existing institute logo
 %\uulmlogos{sp,uulm} % freely configure multiple logos (overwrites any other logo setting)
+%\uulmlogos{softvare,sp,uulm} % include softvare working group logo
 
 %\usepackage[ngerman]{babel} % use this line for slides in German
 
@@ -114,6 +117,37 @@
 	\end{mycolumns}
 \end{frame}
 
+{\MakeNewBox{amazing}{purple}
+\begin{frame}{Create new and modify existing Boxes}
+	\begin{amazing}{An Amazing Box}
+		You can create new boxes with \texttt{\textbackslash MakeNewBox\{name\}\{color\}} (which will check if any of the new box commands is already taken) or \texttt{\textbackslash DeclareBox\{name\}\{color\}} (which may overwrite existing commands). This box was created by \texttt{\textbackslash MakeNewBox\{amazing\}\{purple\}}.
+	\end{amazing}
+	\bigskip
+	{\UpdateBoxColor{definition}{teal}
+	\begin{definition}{This is a Definition}
+		With \texttt{\textbackslash UpdateBoxColor\{name\}\{color\}} you can change the color of a box (locally to the current group). This definition was changed with \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}}.
+	\end{definition}}
+	\begin{definition}{Another Definition}
+		This definition appears outside of the group, so \texttt{\textbackslash UpdateBoxColor\{definition\}\{teal\}} is no longer active.
+	\end{definition}
+\end{frame}
+}
+{\MakeNewBox[Improved-Box: ]{improved}{purple}[\hfill Jeah! \boxnumber]
+\begin{frame}{Counting Boxes!}
+	\UpdateBoxPrefix{definition}{Definition~\boxnumber: }%
+	\begin{definition}{Hey look at my number!}
+		With \texttt{\textbackslash UpdateBoxPrefix\{name\}\{prefix\}} you can change text to appear before the title of a box (locally to the current group). The macro \texttt{\textbackslash boxnumber} refers to the number of the current box that is robust against beamer overlays (but you do not have to use it).\medskip
+
+		This box was updated with \texttt{\textbackslash UpdateBoxPrefix\{definition\}\{Definition~\textbackslash boxnumber: \}}.
+		Similarly, there is \texttt{\textbackslash UpdateBoxSuffix\{name\}\{suffix\}} for text to appear after the title. As a comfort macro, there is \texttt{\textbackslash UpdateBoxSurround\{name\}\{prefix\}\{suffix\}}.
+	\end{definition}
+	\bigskip
+	\onslide<2->{\begin{improved}{This can be done at construction!}
+		Both \texttt{\textbackslash MakeNewBox[prefix]\{name\}\{color\}[postfix]} and \texttt{\textbackslash DeclareBox[prefix]\{name\}\{color\}[postfix]} have optional arguments that allow to set the prefix and suffix at construction. This box was created with \texttt{\textbackslash MakeNewBox[Improved-Box: ]\{improved\}\{purple\}[\textbackslash hfill Jeah! \textbackslash boxnumber]}.
+	\end{improved}}%
+\end{frame}
+}
+
 \section{Slide Layouts}
 
 \subsection{Multiple Columns}
@@ -135,7 +169,7 @@
 	\end{note}
 \end{frame}
 
-\subsection{Columns with Customized Width}
+\subsection{Columns with Custom Width}
 \begin{frame}{\insertsubsection}
 	\begin{mycolumns}[columns=3,widths={20,30}]
 		\begin{example}{}
@@ -156,6 +190,57 @@
 
 		All columns whose width is not specified are equally split over the remaining space.
 	\end{note}
+\end{frame}
+
+\subsection{Columns with Custom Height}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}[height=6cm]
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{note}{Explanation}
+			If the content of a column exceeds a certain height, the common centering of all columns will not work anymore because beamer does not define the height of a slide. In this case, you can set the height of the columns manually by adding the option \texttt{height=<height>}.
+		\end{note}
+	\mynextcolumn
+		\begin{example}{}
+			This is the content of the second column. It is too high and would make the first column move downwards without additional options.
+			\vspace{80mm}
+		\end{example}
+	\end{mycolumns}
+\end{frame}
+
+\subsection{Nested Columns}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}
+		\begin{example}{}
+			This is the content of the first column.
+		\end{example}
+		\begin{mycolumns}[columns=4]
+			\mynote{}{1.1}
+			\mynextcolumn
+			\mynote{}{1.2}
+			\mynextcolumn
+			\mynote{}{1.3}
+			\mynextcolumn
+			\mynote{}{1.4}
+		\end{mycolumns}
+	\mynextcolumn
+		\begin{example}{}
+			A column on the right side
+		\end{example}
+		\begin{mycolumns}
+			\mynote{}{2.1}
+			\begin{mycolumns}[columns=3]
+				\mynote{}{2.1.1}
+				\mynextcolumn
+				\mynote{}{2.1.2}
+				\mynextcolumn
+				\mynote{}{2.1.3}
+			\end{mycolumns}
+			\mynextcolumn
+			\mynote{}{2.2}
+		\end{mycolumns}
+	\end{mycolumns}
 \end{frame}
 
 \subsection{Column Animations}
@@ -250,18 +335,22 @@
 	\vfill
 \end{frame}
 
+\subsection{Repeating the Last Title Slide}
+\againtitle
+
 \subsection{Alternative Title Pictures}
 \maketitle[] % title page without a picture
 % examples for alternative title pictures:
-\maketitle[mar22-bee1][0] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-north1][50] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-o25b][100] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-west1][150] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-south][175] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-q47][200] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-o27c][250] % optional parameters to change title picture and offset to move it upwards
-\maketitle[may21-ulm][300] % optional parameters to change title picture and offset to move it upwards
-\maketitle[oct20-q37][350] % optional parameters to change title picture and offset to move it upwards
+\maketitle[jun22-clouds1] % optional parameter to change title picture
+\maketitle[mar22-bee1][0]
+\maketitle[may21-north1][50] % optional parameter to move it upwards
+\maketitle[oct20-o25b][100]
+\maketitle[may21-west1][150]
+\maketitle[may21-south][175]
+\maketitle[may21-q47][200]
+\maketitle[oct20-o27c][250]
+\maketitle[may21-ulm][300]
+\maketitle[oct20-q37][350]
 
 \contentoverview
 
