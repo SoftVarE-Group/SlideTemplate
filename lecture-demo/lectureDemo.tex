@@ -1,0 +1,32 @@
+\documentclass[
+	aspectratio=169, % default is 43
+	8pt, % font size, default is 11pt
+]{beamer}
+
+\usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
+
+\title{Beamer Lecture Test}
+\author{Author}
+\includeonlylecture{lecture 1}
+
+\begin{document}
+    \maketitle
+
+    \contentoverview
+
+    \lecture{The first lecture}{lecture 1}
+
+    \section{First Section of Lecture 1}
+
+    \begin{frame}{First Slide of Lecture 1}
+        Hello World! This is \insertlecture.
+    \end{frame}
+
+    \lecture{The second lecture}{lecture 2}
+
+    \section{First Section of Lecture 2}
+
+    \begin{frame}{First Slide of Lecture 2}
+        Hello World! This is \insertlecture.
+    \end{frame}
+\end{document}
