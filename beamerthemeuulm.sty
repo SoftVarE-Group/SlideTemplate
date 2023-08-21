@@ -597,11 +597,7 @@
 
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\ifcsname mynextcolumn\endcsname
-    \pgfqkeys{/uulm columns}{#1}%
-\else
-    \pgfqkeys{/uulm columns}{@defaults, #1}%
-\fi
+\pgfqkeys{/uulm columns}{@defaults, #1}%
 \edef\uulm@previous@uulm@cols{\theuulm@cols@current}% store the current column counter
 \ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
@@ -628,10 +624,10 @@
     },
     % style definition for the normal boxes
     % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
-    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}{#4}, colback=#3!10!uulm@background},
+    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={colback=#3!10!uulm@background,#1}{#2}{#3}{1mm}{#4}},
     % style definition for their tight variant
     % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
-    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}{#4}, colback=uulm@background}
+    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={colback=uulm@background,#1}{#2}{#3}{0mm}{#4}}
 }
 
 % [optional prefix] | name | color | [optional suffix]
