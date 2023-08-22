@@ -597,11 +597,7 @@
 
 % #1: arguments like 'columns=3, keep, reverse'
 \newenvironment{mycolumns}[1][]{\begingroup
-\ifcsname mynextcolumn\endcsname
-    \pgfqkeys{/uulm columns}{#1}%
-\else
-    \pgfqkeys{/uulm columns}{@defaults, #1}%
-\fi
+\pgfqkeys{/uulm columns}{@defaults, #1}%
 \edef\uulm@previous@uulm@cols{\theuulm@cols@current}% store the current column counter
 \ifdim\uulm@cols@height<0pt\begin{minipage}{\uulm@cols@target@width}\else\begin{minipage}[\uulm@cols@valign][\uulm@cols@height]{\uulm@cols@target@width}\fi%
 \begin{columns}[onlytextwidth,\uulm@cols@valign, \uulm@cols@extra]
