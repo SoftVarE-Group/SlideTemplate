@@ -199,7 +199,7 @@
 
 \setbeamertemplate{frametitle}{
     \vspace{20pt}%
-    \setbox0=\hbox{\insertframetitle}%
+    \vphantom{/}\setbox0=\hbox{\insertframetitle}%
     \ifdim\wd0<\textwidth
     \insertframetitle
     \else\let\hfill\space\resizebox\linewidth!{\insertframetitle}\fi
