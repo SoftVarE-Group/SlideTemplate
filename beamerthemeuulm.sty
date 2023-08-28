@@ -624,10 +624,10 @@
     },
     % style definition for the normal boxes
     % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
-    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{1mm}{#4}, colback=#3!10!uulm@background},
+    uulm@boxstyle/.style n args=4{uulm@basic-boxstyle={colback=#3!10!uulm@background,#1}{#2}{#3}{1mm}{#4}},
     % style definition for their tight variant
     % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
-    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={#1}{#2}{#3}{0mm}{#4}, colback=uulm@background}
+    uulm@tightboxstyle/.style n args=4{uulm@basic-boxstyle={colback=uulm@background,#1}{#2}{#3}{0mm}{#4}}
 }
 
 % [optional prefix] | name | color | [optional suffix]
