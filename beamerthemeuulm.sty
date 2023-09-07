@@ -199,9 +199,10 @@
 
 \setbeamertemplate{frametitle}{
     \vspace{20pt}%
-    \fitbox[maxheight=2.5ex,minheight=0pt,maxwidth=\textwidth,minwidth=0pt]{%
-        \vphantom{/}\insertframetitle{}%
-    }%
+    \vphantom{/}\setbox0=\hbox{\insertframetitle}%
+    \ifdim\wd0<\textwidth
+    \insertframetitle
+    \else\let\hfill\space\resizebox\linewidth!{\insertframetitle}\fi
 }
 \ifuniqueslidenumbersuffix
     \def\uulm@page{\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi}
