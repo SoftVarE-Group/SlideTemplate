@@ -12,6 +12,7 @@
 \usepackage{tcolorbox} % used for color boxes (definition, example, note)
 \usepackage{ifthen}
 \usepackage{multicol} % for auto multi-column in content overview
+\usepackage{catchfile} % for automatic link on pictures
 % ---------------------------------------------
 
 
@@ -21,7 +22,7 @@
 \beamertemplatenavigationsymbolsempty % remove the default navigation symbols
 
 \AtEndPreamble{
-    \appto\Ginput@path{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
+    \setpaths{{../pics/logos/}{../pics/uulm/}{../pics/nature/}}
 }
 
 \newif\ifuniqueslidenumbersuffix
@@ -704,4 +705,24 @@
 % => \mynote and \mynotetight
 % furthermore defines the environment \begin{note}{<title>} ... \end{note}
 \uulm@DeclareBox{note}{red}
+% ---------------------------------------------
+
+% ---------------------------------------------
+% Pictures
+% ---------------------------------------------
+% GRAPHICSPATH
+\makeatletter
+\newcommand{\setpaths}[1]{
+	\appto\Ginput@path{#1} % for loading pictures
+	\def\input@path{#1} % for loading picture sources
+}
+\makeatother
+
+% adding links from text file to pictures automatically
+\newcommand\hreffile[1]{%
+	\CatchFileDef\myurl{#1}{\catcode`\#=12\catcode`\%=12\endlinechar=-1}%
+	\expandafter\href\expandafter{\myurl}}
+\newcommand{\pic}[2][]{%
+    \IfFileExists{#2.txt}{\hreffile{#2.txt}}{}{\includegraphics[#1]{#2}}
+}
 % ---------------------------------------------
