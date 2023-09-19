@@ -342,6 +342,26 @@
 	\pic[width=0.5\textwidth]{jun22-clouds2}
 \end{frame}
 
+\subsection{Automatic Dark-Mode for Pictures}
+\begin{frame}{\insertsubsection}
+	\begin{mycolumns}
+		\begin{notetight}{Normal image with \texttt{\textbackslash pic}}
+			\centering
+			\pic[width=.8\textwidth]{example-image.jpg}
+		\end{notetight}
+	\mynextcolumn
+		\begin{notetight}{Inverted image with \texttt{\textbackslash picDark} (in dark-mode only)}
+			\centering
+			\picDark[width=.8\textwidth]{example-image.jpg}
+		\end{notetight}
+	\end{mycolumns}
+	\begin{note}{Explanation}
+		Using \texttt{\textbackslash pic} instead of \texttt{\textbackslash picDark}, images can be automatically inverted in dark-mode.
+		
+		Therefore, white gets converted to a dark gray that matches the dark background color of the slides.
+	\end{note}
+\end{frame}
+
 \subsection{Repeating the Last Title Slide}
 \againtitle
 
