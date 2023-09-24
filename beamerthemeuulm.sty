@@ -211,7 +211,7 @@
 \fi
 \setbeamertemplate{footline}{
     \hypersetup{linkcolor = white}
-    \vspace{20pt}
+    %\vspace{20pt}
     \hbox{%
         \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
             \hspace{0.03\textwidth}
@@ -227,6 +227,12 @@
             \uulm@page
         \end{beamercolorbox}%
     }%
+}
+\define@key{beamerframe}{b}[true]{% set bottom space
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=20pt\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
 }
 % ---------------------------------------------
 
