@@ -347,18 +347,18 @@
 	\begin{mycolumns}
 		\begin{notetight}{Normal image with \texttt{\textbackslash pic}}
 			\centering
-			\pic[width=.8\textwidth]{example-image.jpg}
+			\pic[width=.7\textwidth]{example-image.jpg}
 		\end{notetight}
 	\mynextcolumn
 		\begin{notetight}{Inverted image with \texttt{\textbackslash picDark} (in dark-mode only)}
 			\centering
-			\picDark[width=.8\textwidth]{example-image.jpg}
+			\picDark[width=.7\textwidth]{example-image.jpg}
 		\end{notetight}
 	\end{mycolumns}
 	\begin{note}{Explanation}
-		Using \texttt{\textbackslash pic} instead of \texttt{\textbackslash picDark}, images can be automatically inverted in dark-mode.
+		Using \texttt{\textbackslash picDark} instead of \texttt{\textbackslash pic}, the dark version of an image that is saved as \texttt{<image-name>-dark} automatically gets used when dark-mode is enabled.
 		
-		Therefore, white gets converted to a dark gray that matches the dark background color of the slides.
+		Images can also automatically be inverted if there is no separate dark version. Therefore, white gets converted to a dark gray that matches the dark background color of the slides.
 	\end{note}
 \end{frame}
 
