@@ -8,18 +8,35 @@
 \title{Beamer Lecture Test}
 \author{Author}
 
-\includeonlylecture{lecture 1}
+%\includeonlylecture{lecture1} % include only single lectures by their label
+
+\newcommand{\lectureoverviewslide}{
+    \begin{frame}{\thelecture.~\insertlecture}
+        \label{lec:\thelecture}
+        \begin{mycolumns}
+            \begin{definition}{Lectures}
+                \begin{enumerate}
+                    \item \href{lec:1}{The first lecture}
+                    \item \href{lec:2}{The second lecture}
+                    \item \href{lec:3}{The third lecture}
+                \end{enumerate}
+            \end{definition}
+        \mynextcolumn
+            \tableofcontents
+        \end{mycolumns}
+    \end{frame}
+}
 
 \begin{document}
     \maketitle
 
     %%% Lecture 1 %%%
 
-    \lecture{The first lecture}{lec:lecture1}
+    \lecture{The first lecture}{lecture1}
 
-    \maketitle
-
-    \contentoverview
+    \maketitle[dec21-forest1]
+    
+    \lectureoverviewslide
 
     \section{First Section of Lecture \thelecture}
 
@@ -36,11 +53,11 @@
 
     %%% Lecture 2 %%%
 
-    \lecture{The second lecture}{lec:lecture}
+    \lecture{The second lecture}{lecture2}
 
-    \maketitle
+    \maketitle[mar22-bee1]
 
-    \contentoverview
+    \lectureoverviewslide
 
     \section{First Section of Lecture \thelecture}
 
@@ -57,11 +74,11 @@
 
     %%% Lecture 3 %%%
 
-    \lecture{The third lecture}{lec:lecture3}
+    \lecture{The third lecture}{lecture3}
 
-    \maketitle
+    \maketitle[sep22-caterpillar1]
 
-    \contentoverview
+    \lectureoverviewslide
 
     \section{First Section of Lecture \thelecture}
 

@@ -266,7 +266,11 @@
 % handling lectures
 % ---------------------------------------------
 \AtBeginLecture{
-    \part{\insertlecture}\label{lec:\thelecture}
+    \part{}
+    \subtitle{\thelecture.~\insertlecture}
+    \beamer@tocsectionnumber=0\relax
+    \setcounter{section}{0}
+	\setcounter{framenumber}{0}
 }
 % ---------------------------------------------
 
