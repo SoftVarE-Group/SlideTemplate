@@ -265,6 +265,19 @@
 
 
 % ---------------------------------------------
+% handling lectures
+% ---------------------------------------------
+\AtBeginLecture{
+    \part{}
+    \subtitle{\thelecture.~\insertlecture}
+    \beamer@tocsectionnumber=0\relax
+    \setcounter{section}{0}
+	\setcounter{framenumber}{0}
+}
+% ---------------------------------------------
+
+
+% ---------------------------------------------
 % content layout
 % ---------------------------------------------
 \newcommand{\halfpage}[1]{\partofpage{48}{#1}}
