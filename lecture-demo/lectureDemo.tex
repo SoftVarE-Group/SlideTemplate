@@ -1,0 +1,95 @@
+\documentclass[
+	aspectratio=169, % default is 43
+	8pt, % font size, default is 11pt
+]{beamer}
+
+\usepackage{../beamerthemeuulm} % use the inofficial uulm beamer theme
+
+\title{Beamer Lecture Test}
+\author{Author}
+
+%\includeonlylecture{lecture1} % include only single lectures by their label
+
+\newcommand{\lectureoverviewslide}{
+    \begin{frame}[plain]{\thelecture.~\insertlecture}
+        \label{lec:\thelecture}
+        \begin{mycolumns}
+            \begin{definition}{Lectures}
+                \begin{enumerate}
+                    \item \hyperlink{lec:1}{The first lecture}
+                    \item \hyperlink{lec:2}{The second lecture}
+                    \item \hyperlink{lec:3}{The third lecture}
+                \end{enumerate}
+            \end{definition}
+        \mynextcolumn
+            \tableofcontents
+        \end{mycolumns}
+    \end{frame}
+}
+
+\begin{document}
+    \maketitle
+
+    %%% Lecture 1 %%%
+
+    \lecture{The first lecture}{lecture1}
+
+    \maketitle[dec21-forest1]
+    
+    \lectureoverviewslide
+
+    \section{First Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+    \section{Second Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+
+    %%% Lecture 2 %%%
+
+    \lecture{The second lecture}{lecture2}
+
+    \maketitle[mar22-bee1]
+
+    \lectureoverviewslide
+
+    \section{First Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+    \section{Second Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+
+    %%% Lecture 3 %%%
+
+    \lecture{The third lecture}{lecture3}
+
+    \maketitle[sep22-caterpillar1]
+
+    \lectureoverviewslide
+
+    \section{First Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+    \section{Second Section of Lecture \thelecture}
+
+    \begin{frame}{First Slide of Lecture \thelecture}
+        Hello World! This section \thesection\ of \insertlecture.
+    \end{frame}
+
+\end{document}
